@@ -53,9 +53,9 @@ const Header = () => {
                   TỔNG QUAN
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownOverview">
-                  <li><a className="dropdown-item" href="/Trang-chủ">Trang chủ</a></li>
-       
-                </ul>
+  <li><Link className="dropdown-item" to="/Trang-chu">Trang chủ</Link></li>
+</ul>
+
               </li>
               <li className="nav-item dropdown">
   <a
@@ -74,9 +74,9 @@ const Header = () => {
 </li>
 
               <li className="nav-item ">
-                <a className="nav-link " href="/Bang-gia" >
-                  BẢNG GIÁ
-                </a>
+              <Link className="nav-link" to="/Bang-gia">
+  BẢNG GIÁ
+</Link>
                
               </li>
               <li className="nav-item dropdown">

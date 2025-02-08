@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../component/Header";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
@@ -80,9 +81,9 @@ const LoginPage = () => {
                       Lưu mật khẩu
                     </label>
                   </div>
-                  <a href="/Quen-mat-khau" className="text-primary">
-                    Quên mật khẩu?
-                  </a>
+                  <Link to="/Quen-mat-khau" className="text-primary">
+  Quên mật khẩu?
+</Link>
                 </div>
 
                 {/* Button Đăng nhập */}
