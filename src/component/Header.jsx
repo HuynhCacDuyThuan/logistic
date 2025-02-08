@@ -53,7 +53,7 @@ const Header = () => {
                   TỔNG QUAN
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownOverview">
-                  <li><a className="dropdown-item" href="/">Trang chủ</a></li>
+                  <li><a className="dropdown-item" href="/logistic/">Trang chủ</a></li>
        
                 </ul>
               </li>
