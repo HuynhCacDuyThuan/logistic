@@ -1,0 +1,64 @@
+/* Giúp thanh tìm kiếm chiếm toàn bộ chiều rộng trong màn hình nhỏ */
+.search-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.navbar-brand img {
+  max-width: 100%;
+  height: 60px;
+  border: 3px solid #000;  /* Thêm viền đen, độ dày 3px */
+  border-radius: 8px;  /* Làm viền tròn */
+}
+.nav-item .nav-link {
+  font-size: 14px;  /* Kích thước chữ */
+  font-weight: 400; /* Đậm hơn */
+  color: #007bff;   /* Màu chữ */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển màu */
+}
+ul.dropdown-menu.show.custom-dropdown.c-dropdown {
+ 
+  left: -136px;
+}
+.nav-item .nav-link:hover {
+  color: #0056b3; /* Màu chữ khi hover */
+  text-decoration: underline; /* Gạch dưới khi hover */
+}
+
+.dropdown-menu .dropdown-item {
+  font-size: 16px; /* Kích thước chữ các mục con */
+  color: #333;     /* Màu chữ của các item */
+  padding: 8px 16px;  /* Khoảng cách trong các mục dropdown */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển màu nền và chữ */
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f8f9fa;  /* Màu nền khi hover */
+  color: #007bff; /* Màu chữ khi hover */
+}
+
+
+/* Đảm bảo thanh tìm kiếm căn giữa trong thanh điều hướng */
+@media (min-width: 768px) {
+  .search-container {
+    width: 60%;
+  }
+}
+
+/* Căn giữa cho phần biểu tượng */
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.w-100 {
+  width: 100%;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}

@@ -1,0 +1,199 @@
+.orders-container {
+    margin-top: 60px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  /* Custom Header Colors */
+table thead.thead-custom {
+  background-color: #0062cc !important; /* Dark blue background with !important to override Bootstrap */
+  color: #ffffff !important; /* White text with !important */
+}
+
+table thead.thead-custom th {
+  font-weight: bold;
+}
+
+/* Custom Row Colors in tbody */
+table tbody tr:nth-child(even) {
+  background-color: #f0f8ff !important; /* Light blue background for even rows */
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* White background for odd rows */
+}
+
+/* Hover effect for table rows */
+table tbody tr:hover {
+  background-color: #e1f5fe !important; /* Lighter blue on hover */
+}
+
+/* Text colors for the table data */
+table td {
+  color: #333333; /* Dark grey for text */
+}
+
+/* Add a border for the rows */
+.table-bordered td, .table-bordered th {
+  border: 1px solid #ddd;
+}
+
+/* Styling for the link */
+a.text-primary {
+  color: #007bff;
+}
+
+a.text-primary:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Styling for the loading spinner */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Custom line divider */
+.hr-oder {
+  border: 1px solid #ddd;
+  margin: 0;
+  width: 100%;
+}
+
+  h2 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+/* CSS để căn giữa spinner trong toàn màn hình */
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7); /* Nền mờ */
+  z-index: 9999; /* Đảm bảo spinner luôn ở trên cùng */
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
+
+  .hr-oder {
+    display: none;
+}
+  /* Đảm bảo rằng bảng có thể cuộn ngang khi màn hình nhỏ */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .table th, .table td {
+    font-size: 12px; /* Giảm kích thước font cho màn hình nhỏ */
+  }
+
+  .table {
+    font-size: 14px; /* Kích thước chữ nhỏ hơn cho bảng */
+  }
+}
+
+  /* Bảng */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    border: 1px solid #eaeaea;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Link màu xanh */
+  .td a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Căn chỉnh cột khách hàng */
+  td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  
+  /* Địa chỉ và icon */
+  td {
+    vertical-align: middle;
+  }
+  
+  td:nth-child(3) {
+    color: #333;
+    font-size: 13px;
+  }
+  
+  /* Status màu vàng */
+  td span.status {
+    color: #f4b400; 
+    font-weight: bold;
+  }
+  
+  /* Cổng thanh toán */
+  td:nth-child(6) {
+    color: #333;
+  }
+  
+  /* Hover khi di chuột vào dòng */
+  tr:hover {
+    background-color: #f1f1f1;
+    transition: 0.3s ease;
+  }
+  .highlight-link {
+    color: #fd0c0c; 
+    font-weight: bold; /* In đậm */
+    cursor: pointer; /* Hiển thị con trỏ chỉ tay */
+  }
+  .highlight-link:hover {
+    color: #0056b3; /* Màu đậm hơn khi hover */
+  }
+  td hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 8px 0;
+    width: 100%;
+  }
+  
+  
+  

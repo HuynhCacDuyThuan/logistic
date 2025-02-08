@@ -1,0 +1,298 @@
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+/* Cải thiện giao diện thẻ sản phẩm */
+.card {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-title {
+    white-space: nowrap;        /* Prevent text from wrapping to the next line */
+    overflow: hidden;           /* Hide anything that overflows the container */
+    text-overflow: ellipsis;    /* Add ellipsis (...) when text overflows */
+    display: block;             /* Ensure it behaves as a block element for proper styling */
+    max-width: 100%;            /* Ensure it doesn’t exceed the container’s width */
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 250px; /* You can adjust this to suit your design */
+    object-fit: cover; /* or use 'contain' if you want the whole image to fit within */
+    border-radius: 8px 8px 0 0; /* Optional: adds rounded corners to the top */
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Cải thiện slider (Range) */
+  .range-track {
+    border-radius: 5px;
+    height: 8px;
+  }
+  
+  .range-thumb {
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background-color: #007bff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .range-thumb:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Tạo hiệu ứng hover cho nút danh mục */
+  .list-group-item button {
+    border-radius: 20px;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .list-group-item button:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  /* Cải thiện giao diện pagination */
+  .pagination button {
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .pagination button:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  .pagination button:focus {
+    outline: none;
+  }
+  
+/* Tổng thể */
+.store-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10%;
+    gap: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    margin-top: 50px;
+    width: 20%;
+    background: #f4f4f4;
+    border-radius: 5px;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.sidebar h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+/* Style cho danh mục */
+.sidebar ul li {
+  list-style-type: none;
+  margin: 10px 0;
+  color: #d62828;
+}
+
+.sidebar ul li button {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  width: 100%;
+  text-align: left;
+  color: #0e0d0d;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Style khi danh mục được chọn */
+.sidebar ul li button.active {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+.sidebar ul li button.active:hover {
+  background-color: #444;
+}
+.mt-15{
+    margin-top: 90px;
+}
+
+/* Thanh lọc giá */
+.price-range-container {
+    margin-bottom: 30px;
+}
+
+.price-range-values {
+    display: flex;
+    justify-content: space-between;
+    /* Đẩy 2 giá trị ra hai bên */
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+}
+
+.range-track {
+    height: 3px;
+    background: #ddd;
+    border-radius: 1px;
+}
+
+.range-thumb {
+    background: #e63946;
+}
+
+
+
+/* Danh sách sản phẩm */
+.product-list {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+    margin-top: 25;
+    margin-left: 22%;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    width: 100%;
+    /* Chiếm toàn bộ chiều ngang */
+    text-align: left;
+    /* Căn trái nội dung */
+    margin-left: 24%;
+}
+
+.breadcrumb span {
+    cursor: pointer;
+}
+
+.breadcrumb span:hover {
+    text-decoration: underline;
+}
+
+
+.product-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.product-item h3 {
+    font-size: 16px;
+    color: #222;
+    text-align: center;
+}
+
+.product-item p {
+    font-size: 16px;
+    color: #e63946;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.product-item button {
+    width: 100%;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.product-item button:hover {
+    background: #d62828;
+}
+/* page */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .pagination-button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination-button:hover {
+    background-color: #e63946;
+    color: #fff;
+  }
+  
+  .pagination-button.active {
+    background-color: #333;
+    color: #fff;
+  }
+  
+/* Footer */
+.footer {
+    margin-top:150px;
+    background-color: #222;
+    color: #fff;
+    padding: 20px 10%;
+    font-size: 14px;
+    position: static; /* Giữ footer cố định */
+    bottom: 0; /* Đặt ở cuối trang */
+    width: 100%; /* Chiếm toàn bộ chiều rộng trang */
+    text-align: center; /* Canh giữa nội dung */
+    z-index: 10; /* Đảm bảo nằm trên các thành phần khác */
+}

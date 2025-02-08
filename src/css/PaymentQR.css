@@ -1,0 +1,83 @@
+.payment-container {
+    max-width: 800px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    margin-top: 80px;
+  }
+  
+  .payment-success-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .success-icon {
+    font-size: 40px;
+    color: green;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  h3 {
+    margin: 20px 0;
+    color: #555;
+  }
+  
+  .payment-instructions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .method {
+    flex: 1;
+    min-width: 300px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .method-qr img {
+    width: 200px;
+    margin: 10px 0;
+  }
+  
+  .sepay-logo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0056b3;
+  }
+  
+  .method-bank {
+    text-align: left;
+  }
+  
+  .note {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .loading-spinner {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #ddd;
+    border-top: 2px solid #0056b3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
