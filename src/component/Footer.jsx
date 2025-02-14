@@ -1,5 +1,5 @@
 import React from 'react';
-
+import logo from "../img/logo.JPG"
 const Footer = () => {
   return (
     <footer className="bg-dark text-white pt-5 pb-4">
@@ -7,7 +7,10 @@ const Footer = () => {
         <div className="row">
           {/* Column 1: Company Info */}
           <div className="col-md-4 mb-4">
-            <h5 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>ZTO</h5>
+            <h5 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}> <a className="navbar-brand fw-bold fs-3" href="#">
+                       <img  src={logo}
+                        alt="Logo" />
+                      </a></h5>
             <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
               Cung cấp giải pháp Logistics - Fulfillment toàn diện.
             </p>
@@ -36,7 +39,10 @@ const Footer = () => {
           <div className="col-md-4 mb-4">
             <h5 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Địa chỉ</h5>
             <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
-              123 Logistics Street, Ho Chi Minh City, Vietnam
+            41b P. Lý Quốc Sư, Hàng Trống, Hoàn Kiếm, Hà Nội, Việt Nam
+            </p>
+            <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+            QPJ5+P7W, Tôn Đức Thắng, Bến Nghé, Quận 1, Hồ Chí Minh, Việt Nam
             </p>
           </div>
         </div>

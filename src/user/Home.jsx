@@ -15,23 +15,45 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(0); // Trang hiện tại
   const [totalPages, setTotalPages] = useState(1); // Tổng số trang
   const navigate = useNavigate(); // Hook để chuyển hướng đến trang chi tiết
+  const [heroImage, setHeroImage] = useState(""); // State lưu ảnh hero section
 
-  // Giả lập dữ liệu sản phẩm
-  const mockProducts = [
-    { id: 1, name: "Sản phẩm 1", brand: "Brand A", thumbnail: { url: "https://via.placeholder.com/150" }, minPrice: 100, maxPrice: 200 },
-    { id: 2, name: "Sản phẩm 2", brand: "Brand B", thumbnail: { url: "https://via.placeholder.com/150" }, minPrice: 150, maxPrice: 250 },
-    { id: 3, name: "Sản phẩm 3", brand: "Brand C", thumbnail: { url: "https://via.placeholder.com/150" }, minPrice: 200, maxPrice: 300 },
-    // Thêm sản phẩm giả lập ở đây
-  ];
+  const [heroTitle, setHeroTitle] = useState(""); // State lưu tiêu đề
+  const [heroDescription, setHeroDescription] = useState(""); // State lưu mô tả
 
+  // Hàm fetch banner từ API
+ // Hàm preload ảnh
+const preloadImage = (src) =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = resolve; // Ảnh tải xong
+    img.onerror = reject; // Báo lỗi nếu không tải được
+  });
+
+// Hàm fetch banner từ API và preload ảnh
+const fetchBanners = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/api/banner/all");
+    if (response.ok) {
+      const data = await response.json();
+      if (data.length > 0) {
+        await preloadImage(data[0].imageUrl); // Preload ảnh từ URL
+        setHeroImage(data[0].imageUrl); // Chỉ set URL khi ảnh tải xong
+        setHeroTitle(data[0].title);
+        setHeroDescription(data[0].description);
+      }
+    } else {
+      console.error("Failed to fetch banners:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error fetching banners:", error);
+  }
+};
+
+  // Gọi fetchBanners khi component được mount
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setProducts(mockProducts); // Đặt dữ liệu giả
-      setTotalPages(1); // Tổng số trang là 1 vì chỉ có 3 sản phẩm
-      setLoading(false);
-    }, 500); // Giả lập thời gian tải
-  }, []); // Gọi hàm chỉ một lần khi component được render
+    fetchBanners();
+  }, []);
 
   // Lắng nghe sự kiện cuộn để thay đổi trạng thái header
   useEffect(() => {
@@ -64,10 +86,30 @@ const Home = () => {
     </div>
     <div className={`container-fluid hero-header ${isScrolled ? "scrolled" : ""}`}>
       {/* Hero Section */}
-      <section className="hero-section text-center py-5 bg-primary text-white">
+      <section className="hero-section text-center py-5 bg-primary text-white"
+       style={{
+        backgroundImage: `url(${heroImage})`, // Đặt ảnh nền từ API
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+        height: "110vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        color: "white",
+        textShadow: "0 2px 4px rgba(0, 0, 0, 0.7)",
+        marginTop: "-5px",
+      }}
+      
+      >
         <div className="container">
-          <h1 className="display-4 fw-bold">Welcome to ZTO</h1>
-          <p className="lead">Cung cấp giải pháp Logistics - Fulfillment toàn diện.</p>
+        <h1 className="display-4 fw-bold">{heroTitle || "Welcome to ZTO"}</h1>
+        <p className="lead">
+          {heroDescription || "Cung cấp giải pháp Logistics - Fulfillment toàn diện."}
+        </p>
           
         </div>
       </section>

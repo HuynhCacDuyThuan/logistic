@@ -1,22 +1,5 @@
 
 /* Hero section styles */
-.hero-section {
-  margin-top: -5px;
-  width: 100%; /* Đảm bảo phù hợp với màn hình */
-  height: 110vh;
-  margin-left: 0; /* Đặt lại căn lề */
-  background-image: url(https://media.vietq.vn/files/HanHien/2023/05/03/logistic.jpg);
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
-}
 
 /* Media query cho màn hình nhỏ */
 @media (max-width: 768px) {

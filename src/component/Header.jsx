@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link, useNavigate } from "react-router-dom";
-
+import logo from "../img/logo.JPG"
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -28,7 +28,8 @@ const Header = () => {
         <div className="container-fluid">
           {/* Logo */}
           <a className="navbar-brand fw-bold fs-3" href="#">
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZo55JX1AVUP-_7zEzA2ApcL6CXZL0_gWobQ&s" alt="" />
+           <img  src={logo}
+            alt="Logo" />
           </a>
 
           {/* Navbar Toggler for mobile */}

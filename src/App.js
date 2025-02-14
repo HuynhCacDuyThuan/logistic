@@ -6,6 +6,10 @@ import LoginPage from "./user/LoginPage";
 import PricingTable from "./user/PricingTable";
 import ServicesPage from "./user/ServicesPage";
 import ForgotPasswordPage from "./user/ForgotPasswordPage";
+import AdminPage from "./admin/AdminPage";
+import AddPostPage from "./admin/AddPostPage";
+import PostDetail from "./user/PostDetail";
+import EditPostPage from "./admin/EditPostPage";
 
 const App = () => {
   return (
@@ -18,6 +22,10 @@ const App = () => {
         <Route path="/Bang-gia" element={<PricingTable />} />
         <Route path="/Dich-vu" element={<ServicesPage />} />
         <Route path="/Quen-mat-khau" element={<ForgotPasswordPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/posts/add" element={<AddPostPage />} />
+        <Route path="/posts/:id" element={<PostDetail />} />
+        <Route path="/admin/posts/edit/:id" element={<EditPostPage />} />
       </Routes>
     </Router>
   );

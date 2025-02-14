@@ -5,16 +5,20 @@
   "homepage": "https://HuynhCacDuyThuan.github.io/logistic",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
     "font-awesome": "^4.7.0",
+    "formik": "^2.4.6",
     "lodash.debounce": "^4.0.8",
-    "react": "^19.0.0",
+    "react": "^18.0.2",
     "react-bootstrap": "^2.10.9",
-    "react-dom": "^19.0.0",
+    "react-dom": "^18.0.2",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.29.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^4.2.4"
+    "web-vitals": "^4.2.4",
+    "yup": "^1.6.1"
   },
   "scripts": {
     "start": "react-scripts start",
