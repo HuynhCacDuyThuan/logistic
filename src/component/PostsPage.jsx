@@ -38,8 +38,10 @@ const PostsPage = () => {
   };
 
   if (loading) {
-    return <p>Đang tải dữ liệu...</p>;
+    return <p className="d-flex justify-content-center align-items-center min-vh-100">Đang tải dữ liệu..</p>;
   }
+  
+  
 
   return (
     <div className="container-fluid">
