@@ -9,7 +9,7 @@ const Services = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://14.225.29.33/api/posts/");
+        const response = await axios.get("http://14.225.29.33:81/api/posts/");
         setPosts(response.data); // Store the fetched data in the state
       } catch (error) {
         console.error("Error fetching posts:", error);

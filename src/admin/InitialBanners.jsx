@@ -12,7 +12,7 @@ const BannerManagement = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetch("http://14.225.29.33/api/banner/all");
+      const response = await fetch("http://14.225.29.33:81/api/banner/all");
       if (response.ok) {
         const data = await response.json();
         setBanners(data);
@@ -26,7 +26,7 @@ const BannerManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://14.225.29.33/api/banner/delete/${id}`, {
+      const response = await fetch(`http://14.225.29.33:81/api/banner/delete/${id}`, {
         method: "DELETE",
       });
 
@@ -122,7 +122,7 @@ const AddBannerForm = ({ fetchBanners }) => {
     formData.append("file", values.image);
 
     try {
-      const response = await fetch("http://14.225.29.33/api/banner/add", {
+      const response = await fetch("http://14.225.29.33:81/api/banner/add", {
         method: "POST",
         body: formData,
       });
@@ -204,7 +204,7 @@ const EditBannerForm = ({ fetchBanners, banner, setEditingBanner }) => {
 
     try {
       const response = await fetch(
-        `http://14.225.29.33/api/banner/update/${banner.id}`,
+        `http://14.225.29.33:81/api/banner/update/${banner.id}`,
         {
           method: "PUT",
           body: formData,
