@@ -88,7 +88,7 @@ const AddPostPage = () => {
   
     try {
       // Send the data to the backend
-      const response = await axios.post("http://localhost:8080/api/posts/add", formData, {
+      const response = await axios.post("http://14.225.29.33:8080/api/posts/add", formData, {
         headers: {
           "Content-Type": "application/json",
         },
