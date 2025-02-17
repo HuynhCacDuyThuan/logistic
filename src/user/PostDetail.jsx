@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../component/Header";
+import "../App.css"
 
 const PostDetail = () => {
   const { id } = useParams(); // Get the post ID from the URL
@@ -10,7 +11,7 @@ const PostDetail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://14.225.29.33:8080/api/posts/${id}`);
+        const response = await axios.get(`http://14.225.29.33/api/posts/${id}`);
         setPost(response.data); // Store the fetched post data
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -20,7 +21,10 @@ const PostDetail = () => {
     fetchPost();
   }, [id]);
 
-  if (!post) return <p>Loading...</p>;
+  if (!post) return 
+  <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+    <p>Loading...</p>
+  </div>;
 
   return (
     <div>

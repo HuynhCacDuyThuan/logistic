@@ -24,7 +24,7 @@ const EditPostPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://14.225.29.33:8080/api/posts/${id}`);
+        const response = await axios.get(`http://14.225.29.33/api/posts/${id}`);
         setPost(response.data);
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -89,7 +89,7 @@ const EditPostPage = () => {
   
     try {
       // Send PUT request to update the post
-      await axios.put(`http://14.225.29.33:8080/api/posts/${id}`, formData, {
+      await axios.put(`http://14.225.29.33/api/posts/${id}`, formData, {
         headers: {
           "Content-Type": "application/json",
         },

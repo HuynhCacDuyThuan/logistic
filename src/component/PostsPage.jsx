@@ -10,7 +10,7 @@ const PostsPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://14.225.29.33:8080/api/posts/");
+        const response = await axios.get("http://14.225.29.33/api/posts/");
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
@@ -26,7 +26,7 @@ const PostsPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa bài viết này?")) {
       try {
-        await axios.delete(`http://14.225.29.33:8080/api/posts/${id}`);
+        await axios.delete(`http://14.225.29.33/api/posts/${id}`);
         const updatedPosts = posts.filter((post) => post.id !== id);
         setPosts(updatedPosts);
         alert("Xóa bài viết thành công!");

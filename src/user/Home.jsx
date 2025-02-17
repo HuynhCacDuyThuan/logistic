@@ -33,7 +33,7 @@ const preloadImage = (src) =>
 // Hàm fetch banner từ API và preload ảnh
 const fetchBanners = async () => {
   try {
-    const response = await fetch("http://14.225.29.33:8080/api/banner/all");
+    const response = await fetch("http://14.225.29.33/api/banner/all");
     if (response.ok) {
       const data = await response.json();
       if (data.length > 0) {
