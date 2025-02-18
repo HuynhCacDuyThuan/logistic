@@ -140,13 +140,13 @@ const Header = () => {
   </button>
 
   {/* Nút Đăng Ký */}
-  <button
+  {/* <button
     className="btn btn-outline-success"
     type="button"
     onClick={handleRegister}
   >
     Đăng ký
-  </button>
+  </button> */}
 </div>
 
                 </div>

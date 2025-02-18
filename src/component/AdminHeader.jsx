@@ -1,7 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useEffect } from "react";
 import "../css/AdminHeader.css"
 const AdminHeader = () => {
+  const navigate = useNavigate();
+
+  // Hàm xử lý đăng xuất
+  const handleLogout = () => {
+   
+   
+    navigate("/Dang-nhap"); 
+  };
+
+  
+  
+
   return (
     <header className="bg-dark text-white p-3">
       <div className="container-fluid d-flex justify-content-between align-items-center">
@@ -33,9 +46,9 @@ const AdminHeader = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/logout" className="dropdown-item">
-                  <i className="bi bi-box-arrow-right me-2"></i>Đăng xuất
-                </Link>
+              <Link to="/dang-nhap" className="dropdown-item" onClick={handleLogout}>
+        <i className="bi bi-box-arrow-right me-2"></i>Đăng xuất
+      </Link>
               </li>
             </ul>
           </div>

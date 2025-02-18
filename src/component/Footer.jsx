@@ -18,7 +18,7 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div className="col-md-4 mb-4">
-            <h5 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Quick Links</h5>
+            <h4 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Quick Links</h4>
             <ul className="list-unstyled">
               <li>
                 <a href="/" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>Home</a>
@@ -37,7 +37,7 @@ const Footer = () => {
 
           {/* Column 3: Address */}
           <div className="col-md-4 mb-4">
-            <h5 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Địa chỉ</h5>
+            <h4 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Địa chỉ</h4>
             <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
             41b P. Lý Quốc Sư, Hàng Trống, Hoàn Kiếm, Hà Nội, Việt Nam
             </p>
