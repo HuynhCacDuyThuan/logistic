@@ -52,7 +52,7 @@ const BannerManagement = () => {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Tiêu Đề</th>
+          
             <th>Mô Tả</th>
             <th>Hình Ảnh</th>
             <th>Thao Tác</th>
