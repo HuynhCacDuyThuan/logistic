@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../component/Header";
 import "../App.css"
@@ -46,13 +46,8 @@ const PostDetail = () => {
             <div className="news-sidebar-block">
               <div className="re-menu">
                 <ul className="list-unstyled">
-                  <li><a href="/Bang-gia" className="menu-item"><span className="txt">Bảng giá</span></a></li>
-                  <li><a href="" className="menu-item"><span className="txt">Hướng dẫn</span></a></li>
-                  <li className="active"><a href="#" className="menu-item"><span className="txt">Dịch vụ</span></a></li>
-                  <li><a href="/" className="menu-item"><span className="txt">Tổng quan</span></a></li>
-                  <li><a href="#" className="menu-item"><span className="txt">Chính sách</span></a></li>
-                  <li><a href="/" className="menu-item"><span className="txt">Tin tức</span></a></li>
-                  <li><a href="/chuyen-muc/nguon-hang-trung-quoc" className="menu-item"><span className="txt">Nguồn hàng Trung Quốc</span></a></li>
+                   <li><Link to="/" className="menu-item"><span className="txt">Trang chủ</span></Link></li>
+                                        <li><Link to="/order" className="menu-item"><span className="txt">Đơn hàng</span></Link></li>
                 </ul>
               </div>
             </div>

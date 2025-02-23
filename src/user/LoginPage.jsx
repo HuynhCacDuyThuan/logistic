@@ -1,11 +1,47 @@
 import React, { useState } from "react";
 import Header from "../component/Header";
 import { Link, useNavigate,  } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 
 const LoginPage = () => {
   const [email, setEmail] = useState(""); // State lưu trữ email nhập vào
   const navigate = useNavigate();
+  
+  const dispatch = useDispatch();  // Hook để dispatch action
 
+  const responseGoogle = async (response) => {
+    if (response.error) {
+      console.log('Login Failed:', response.error);
+      return;
+    }
+
+    const { credential } = response;
+
+    try {
+      const res = await fetch('http://localhost:81/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: credential }), // Gửi token cho backend
+      });
+
+      const data = await res.json();
+      console.log('User data:', data); // Xử lý dữ liệu người dùng từ backend
+
+      if (data.success) {
+        dispatch(setUser(data.data));  // Lưu thông tin người dùng vào Redux
+        navigate("/"); // Chuyển hướng đến trang chủ
+      } else {
+        alert("Đăng nhập thất bại: " + data.data); // Hiển thị lỗi nếu có
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Có lỗi xảy ra. Vui lòng thử lại.');
+    }
+  };
   // Hàm xử lý khi người dùng submit form đăng nhập
   const handleSubmit = (e) => {
     e.preventDefault(); 
@@ -82,13 +118,11 @@ const LoginPage = () => {
                         Lưu mật khẩu
                       </label>
                     </div>
-                    <Link to="/Quen-mat-khau" className="text-primary">
-                      Quên mật khẩu?
-                    </Link>
+                  
                   </div>
 
                   {/* Button Đăng nhập */}
-                  <div className="text-center">
+                  <div className="text-center mb-3">
                     <button
                       type="submit"
                       className="btn btn-primary w-100 fw-bold"
@@ -96,16 +130,14 @@ const LoginPage = () => {
                       Đăng nhập
                     </button>
                   </div>
-
-                  {/* Liên kết Đăng ký */}
-                  <div className="text-center mt-3">
-                    <p>
-                      Chưa có tài khoản?{" "}
-                      <a href="/dang-ky" className="text-primary fw-bold">
-                        Đăng ký ngay
-                      </a>
-                    </p>
+                  <div className="text-center">
+                  <GoogleLogin 
+        onSuccess={responseGoogle}
+        onError={() => console.log('Login Failed')}
+      />
                   </div>
+                  {/* Liên kết Đăng ký */}
+             
                 </form>
               </div>
             </div>

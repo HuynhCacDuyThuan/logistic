@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from "../img/logo.JPG"
+import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <footer className="bg-dark text-white pt-5 pb-4">
@@ -21,17 +22,12 @@ const Footer = () => {
             <h4 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Quick Links</h4>
             <ul className="list-unstyled">
               <li>
-                <a href="/" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>Home</a>
+                <Link to="/" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>Trang chủ</Link>
               </li>
               <li>
-                <a href="/services" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>Services</a>
+                <Link to="/order" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>Đơn hàng</Link>
               </li>
-              <li>
-                <a href="/about" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>About Us</a>
-              </li>
-              <li>
-                <a href="/contact" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>Contact</a>
-              </li>
+              
             </ul>
           </div>
 

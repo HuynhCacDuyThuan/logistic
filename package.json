@@ -5,6 +5,8 @@
   "homepage": "https://HuynhCacDuyThuan.github.io/logistic",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@react-oauth/google": "^0.12.1",
+    "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
@@ -14,7 +16,9 @@
     "react": "^18.0.2",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^18.0.2",
+    "react-icons": "^5.5.0",
     "react-quill": "^2.0.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^6.29.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^4.2.4",

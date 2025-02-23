@@ -12,7 +12,7 @@ const BannerManagement = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetch("http://14.225.29.33:81/api/banner/all");
+      const response = await fetch("http://localhost:81/api/banner/all");
       if (response.ok) {
         const data = await response.json();
         setBanners(data);
@@ -61,7 +61,7 @@ const BannerManagement = () => {
         <tbody>
           {banners.map((banner) => (
             <tr key={banner.id}>
-              <td>{banner.title}</td>
+              
               <td>{banner.description}</td>
               <td>
                 <img src={banner.imageUrl} alt={banner.title} width="100" />
@@ -110,19 +110,18 @@ const BannerManagement = () => {
 
 const AddBannerForm = ({ fetchBanners }) => {
   const validationSchema = Yup.object({
-    title: Yup.string().required("Tiêu đề là bắt buộc"),
     description: Yup.string().required("Mô tả là bắt buộc"),
     image: Yup.mixed().required("Hình ảnh là bắt buộc"),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
     const formData = new FormData();
-    formData.append("title", values.title);
+    
     formData.append("description", values.description);
     formData.append("file", values.image);
 
     try {
-      const response = await fetch("http://14.225.29.33:81/api/banner/add", {
+      const response = await fetch("http://localhost:81/api/banner/add", {
         method: "POST",
         body: formData,
       });
@@ -146,15 +145,7 @@ const AddBannerForm = ({ fetchBanners }) => {
     >
       {({ setFieldValue }) => (
         <Form>
-          <div className="mb-3">
-            <label className="form-label">Tiêu Đề</label>
-            <Field
-              type="text"
-              name="title"
-              className="form-control"
-              placeholder="Nhập tiêu đề"
-            />
-          </div>
+          
           <div className="mb-3">
             <label className="form-label">Mô Tả</label>
             <Field

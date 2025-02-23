@@ -9,7 +9,7 @@ const AdminHeader = () => {
   const handleLogout = () => {
    
    
-    navigate("/Dang-nhap"); 
+    navigate("/dang-nhap"); 
   };
 
   
@@ -40,11 +40,7 @@ const AdminHeader = () => {
               <i className="bi bi-person-circle me-2"></i>Admin
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li>
-                <Link to="/profile" className="dropdown-item">
-                  <i className="bi bi-person-fill me-2"></i>Hồ sơ
-                </Link>
-              </li>
+             
               <li>
               <Link to="/dang-nhap" className="dropdown-item" onClick={handleLogout}>
         <i className="bi bi-box-arrow-right me-2"></i>Đăng xuất

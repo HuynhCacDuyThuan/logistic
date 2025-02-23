@@ -33,13 +33,13 @@ const preloadImage = (src) =>
 // Hàm fetch banner từ API và preload ảnh
 const fetchBanners = async () => {
   try {
-    const response = await fetch("http://14.225.29.33:81/api/banner/all");
+    const response = await fetch("http://localhost:81/api/banner/all");
     if (response.ok) {
       const data = await response.json();
       if (data.length > 0) {
         await preloadImage(data[0].imageUrl); // Preload ảnh từ URL
         setHeroImage(data[0].imageUrl); // Chỉ set URL khi ảnh tải xong
-        setHeroTitle(data[0].title);
+        
         setHeroDescription(data[0].description);
       }
     } else {
@@ -86,27 +86,29 @@ const fetchBanners = async () => {
     </div>
     <div className={`container-fluid hero-header ${isScrolled ? "scrolled" : ""}`}>
       {/* Hero Section */}
-      <section className="hero-section text-center py-5 bg-primary text-white"
-       style={{
-        backgroundImage: `url(${heroImage})`, // Đặt ảnh nền từ API
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        backgroundRepeat: "no-repeat",
-        width: "100%",
-        height: "110vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        color: "white",
-        textShadow: "0 2px 4px rgba(0, 0, 0, 0.7)",
-        marginTop: "-5px",
-      }}
-      
-      >
+      <section
+  className="hero-section text-center py-5 bg-primary text-white"
+  style={{
+    backgroundImage: `url(${heroImage ? heroImage : 'https://res.cloudinary.com/dfy5bqyi7/image/upload/v1740316067/ysmoop1tnbdd7mvdlsfp.jpg'})`, // If heroImage is not provided, use the default URL
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundAttachment: "fixed",
+    backgroundRepeat: "no-repeat",
+    width: "100%",
+    height: "110vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "white",
+    textShadow: "0 2px 4px rgba(0, 0, 0, 0.7)",
+    marginTop: "-5px",
+  }}
+>
+
+
         <div className="container">
-        <h1 className="display-4 fw-bold">{heroTitle || "Welcome to ZTO"}</h1>
+       
         <p className="lead">
           {heroDescription || "Cung cấp giải pháp Logistics - Fulfillment toàn diện."}
         </p>
@@ -128,7 +130,7 @@ const fetchBanners = async () => {
         </div>
       </section>
       
-      <div className="bg-light py-3">  <RegistrationForm/></div>
+     
       
       <Footer/>
     </div>

@@ -75,43 +75,10 @@ const ServicesPage = () => {
                 <div className="news-sidebar">
                   <div className="news-sidebar-block">
                     <div className="re-menu">
-                      <ul className="list-unstyled">
-                        <li>
-                          <a href="/Bang-gia" className="menu-item">
-                            <span className="txt">Bảng giá</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="" className="menu-item">
-                            <span className="txt">Hướng dẫn</span>
-                          </a>
-                        </li>
-                        <li className="active">
-                          <a href="#" className="menu-item">
-                            <span className="txt">Dịch vụ</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/" className="menu-item">
-                            <span className="txt">Tổng quan</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="menu-item">
-                            <span className="txt">Chính sách</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/" className="menu-item">
-                            <span className="txt">Tin tức</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/chuyen-muc/nguon-hang-trung-quoc" className="menu-item">
-                            <span className="txt">Nguồn hàng Trung Quốc</span>
-                          </a>
-                        </li>
-                      </ul>
+                     <ul className="list-unstyled">
+                                        <li><Link to="/" className="menu-item"><span className="txt">Trang chủ</span></Link></li>
+                                                             <li><Link to="/order" className="menu-item"><span className="txt">Đơn hàng</span></Link></li>
+                                     </ul>
                     </div>
                   </div>
                   <div className="news-sidebar-block"></div>
@@ -176,9 +143,7 @@ const ServicesPage = () => {
             </div>
           </div>
         </div>
-        <div className="bg-light py-2">
-          <RegistrationForm />
-        </div>
+       
       </div>
     </div>
   );
