@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/logistic/static/css/main.a07f578d.css",
-    "main.js": "/logistic/static/js/main.1fd6e525.js",
+    "main.css": "/logistic/static/css/main.e110ba9e.css",
+    "main.js": "/logistic/static/js/main.c86573d9.js",
     "static/js/488.141464e9.chunk.js": "/logistic/static/js/488.141464e9.chunk.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/logistic/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/fa-solid-900.ttf": "/logistic/static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
@@ -18,12 +18,12 @@
     "static/media/logo.JPG": "/logistic/static/media/logo.9883c811383f8d7bcd8a.JPG",
     "static/media/fa-v4compatibility.woff2": "/logistic/static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
     "index.html": "/logistic/index.html",
-    "main.a07f578d.css.map": "/logistic/static/css/main.a07f578d.css.map",
-    "main.1fd6e525.js.map": "/logistic/static/js/main.1fd6e525.js.map",
+    "main.e110ba9e.css.map": "/logistic/static/css/main.e110ba9e.css.map",
+    "main.c86573d9.js.map": "/logistic/static/js/main.c86573d9.js.map",
     "488.141464e9.chunk.js.map": "/logistic/static/js/488.141464e9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a07f578d.css",
-    "static/js/main.1fd6e525.js"
+    "static/css/main.e110ba9e.css",
+    "static/js/main.c86573d9.js"
   ]
 }
