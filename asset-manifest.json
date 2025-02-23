@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/logistic/static/css/main.e110ba9e.css",
-    "main.js": "/logistic/static/js/main.23a8557f.js",
+    "main.js": "/logistic/static/js/main.b99a06fc.js",
     "static/js/488.141464e9.chunk.js": "/logistic/static/js/488.141464e9.chunk.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/logistic/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/fa-solid-900.ttf": "/logistic/static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
@@ -19,11 +19,11 @@
     "static/media/fa-v4compatibility.woff2": "/logistic/static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
     "index.html": "/logistic/index.html",
     "main.e110ba9e.css.map": "/logistic/static/css/main.e110ba9e.css.map",
-    "main.23a8557f.js.map": "/logistic/static/js/main.23a8557f.js.map",
+    "main.b99a06fc.js.map": "/logistic/static/js/main.b99a06fc.js.map",
     "488.141464e9.chunk.js.map": "/logistic/static/js/488.141464e9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e110ba9e.css",
-    "static/js/main.23a8557f.js"
+    "static/js/main.b99a06fc.js"
   ]
 }
