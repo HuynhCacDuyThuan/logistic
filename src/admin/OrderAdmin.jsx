@@ -166,7 +166,7 @@ function OrderAdmin() {
                         <td>{order.notes}</td>
                         <td>{order.flowNotes}</td>
                         <td>
-                          <FaEye className="text-info me-3" style={{ cursor: 'pointer' }} onClick={() => handleViewDetails(order)} title="Xem chi tiết" />
+                         
                           <FaEdit className="text-warning me-3" style={{ cursor: 'pointer' }} onClick={() => handleEdit(order)} title="Sửa" />
                           <FaTrashAlt className="text-danger" style={{ cursor: 'pointer' }} onClick={() => handleDelete(order.id)} title="Xóa" />
                         </td>
