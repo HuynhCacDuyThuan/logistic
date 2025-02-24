@@ -7,7 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/logo.JPG"
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/userSlice";
-
+import { FiLogOut } from "react-icons/fi"; // Import icon đăng xuất
+import { AiOutlineUser } from "react-icons/ai"; // Icon người dùng
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -81,12 +82,14 @@ const Header = () => {
               {isLoggedIn ? (
                 <div className="d-flex">
                   <span className="navbar-text me-3">Xin chào, {user.name}</span>
-                  <button className="btn btn-outline-danger" onClick={handleLogout}>Đăng xuất</button>
+                  <button className="btn btn-outline-danger" onClick={handleLogout}>
+    <FiLogOut size={20} /> {/* Icon đăng xuất */}
+</button>
                 </div>
               ) : (
                 <button className="btn btn-outline-primary me-2" type="button" onClick={handleLogin}>
-                  Đăng nhập
-                </button>
+                <AiOutlineUser size={20} /> {/* Icon người dùng */}
+            </button>
               )}
             </div>
           </div>

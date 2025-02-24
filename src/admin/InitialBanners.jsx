@@ -12,7 +12,7 @@ const BannerManagement = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetch("http://localhost:81/api/banner/all");
+      const response = await fetch("http://14.225.29.33:81/api/banner/all");
       if (response.ok) {
         const data = await response.json();
         setBanners(data);
@@ -121,7 +121,7 @@ const AddBannerForm = ({ fetchBanners }) => {
     formData.append("file", values.image);
 
     try {
-      const response = await fetch("http://localhost:81/api/banner/add", {
+      const response = await fetch("http://14.225.29.33:81/api/banner/add", {
         method: "POST",
         body: formData,
       });

@@ -20,7 +20,7 @@ const LoginPage = () => {
     const { credential } = response;
 
     try {
-      const res = await fetch('http://localhost:81/login', {
+      const res = await fetch('http://14.225.29.33:81/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -24,7 +24,7 @@ const ModelManagement = () => {
   useEffect(() => {
     const fetchModels = async () => {
       try {
-        const response = await axios.get('http://localhost:81/api/models/active');
+        const response = await axios.get('http://14.225.29.33:81/api/models/active');
         setModels(response.data);
       } catch (error) {
         console.error('There was an error fetching the models:', error);
@@ -48,13 +48,13 @@ const ModelManagement = () => {
 
     try {
       if (isEditing && selectedModel) {
-        const response = await axios.put(`http://localhost:81/api/models/${selectedModel.id}`, modelData);
+        const response = await axios.put(`http://14.225.29.33:81/api/models/${selectedModel.id}`, modelData);
         setModels(models.map((model) =>
           model.id === selectedModel.id ? response.data : model
         ));
         setIsEditing(false);
       } else {
-        const response = await axios.post('http://localhost:81/api/models', modelData);
+        const response = await axios.post('http://14.225.29.33:81/api/models', modelData);
         setModels([...models, response.data]);
       }
       clearForm();
@@ -77,7 +77,7 @@ const ModelManagement = () => {
     // Xác nhận xóa
     try {
       // Gọi API DELETE để xóa model
-      await axios.delete(`http://localhost:81/api/models/${id}`);
+      await axios.delete(`http://14.225.29.33:81/api/models/${id}`);
   
       // Cập nhật lại state models sau khi xóa thành công
       setModels(models.filter(model => model.id !== id));

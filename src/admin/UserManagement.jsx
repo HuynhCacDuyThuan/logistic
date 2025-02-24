@@ -9,7 +9,7 @@ const UserManagement = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:81/api/users");
+        const response = await axios.get("http://14.225.29.33:81/api/users");
         setUsers(response.data); // Cập nhật danh sách người dùng
       } catch (error) {
         console.error("There was an error fetching the users:", error);
