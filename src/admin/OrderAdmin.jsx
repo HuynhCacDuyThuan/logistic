@@ -16,20 +16,43 @@ function OrderAdmin() {
   const [selectedOrder, setSelectedOrder] = useState(null); // To store the order being edited
   const navigate = useNavigate();  // Initialize the navigate function
   const dispatch = useDispatch(); // Khởi tạo useDispatch
-  const orders = [
-    { id: 1, date: '2025-02-20', name: 'Order 1', warehouse: 'Warehouse A', importTypeId: 101, notes: 'No notes', flowNotes: 'Order processed' },
-    { id: 2, date: '2025-02-21', name: 'Order 2', warehouse: 'Warehouse B', importTypeId: 102, notes: 'Urgent order', flowNotes: 'Order dispatched' },
-    // Add more orders as needed
-  ];
 
-  // Filter orders by both searchQuery and searchDate
-  const filteredOrders = orders.filter(order => 
-    (order.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    order.warehouse.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    order.notes.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    order.flowNotes.toLowerCase().includes(searchQuery.toLowerCase())) &&
-    (order.date.includes(searchDate))  // Filter by date
+  
+
+  const orders = [
+    { id: 3, date: '2023-07-12', warehouse: 'MKT', providers: ['Google', 'Yahoo'], sp: 2, sl: 300, totalPay: 26100000, notes: 'Nhập hàng từ kho Ambino\n123456', submit: 'ADMIN', approve: 'Long Pham 2023-12-18', status: 'Kho VN nhận hàng' },
+    { id: 4, date: '2023-07-14', warehouse: 'MKT', providers: ['Google'], sp: 1, sl: 100, totalPay: 100000000, notes: 'Nhập led hắt 3 bóng lẻ, nguồn 33A 400W\n321', submit: 'ADMIN', approve: 'Long Pham 2023-12-18', status: 'Đã đặt cọc' },
+    { id: 5, date: '2023-07-14', warehouse: 'HCM', providers: ['Yahoo'], sp: 1, sl: 100, totalPay: 200000000, notes: 'Nhập kẹp cố định Led Silicon\n456', submit: 'ADMIN', approve: '', status: 'Nhà cung cấp giao hàng' },
+    { id: 42, date: '2023-09-26', warehouse: 'Nhập khác', providers: ['Google', 'Yahoo', 'Amazon', 'IBM'], sp: 4, sl: 1000, totalPay: 47700000, notes: '------', submit: 'ADMIN', approve: '', status: 'Đã đặt cọc' },
+];
+
+const statusOptions = [
+  "Kho VN nhận hàng",
+  "Đã đặt cọc",
+  "Nhà cung cấp giao hàng",
+  "Đã giao",
+  "Hủy đơn"
+];
+
+const [ordersState, setOrdersState] = useState(orders); // Tạo state để lưu orders
+ // Filter orders by both searchQuery and searchDate
+const filteredOrders = orders.filter(order => 
+  (
+    (order.name?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
+    (order.warehouse?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
+    (order.notes?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
+    (order.flowNotes?.toLowerCase().includes(searchQuery.toLowerCase()) || '')
+  ) &&
+  (searchDate ? order.date.includes(searchDate) : true)  // Kiểm tra ngày nếu có
+);
+
+const handleStatusChange = (orderId, newStatus) => {
+  setOrdersState(prevOrders =>
+    prevOrders.map(order =>
+      order.id === orderId ? { ...order, status: newStatus } : order
+    )
   );
+};
 
   // Pagination logic
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
@@ -136,49 +159,68 @@ function OrderAdmin() {
             </div>
 
             <div className="table-responsive">
-              <table className="table table-bordered table-striped table-hover">
-                <thead className="thead-light">
-                  <tr>
-                    <th onClick={() => handleIDClick(selectedOrder)} style={{ cursor: 'pointer' }}>ID</th> {/* Click on ID */}
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Warehouse</th>
-                    <th>Import Type ID</th>
-                    <th>Notes</th>
-                    <th>Flow Notes</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paginatedOrders.length > 0 ? (
-                    paginatedOrders.map((order) => (
-                      <tr key={order.id} style={{ backgroundColor: '#f9f9f9' }}>
-                        <td 
-                          style={{ cursor: 'pointer', color: 'blue' }} 
-                          onClick={() => handleIDClick(order)} // Make ID clickable
-                        >
-                          {order.id}
-                        </td>
-                        <td>{order.date}</td>
-                        <td>{order.name}</td>
-                        <td>{order.warehouse}</td>
-                        <td>{order.importTypeId}</td>
-                        <td>{order.notes}</td>
-                        <td>{order.flowNotes}</td>
-                        <td>
-                         
-                          <FaEdit className="text-warning me-3" style={{ cursor: 'pointer' }} onClick={() => handleEdit(order)} title="Sửa" />
-                          <FaTrashAlt className="text-danger" style={{ cursor: 'pointer' }} onClick={() => handleDelete(order.id)} title="Xóa" />
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="8" className="text-center">No orders found</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+            <table className="table table-bordered table-striped table-hover">
+      <thead className="thead-light">
+        <tr>
+          <th onClick={() => handleIDClick(null)} style={{ cursor: 'pointer' }}>ID</th>
+          <th>Date</th>
+          <th>Warehouse</th>
+          <th>Providers</th>
+          <th>SP</th>
+          <th>SL</th>
+          <th>Total Pay</th>
+          <th>Notes</th>
+          <th>Submit</th>
+          <th>Approve</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {orders.length > 0 ? (
+          orders.map((order) => (
+            <tr key={order.id} style={{ backgroundColor: '#f9f9f9' }}>
+              <td 
+                style={{ cursor: 'pointer', color: 'blue' }} 
+                onClick={() => handleIDClick(order)}
+              >
+                {order.id}
+              </td>
+              <td>{order.date}</td>
+              <td>{order.warehouse}</td>
+              <td>{order.providers.join(', ')}</td> {/* Hiển thị danh sách providers */}
+              <td>{order.sp}</td>
+              <td>{order.sl}</td>
+              <td>{order.totalPay.toLocaleString()} VND</td> {/* Định dạng số tiền */}
+              <td style={{ whiteSpace: 'pre-line' }}>{order.notes}</td> {/* Giữ xuống dòng trong notes */}
+              <td>{order.submit}</td>
+              <td>{order.approve || 'Chưa duyệt'}</td>
+              <td>
+                <select
+                  value={order.status}
+                  onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                  className="form-select"
+                >
+                  {statusOptions.map((status, index) => (
+                    <option key={index} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              <td>
+                <FaEdit className="text-warning me-3" style={{ cursor: 'pointer' }} onClick={() => handleEdit(order)} title="Sửa" />
+                <FaTrashAlt className="text-danger" style={{ cursor: 'pointer' }} onClick={() => handleDelete(order.id)} title="Xóa" />
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="12" className="text-center">No orders found</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
             </div>
 
             <div className="d-flex justify-content-end mt-4">

@@ -64,7 +64,7 @@ const BannerManagement = () => {
               
               <td>{banner.description}</td>
               <td>
-                <img src={banner.imageUrl} alt={banner.title} width="100" />
+                <img src={banner.imageUrl} width="100" />
               </td>
               <td>
                 <button
@@ -139,7 +139,7 @@ const AddBannerForm = ({ fetchBanners }) => {
 
   return (
     <Formik
-      initialValues={{ title: "", description: "", image: null }}
+      initialValues={{ description: "", image: null }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
@@ -178,14 +178,14 @@ const AddBannerForm = ({ fetchBanners }) => {
 
 const EditBannerForm = ({ fetchBanners, banner, setEditingBanner }) => {
   const validationSchema = Yup.object({
-    title: Yup.string().required("Tiêu đề là bắt buộc"),
+   
     description: Yup.string().required("Mô tả là bắt buộc"),
     image: Yup.mixed().notRequired(),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
     const formData = new FormData();
-    formData.append("title", values.title);
+   
     formData.append("description", values.description);
 
     // Chỉ thêm ảnh mới vào formData nếu người dùng chọn ảnh mới
@@ -217,7 +217,6 @@ const EditBannerForm = ({ fetchBanners, banner, setEditingBanner }) => {
   return (
     <Formik
       initialValues={{
-        title: banner.title,
         description: banner.description,
         image: null, // Giữ trạng thái ảnh null nếu không có ảnh mới
       }}
@@ -226,15 +225,7 @@ const EditBannerForm = ({ fetchBanners, banner, setEditingBanner }) => {
     >
       {({ setFieldValue, values }) => (
         <Form>
-          <div className="mb-3">
-            <label className="form-label">Tiêu Đề</label>
-            <Field
-              type="text"
-              name="title"
-              className="form-control"
-              placeholder="Nhập tiêu đề"
-            />
-          </div>
+         
           <div className="mb-3">
             <label className="form-label">Mô Tả</label>
             <Field
