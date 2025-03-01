@@ -5,7 +5,7 @@ import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:81/api/import-orders"; // API URL chuẩn
+const API_URL = "http://14.225.29.33:81/api/import-orders"; // API URL chuẩn
 const EditOrder = () => {
   const { id } = useParams(); // Lấy ID từ URL
   const navigate = useNavigate(); // Điều hướng sau khi cập nhật thành công
@@ -44,9 +44,9 @@ const EditOrder = () => {
         };
 
         const [unitData, lineData, statusData] = await Promise.all([
-          fetchWithCheck("http://localhost:81/api/model-details/by-model/2"),
-          fetchWithCheck("http://localhost:81/api/model-details/by-model/1"),
-          fetchWithCheck("http://localhost:81/api/model-details/by-model/3"),
+          fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/2"),
+          fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/1"),
+          fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/3"),
         ]);
 
         setUnits(unitData);

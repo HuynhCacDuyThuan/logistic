@@ -29,7 +29,7 @@ function OrderAdmin() {
 
 
   
-      const response = await axios.get(`http://localhost:81/api/import-orders`, {
+      const response = await axios.get(`http://14.225.29.33:81/api/import-orders`, {
         params: { 
           page: currentPage - 1, 
           size: itemsPerPage, 
@@ -38,7 +38,7 @@ function OrderAdmin() {
         }
       });
   
-      console.log(`Fetching: http://localhost:81/api/import-orders?page=${currentPage - 1}&size=${itemsPerPage}&search=${searchQuery}&createdDate=${formattedDate}`);
+      console.log(`Fetching: http://14.225.29.33:81/api/import-orders?page=${currentPage - 1}&size=${itemsPerPage}&search=${searchQuery}&createdDate=${formattedDate}`);
   
       const processedOrders = response.data.content.map((order) => ({
         ...order,
@@ -61,7 +61,7 @@ function OrderAdmin() {
     if (!window.confirm(`Bạn có chắc muốn xóa đơn hàng ID: ${id}?`)) return;
     
     try {
-      await axios.delete(`http://localhost:81/api/import-orders/${id}`);
+      await axios.delete(`http://14.225.29.33:81/api/import-orders/${id}`);
       setOrders(orders.filter((order) => order.id !== id));
       alert("Xóa đơn hàng thành công!");
     } catch (error) {

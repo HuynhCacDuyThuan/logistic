@@ -28,7 +28,7 @@ const LoginPage = () => {
   
     try {
       console.log("Sending token to backend:", credential); // ✅ Debug log
-      const res = await fetch("http://localhost:81/login", {
+      const res = await fetch("http://14.225.29.33:81/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: credential }),

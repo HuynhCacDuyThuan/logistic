@@ -47,7 +47,7 @@ const ModelManagement = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:81/api/model-details", {
+      const response = await axios.post("http://14.225.29.33:81/api/model-details", {
         name: formData.name,
         modelId: selectedModel.id, // Gửi ID của Model
         activeFlag: true,

@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Modal } from "bootstrap";
 
-const API_URL = "http://localhost:81/api/model-details";
+const API_URL = "http://14.225.29.33:81/api/model-details";
 
 const ModelDetailComponent = () => {
   const [modelDetails, setModelDetails] = useState([]);

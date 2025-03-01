@@ -39,7 +39,7 @@ function OrderTable() {
       console.log(`🔍 Fetching customerCode for email: ${user.email}`);
   
      
-      const customerRes = await axios.get(`http://localhost:81/api/users/customer-code/${user.email}`);
+      const customerRes = await axios.get(`http://14.225.29.33:81/api/users/customer-code/${user.email}`);
       const customerCode = customerRes.data.customerCode;
   
       if (!customerCode) {
@@ -52,7 +52,7 @@ function OrderTable() {
       console.log(`Mã khách hàng: ${customerCode}`);
   
     
-      const orderRes = await axios.get(`http://localhost:81/api/import-orders/customer/${customerCode}`, {
+      const orderRes = await axios.get(`http://14.225.29.33:81/api/import-orders/customer/${customerCode}`, {
         params: { 
           page: currentPage - 1, 
           size: itemsPerPage, 

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
 
-const API_URL = "http://localhost:81/api/import-orders"; // Adjusted API URL
+const API_URL = "http://14.225.29.33:81/api/import-orders"; // Adjusted API URL
 
 const AddOrder = () => {
   const [units, setUnits] = useState([]);
@@ -24,9 +24,9 @@ const AddOrder = () => {
         };
   
         const [unitData, lineData, statusData] = await Promise.all([
-          fetchWithCheck("http://localhost:81/api/model-details/by-model/2"),
-          fetchWithCheck("http://localhost:81/api/model-details/by-model/1"),
-          fetchWithCheck("http://localhost:81/api/model-details/by-model/3"),
+          fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/2"),
+          fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/1"),
+          fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/3"),
         ]);
   
         setUnits(unitData);

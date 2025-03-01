@@ -15,7 +15,7 @@ const UserManagement = () => {
   // Fetch danh sách người dùng
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:81/api/users");
+      const response = await axios.get("http://14.225.29.33:81/api/users");
       setUsers(response.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách người dùng:", error);
@@ -40,7 +40,7 @@ const handleUpdateCustomerCode = async () => {
 
   try {
     await axios.put(
-      `http://localhost:81/api/users/${selectedUser.id}/customer-code`,
+      `http://14.225.29.33:81/api/users/${selectedUser.id}/customer-code`,
       { customerCode: customerCode }, // ✅ Gửi JSON Object thay vì string
       { headers: { "Content-Type": "application/json" } }
     );
