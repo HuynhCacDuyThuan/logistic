@@ -22,7 +22,7 @@ const SearchForm = () => {
 
   return (
     <div className="container py-4 bg-light border border-primary rounded shadow">
-      {/* Tab Navigation */}
+      Tab Navigation
       <div className="fil-top">
         <ul className="nav nav-tabs border-bottom-0">
           <li className="nav-item">

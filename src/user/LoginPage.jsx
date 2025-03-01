@@ -13,50 +13,55 @@ const LoginPage = () => {
 
   const responseGoogle = async (response) => {
     if (response.error) {
-      console.log('Login Failed:', response.error);
+      console.error("Google Login Failed:", response.error);
+      alert("Đăng nhập Google thất bại. Vui lòng thử lại!");
       return;
     }
-
+  
     const { credential } = response;
-
+  
+    if (!credential) {
+      console.error("Không nhận được token từ Google:", response);
+      alert("Token Google không hợp lệ!");
+      return;
+    }
+  
     try {
-      const res = await fetch('http://14.225.29.33:81/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: credential }), // Gửi token cho backend
+      console.log("Sending token to backend:", credential); // ✅ Debug log
+      const res = await fetch("http://localhost:81/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: credential }),
       });
-
+  
       const data = await res.json();
-      console.log('User data:', data); // Xử lý dữ liệu người dùng từ backend
-
+      console.log("Server Response:", data); // ✅ Debug log
+  
       if (data.success) {
-        dispatch(setUser(data.data));  // Lưu thông tin người dùng vào Redux
-        navigate("/"); // Chuyển hướng đến trang chủ
+        dispatch(setUser(data.data)); // ✅ Lưu vào Redux
+        navigate("/"); // ✅ Chuyển hướng sau khi đăng nhập thành công
       } else {
-        alert("Đăng nhập thất bại: " + data.data); // Hiển thị lỗi nếu có
+        alert("Đăng nhập thất bại: " + (data.data || "Lỗi không xác định từ server"));
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Có lỗi xảy ra. Vui lòng thử lại.');
+      console.error("Error sending request to backend:", error);
+      alert("Có lỗi xảy ra. Vui lòng thử lại!");
     }
   };
+  
   // Hàm xử lý khi người dùng submit form đăng nhập
   const handleSubmit = (e) => {
-    e.preventDefault(); 
-
-    
+    e.preventDefault();
+  
     if (email === "phamvulong2411@gmail.com") {
-     
-
-     
-      navigate("/admin");  
+      const userData = { email, role: "admin" };
+      dispatch(setUser(userData)); // Lưu thông tin người dùng vào Redux
+      navigate("/admin");
     } else {
       alert("Email không hợp lệ.");
     }
   };
-
+  
   return (
     <div>
       <div className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>

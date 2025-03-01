@@ -4,3 +4,90 @@ h5 {
     margin-bottom: 10px;
     color: rgb(85, 85, 85);
 }
+.empty-orders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .empty-orders-img {
+    width: 200px;  /* Điều chỉnh kích thước ảnh */
+    height: auto;
+    opacity: 0.8;  /* Hiệu ứng mờ nhẹ */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .empty-orders-img:hover {
+    transform: scale(1.1); /* Hiệu ứng phóng to nhẹ khi hover */
+  }
+  
+/* Section Background */
+.product-grid-title {
+    background: linear-gradient(to right, #4F9E9E, #3a7d7d);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  /* Tiêu đề */
+  .title-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    position: relative;
+    opacity: 0;
+    animation: textFadeIn 1.2s ease-in-out forwards;
+  }
+  
+  /* Gạch chân trang trí */
+  .underline {
+    width: 100px;
+    height: 4px;
+    background-color: white;
+    margin: 10px auto 0;
+    border-radius: 2px;
+    opacity: 0;
+    animation: slideIn 1.2s ease-in-out forwards 0.3s;
+  }
+  
+  /* Hiệu ứng chữ xuất hiện */
+  @keyframes textFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Hiệu ứng gạch chân */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+  
+  /* Hiệu ứng fade-in tổng thể */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

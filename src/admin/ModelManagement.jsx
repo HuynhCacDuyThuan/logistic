@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { useDispatch } from 'react-redux';
+import { setSelectedOrderId } from '../redux/userSlice';
+
 const ModelManagement = () => {
   const [models, setModels] = useState([]);
   const [name, setName] = useState('');
@@ -14,12 +18,57 @@ const ModelManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedModel, setSelectedModel] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-
+  const dispatch = useDispatch(); // Khởi tạo useDispatch
   // Chuyển đổi định dạng ngày
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0]; // Lấy phần ngày "yyyy-MM-dd"
   };
+
+  const [formData, setFormData] = useState({
+    name: ""
+  });
+
+  const handleAddClick = (modelId) => {
+    setSelectedModel(models.find((model) => model.id === modelId)); // Lưu model được chọn
+    setShowModal(true);
+  };
+  
+
+  const handleClose = () => {
+    setShowModal(false);
+    setFormData({ name: ""}); // Reset form khi đóng modal
+  };
+
+  const handleSave = async () => {
+    if (!selectedModel) {
+      console.error("Model ID is missing!");
+      return;
+    }
+  
+    try {
+      const response = await axios.post("http://localhost:81/api/model-details", {
+        name: formData.name,
+        modelId: selectedModel.id, // Gửi ID của Model
+        activeFlag: true,
+        deleteFlag: false,
+        createdBy: "admin"
+      });
+  
+      console.log("Data saved:", response.data);
+  
+      // Cập nhật danh sách ModelDetail nếu cần
+   
+  
+      // Đóng modal sau khi lưu thành công
+      setShowModal(false);
+      setFormData({ name: "" }); // Reset form
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+  };
+  
+  
 
   useEffect(() => {
     const fetchModels = async () => {
@@ -104,20 +153,15 @@ const ModelManagement = () => {
     }
   };
 
-  const handleIDClick = (id) => {
-    const model = models.find((model) => model.id === id);
-    setSelectedModel(model);
-    setShowModal(true);
+  const handleIDClick = (model) => {
+    dispatch(setSelectedOrderId(model.id)); // Cập nhật selectedOrderId khi nhấn vào ID
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedModel(null);
-  };
+
 
   return (
     <div className="container mt-5">
-      <form onSubmit={handleSubmit} className="mb-4">
+      {/* <form onSubmit={handleSubmit} className="mb-4">
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Model</label>
           <input
@@ -133,7 +177,7 @@ const ModelManagement = () => {
         <button type="submit" className="btn btn-primary">
           {isEditing ? 'Lưu thay đổi' : 'Lưu'}
         </button>
-      </form>
+      </form> */}
 
      
 
@@ -147,7 +191,7 @@ const ModelManagement = () => {
                   <th>Model Name</th>
                   <th>Created By</th>
                   <th>Created Date</th>
-                  <th>Modified Date</th>
+            
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -156,16 +200,24 @@ const ModelManagement = () => {
                   <tr key={model.id}>
                     <td
                       style={{ cursor: 'pointer', color: 'blue' }}
-                      onClick={() => handleIDClick(model.id)}
+                      onClick={() => handleIDClick(model)}
                     >
                       {model.id}
                     </td>
                     <td>{model.name}</td>
                     <td>{model.createdBy}</td>
                     <td>{formatDate(model.createdDate)}</td> {/* Chuyển đổi ngày */}
-                    <td>{formatDate(model.modifiedDate) || 'N/A'}</td> {/* Chuyển đổi ngày */}
+                  
                     <td>
-                      <button
+
+                    <button 
+    onClick={() => handleAddClick(model.id)} 
+    className="btn btn-success btn-sm me-2"
+  >
+    <i className="fas fa-plus"></i>
+  </button>
+
+                      {/* <button
                         onClick={() => handleEdit(model.id)}
                         className="btn btn-warning btn-sm me-2"
                       >
@@ -176,7 +228,7 @@ const ModelManagement = () => {
                         className="btn btn-danger btn-sm"
                       >
                         <i className="fas fa-trash"></i>
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))}
@@ -185,43 +237,39 @@ const ModelManagement = () => {
           </div>
         </div>
       </div>
-
-      {showModal && selectedModel && (
-        <div
-          className="modal show"
-          style={{ display: 'block', backdropFilter: 'blur(1px)' }}
-          tabIndex="-1"
-        >
-          <div className="modal-dialog modal-lg">
+      {showModal && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+          <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Model Details - {selectedModel.name}</h5>
-                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+                <h5 className="modal-title">Thêm Model Detail</h5>
+                <button type="button" className="btn-close" onClick={handleClose}></button>
               </div>
               <div className="modal-body">
-                <p><strong>ID:</strong> {selectedModel.id}</p>
-                <p><strong>Model status:</strong> {selectedModel.name}</p>
                 <div className="mb-3">
-                  <label htmlFor="modelName" className="form-label">Model Name</label>
+                  <label className="form-label">Tên</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="modelName"
-                    value={selectedModel.name}
-                    onChange={(e) => setSelectedModel(prev => ({
-                      ...prev,
-                      name: e.target.value
-                    }))} 
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
+               
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Close</button>
+                <button className="btn btn-secondary" onClick={handleClose}>
+                  Hủy
+                </button>
+                <button className="btn btn-primary" onClick={handleSave}>
+                  Lưu
+                </button>
               </div>
             </div>
           </div>
         </div>
       )}
+     
     </div>
   );
 };
