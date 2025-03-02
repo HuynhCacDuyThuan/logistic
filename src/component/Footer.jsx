@@ -3,13 +3,13 @@ import logo from "../img/logo.JPG"
 import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white pt-5 pb-4">
+    <footer className="bg-dark text-white pt-2 pb-2">
       <div className="container">
         <div className="row">
           {/* Column 1: Company Info */}
           <div className="col-md-4 mb-4">
             <h5 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}> <a className="navbar-brand fw-bold fs-3" href="#">
-                       <img  src={logo}
+                       <img className='Logo'  src={logo}
                         alt="Logo" />
                       </a></h5>
             <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
@@ -19,7 +19,7 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div className="col-md-4 mb-4">
-            <h4 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Quick Links</h4>
+            <h6 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Quick Links</h6>
             <ul className="list-unstyled">
               <li>
                 <Link to="/" className="text-white" style={{ textDecoration: 'none', fontSize: '1rem' }}>Trang chủ</Link>
@@ -33,7 +33,7 @@ const Footer = () => {
 
           {/* Column 3: Address */}
           <div className="col-md-4 mb-4">
-            <h4 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Địa chỉ</h4>
+            <h6 className="text-uppercase mb-3" style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>Địa chỉ</h6>
             <p style={{ fontSize: '1rem', lineHeight: '1.5' }}>
             41b P. Lý Quốc Sư, Hàng Trống, Hoàn Kiếm, Hà Nội, Việt Nam
             </p>

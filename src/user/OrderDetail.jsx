@@ -28,7 +28,7 @@ function OrderDetail() {
  <div>
 
 
-<div  className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+<div  className="header" >
     <Header/>
     </div>
     <div className="container-fluid p-0">

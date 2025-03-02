@@ -27,7 +27,7 @@ const LoginPage = () => {
     }
   
     try {
-      console.log("Sending token to backend:", credential); // ✅ Debug log
+      console.log("Sending token to backend:", credential); 
       const res = await fetch("http://14.225.29.33:81/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,11 +35,11 @@ const LoginPage = () => {
       });
   
       const data = await res.json();
-      console.log("Server Response:", data); // ✅ Debug log
+      console.log("Server Response:", data); 
   
       if (data.success) {
-        dispatch(setUser(data.data)); // ✅ Lưu vào Redux
-        navigate("/"); // ✅ Chuyển hướng sau khi đăng nhập thành công
+        dispatch(setUser(data.data)); 
+        navigate("/trang-chu"); 
       } else {
         alert("Đăng nhập thất bại: " + (data.data || "Lỗi không xác định từ server"));
       }
@@ -64,7 +64,7 @@ const LoginPage = () => {
   
   return (
     <div>
-      <div className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+      <div className="header" >
         <Header />
       </div>
 

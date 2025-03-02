@@ -135,78 +135,64 @@ function OrderAdmin() {
                 <FaPlus /> Thêm Đơn Hàng
               </button>
             </div>
-
             <div className="table-responsive">
-            <table className="table table-bordered table-hover">
-        <thead className="table-light">
-          <tr>
-            <th>Ngày</th>
-            <th>Line</th>
-            <th colSpan="4" className="text-center">Mã Vận Đơn</th>
-            <th>Tên sản phẩm</th>
-            <th>Số Kiện</th>
-            <th>Đơn vị</th>
-            <th>Giá trị</th>
-            <th>Giá Bảo Hiểm</th>
-            <th>Phương Thức Lấy Hàng</th>
-            <th>Mã Khách Hàng</th>
-            <th>Trạng Thái</th>
-            <th>Hành động</th>
-          </tr>
-          <tr>
-            <th></th>
-            <th></th>
-            <th className="text-center"></th>
-            <th className="text-center">TQ</th>
-           
-            <th className="text-center"></th>
-            <th className="text-center">VN</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order.id}>
-             <td>{new Date(order.createdDate).toLocaleString()}</td>
-              <td>{order.lineId}</td>
-              <td className="text-danger fw-bold text-center">{order.tqCode}</td>
-              <td className="text-danger text-center">{order.cnShippingCode}</td>
-              <td className="text-success text-center">{order.vnCode}</td>
-              <td className="text-success text-center">{order.vnShippingCode}</td>
-              <td>{order.name}</td>
-              <td>{order.packageNumbers}</td>
-              <td>{order.packageUnitId}</td>
-              <td>{order.packageUnitValue}</td>
-              <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
-              <td>{order.shippingMethod}</td>
-              <td>{order.customerCode}</td>
-              <td>{order.statusId}</td>
-              <td className="text-center">
+              <table className="table table-bordered table-hover">
+                <thead className="table-light">
+                  <tr>
+                    <th rowSpan="2">Ngày</th>
+                    <th rowSpan="2">Line</th>
+                    <th colSpan="4" className="text-center">Mã Vận Đơn</th>
+                    <th rowSpan="2">Tên sản phẩm</th>
+                    <th rowSpan="2">Số Kiện</th>
+                    <th rowSpan="2">Đơn vị</th>
+                    <th rowSpan="2">Giá trị</th>
+                    <th rowSpan="2">Giá Bảo Hiểm</th>
+                    <th rowSpan="2">Phương Thức Lấy Hàng</th>
+                    <th rowSpan="2">Mã Khách Hàng</th>
+                    <th rowSpan="2">Trạng Thái</th>
+                    <th rowSpan="2"></th>
+                  </tr>
+                  <tr>
+                    <th className="text-center">TQ</th>
+                    <th className="text-center">Mã TQ</th>
+                    <th className="text-center">VN</th>
+                    <th className="text-center">Mã VN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr key={order.id}>
+                      <td>{new Date(order.createdDate).toLocaleString()}</td>
+                      <td>{order.lineId}</td>
+                      <td className="text-danger fw-bold text-center">{order.tqCode}</td>
+                      <td className="text-danger text-center">{order.cnShippingCode}</td>
+                      <td className="text-success text-center">{order.vnCode}</td>
+                      <td className="text-success text-center">{order.vnShippingCode}</td>
+                      <td>{order.name}</td>
+                      <td>{order.packageNumbers}</td>
+                      <td>{order.packageUnitId}</td>
+                      <td>{order.packageUnitValue}</td>
+                      <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
+                      <td>{order.shippingMethod}</td>
+                      <td>{order.customerCode}</td>
+                      <td>{order.statusId}</td>
+                      <td className="text-center">
                         <div className="d-flex align-items-center justify-content-center gap-2">
-                        <button 
-  className="btn btn-warning"
-  onClick={() => navigate(`/edit-order/${order.id}`)} // Điều hướng tới trang chỉnh sửa với ID
->
-  <FiEdit size={20} />
-</button>
-
-                            <button className="btn btn-danger" onClick={() => handleDeleteOrder(order.id)}>
+                          <button 
+                            className="btn btn-warning"
+                            onClick={() => navigate(`/edit-order/${order.id}`)}
+                          >
+                            <FiEdit size={20} />
+                          </button>
+                          <button className="btn btn-danger" onClick={() => handleDeleteOrder(order.id)}>
                             <FiTrash2 size={20} />
                           </button>
                         </div>
-                    </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
             <div className="d-flex justify-content-end mt-4">

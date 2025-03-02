@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import "../App.css"
+import Footer from '../component/Footer';
 function OrderTable() {
  
  
@@ -92,35 +93,16 @@ function OrderTable() {
     <div>
 
 
-    <div  className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+    <div  className="header" >
         <Header/>
         </div>
         <div className="container-fluid p-0">
       <div className="container-fluid row mt-2">
         {/* Left side: Danh Mục */}
-        <div className="col-md-3 mb-4">
-          <div className="side-fixed">
-            <div className="side-fixed-wrap">
-              <div className="news-top">
-                <span className="txt">DANH MỤC</span>
-              </div>
-              <div className="news-sidebar">
-                <div className="news-sidebar-block">
-                  <div className="re-menu">
-                    <ul className="list-unstyled">
-                      <li><Link to="/" className="menu-item"><span className="txt">Trang chủ</span></Link></li>
-                      <li><Link to="/order" className="menu-item"><span className="txt">Đơn hàng</span></Link></li>
-                     
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+       
     
         {/* Right side: Dịch vụ */}
-        <div className="col-md-9 col-12 mb-5"> {/* Added col-12 for responsiveness */}
+        <div className="col-md-12 col-12 mb-5"> {/* Added col-12 for responsiveness */}
         <div className="card p-3 shadow-sm border">
       
     
@@ -145,61 +127,53 @@ function OrderTable() {
   ) : (
     <>
       {/* Table Section */}
-      <div className="table-responsive">
-        <table className="table table-bordered table-hover">
-          <thead className="table-light">
-            <tr>
-              <th>Ngày</th>
-              <th>Line</th>
-              <th colSpan="4" className="text-center">Mã Vận Đơn</th>
-              <th>Tên sản phẩm</th>
-              <th>Số Kiện</th>
-              <th>Đơn vị</th>
-              <th>Giá trị</th>
-              <th>Giá Bảo Hiểm</th>
-              <th>Phương Thức Lấy Hàng</th>
-              <th>Mã Khách Hàng</th>
-              <th>Trạng Thái</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th className="text-center"></th>
-              <th className="text-center">TQ</th>
-              <th className="text-center"></th>
-              <th className="text-center">VN</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order.id}>
-                <td>{new Date(order.createdDate).toLocaleString()}</td>
-                <td>{order.lineId}</td>
-                <td className="text-danger fw-bold text-center">{order.tqCode}</td>
-                <td className="text-danger text-center">{order.cnShippingCode}</td>
-                <td className="text-success text-center">{order.vnCode}</td>
-                <td className="text-success text-center">{order.vnShippingCode}</td>
-                <td>{order.name}</td>
-                <td>{order.packageNumbers}</td>
-                <td>{order.packageUnitId}</td>
-                <td>{order.packageUnitValue}</td>
-                <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
-                <td>{order.shippingMethod}</td>
-                <td>{order.customerCode}</td>
-                <td>{order.statusId}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              <div className="table-responsive">
+                   <table className="table table-bordered table-hover">
+                     <thead className="table-light">
+                       <tr>
+                         <th rowSpan="2">Ngày</th>
+                         <th rowSpan="2">Line</th>
+                         <th colSpan="4" className="text-center">Mã Vận Đơn</th>
+                         <th rowSpan="2">Tên sản phẩm</th>
+                         <th rowSpan="2">Số Kiện</th>
+                         <th rowSpan="2">Đơn vị</th>
+                         <th rowSpan="2">Giá trị</th>
+                         <th rowSpan="2">Giá Bảo Hiểm</th>
+                         <th rowSpan="2">Phương Thức Lấy Hàng</th>
+                         <th rowSpan="2">Mã Khách Hàng</th>
+                         <th rowSpan="2">Trạng Thái</th>
+                         
+                       </tr>
+                       <tr>
+                         <th className="text-center">TQ</th>
+                         <th className="text-center">Mã TQ</th>
+                         <th className="text-center">VN</th>
+                         <th className="text-center">Mã VN</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       {orders.map((order) => (
+                         <tr key={order.id}>
+                           <td>{new Date(order.createdDate).toLocaleString()}</td>
+                           <td>{order.lineId}</td>
+                           <td className="text-danger fw-bold text-center">{order.tqCode}</td>
+                           <td className="text-danger text-center">{order.cnShippingCode}</td>
+                           <td className="text-success text-center">{order.vnCode}</td>
+                           <td className="text-success text-center">{order.vnShippingCode}</td>
+                           <td>{order.name}</td>
+                           <td>{order.packageNumbers}</td>
+                           <td>{order.packageUnitId}</td>
+                           <td>{order.packageUnitValue}</td>
+                           <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
+                           <td>{order.shippingMethod}</td>
+                           <td>{order.customerCode}</td>
+                           <td>{order.statusId}</td>
+                       
+                         </tr>
+                       ))}
+                     </tbody>
+                   </table>
+                 </div>
 
       {/* Pagination */}
       <div className="d-flex justify-content-end mt-4">
@@ -228,7 +202,7 @@ function OrderTable() {
     </div>
       </div>
     </div>
-    
+    <Footer/>
         </div>
   );
 }

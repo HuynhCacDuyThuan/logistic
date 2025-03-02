@@ -5,6 +5,8 @@ import axios from 'axios';
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useDispatch } from 'react-redux';
 import { setSelectedOrderId } from '../redux/userSlice';
+import Header from '../component/Header';
+import AdminHeader from '../component/AdminHeader';
 
 const ModelManagement = () => {
   const [models, setModels] = useState([]);
@@ -160,25 +162,10 @@ const ModelManagement = () => {
 
 
   return (
+   <div className=''>
+   
     <div className="container mt-5">
-      {/* <form onSubmit={handleSubmit} className="mb-4">
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Model</label>
-          <input
-            type="text"
-            id="name"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary">
-          {isEditing ? 'Lưu thay đổi' : 'Lưu'}
-        </button>
-      </form> */}
-
+      
      
 
       <div className="card shadow-lg mb-5">
@@ -271,6 +258,7 @@ const ModelManagement = () => {
       )}
      
     </div>
+   </div>
   );
 };
 

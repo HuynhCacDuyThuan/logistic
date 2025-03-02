@@ -22,4 +22,48 @@
     margin-bottom: 0; /* Remove any bottom margin for h4 */
     font-size: 1.2rem; /* Size of the heading */
   }
-  
+  /* Logo Admin */
+.admin-link h4 {
+  transition: all 0.3s ease;
+}
+
+.admin-link:hover h4 {
+  color: #ffc107; /* Màu vàng khi hover */
+  transform: scale(1.05);
+}
+
+/* Thanh Menu */
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-item {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+a.nav-link.admin {
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+}
+
+span.fw-bold.user.text-center.dropdown-item-text {
+  font-size: 12px;
+}
+a.nav-link.admin:hover {
+
+  color: #fff;
+}
+

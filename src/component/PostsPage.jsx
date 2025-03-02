@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import AdminHeader from "./AdminHeader";
 
 const PostsPage = () => {
   const [posts, setPosts] = useState([]);
@@ -44,7 +45,9 @@ const PostsPage = () => {
   
 
   return (
-    <div className="container-fluid">
+<div>
+  <AdminHeader/>
+  <div className="container">
       <h2 className="text-center mb-4">Danh sách bài viết</h2>
       <div className="row">
         {/* Loop through posts and display each one as a card */}
@@ -90,6 +93,7 @@ const PostsPage = () => {
         </Link>
       </div>
     </div>
+</div>
   );
 };
 

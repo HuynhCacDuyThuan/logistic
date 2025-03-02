@@ -19,10 +19,18 @@ h5 {
     opacity: 0.8;  /* Hiệu ứng mờ nhẹ */
     transition: transform 0.3s ease-in-out;
   }
-  
+  span.me-3 {
+    color: black;
+  }
   .empty-orders-img:hover {
     transform: scale(1.1); /* Hiệu ứng phóng to nhẹ khi hover */
   }
+
+  th, td {
+   
+    padding: 10px;
+    vertical-align: middle; /* Căn giữa nội dung theo chiều dọc */
+}
   
 /* Section Background */
 .product-grid-title {

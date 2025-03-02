@@ -66,7 +66,7 @@ const handleUpdateCustomerCode = async () => {
             <th>Email</th>
             <th>Tên</th>
             <th>Mã Khách Hàng</th>
-            <th>Hành động</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

@@ -59,7 +59,7 @@ const CategoryManagement = () => {
           <tr>
             <th>Tên Danh Mục</th>
             <th>Danh Mục Cha</th>
-            <th>Hành động</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

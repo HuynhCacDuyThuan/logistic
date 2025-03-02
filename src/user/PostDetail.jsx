@@ -30,34 +30,16 @@ const PostDetail = () => {
     <div>
 
 
-<div  className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+<div  className="header" >
     <Header/>
     </div>
     <div className="container-fluid p-0">
   <div className="container-fluid row mt-2">
     {/* Left side: Danh Mục */}
-    <div className="col-md-3 mb-4">
-      <div className="side-fixed">
-        <div className="side-fixed-wrap">
-          <div className="news-top">
-            <span className="txt">DANH MỤC</span>
-          </div>
-          <div className="news-sidebar">
-            <div className="news-sidebar-block">
-              <div className="re-menu">
-                <ul className="list-unstyled">
-                   <li><Link to="/" className="menu-item"><span className="txt">Trang chủ</span></Link></li>
-                                        <li><Link to="/order" className="menu-item"><span className="txt">Đơn hàng</span></Link></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  
 
     {/* Right side: Dịch vụ */}
-    <div className="col-md-9 col-12 mb-4"> {/* Added col-12 for responsiveness */}
+    <div className="col-md-12 col-12 mb-4"> {/* Added col-12 for responsiveness */}
       <div className="service-section">
         <div className="card mb-4 shadow-sm rounded">
           <img

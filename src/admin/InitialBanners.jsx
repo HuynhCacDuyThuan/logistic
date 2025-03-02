@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import AdminHeader from "../component/AdminHeader";
 
 const BannerManagement = () => {
   const [banners, setBanners] = useState([]);
@@ -46,6 +47,9 @@ const BannerManagement = () => {
   };
 
   return (
+   <div>
+    <AdminHeader></AdminHeader>
+
     <div className="container my-5">
       {/* Banner List */}
       <h4>Danh sách Banner</h4>
@@ -105,6 +109,7 @@ const BannerManagement = () => {
         </>
       )}
     </div>
+   </div>
   );
 };
 

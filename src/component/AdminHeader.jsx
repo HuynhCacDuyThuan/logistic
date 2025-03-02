@@ -1,37 +1,84 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/AdminHeader.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // ✅ Đảm bảo Bootstrap JS được import
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/userSlice";
+import { Dropdown } from "react-bootstrap";
+import { FiLogOut } from "react-icons/fi";
 
 const AdminHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [menuOpen, setMenuOpen] = useState(false); // State để toggle menu
+
   // Xử lý đăng xuất
   const handleLogout = () => {
-      dispatch(logoutUser()); // Đăng xuất và cập nhật Redux state
+    dispatch(logoutUser());
     navigate("/dang-nhap");
   };
 
   return (
-    <header className="bg-dark text-white p-3">
-      <div className="container-fluid d-flex justify-content-between align-items-center">
-        {/* Logo Section */}
-        <div className="d-flex align-items-center">
-          <Link to="/admin" className="admin-link">
-            <h4 className="mb-0">Quản Lý Admin</h4>
-          </Link>
-        </div>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+      <div className="container-fluid">
+        {/* Logo Admin */}
+        <Link to="/admin" className="navbar-brand fw-bold">
+          Quản Lý Admin
+        </Link>
 
-        {/* Nút Đăng xuất */}
-        <button className="btn btn-danger" onClick={handleLogout}>
-          <i className="bi bi-box-arrow-right me-2"></i> Đăng xuất
+        {/* Toggle Button cho Mobile */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span className="navbar-toggler-icon"></span>
         </button>
+
+        {/* Navbar Collapse */}
+        <div className={`collapse navbar-collapse admin ${menuOpen ? "show" : ""}`}>
+          <ul className="navbar-nav me-auto">
+            <li className="nav-item">
+              <Link className="nav-link admin" to="/admin">Quản lý người dùng</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link admin" to="/quan-li-bai-viet">Quản lý bài viết</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link admin" to="/quan-li-banner">Quản lý Banner</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link admin" to="/quan-li-don-hang">Quản lý đơn hàng</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link admin" to="/quan-li-model">Quản lý model</Link>
+            </li>
+          </ul>
+
+          {/* Nút Đăng Xuất */}
+          <Dropdown>
+                 <Dropdown.Toggle variant="" id="dropdown-user">
+                 <img 
+      src={"https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg?semt=ais_hybrid" } 
+      alt="User Avatar"
+      className="rounded-circle border "
+      width="30" 
+      height="30"
+    />
+                 </Dropdown.Toggle>
+             
+                 <Dropdown.Menu align="end">
+                 
+                   <Dropdown.Item onClick={handleLogout} className="text-danger text-center">
+                     <FiLogOut size={18} className="me-2" /> Đăng xuất
+                   </Dropdown.Item>
+                 </Dropdown.Menu>
+               </Dropdown>
+        </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

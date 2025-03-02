@@ -5,7 +5,7 @@ const PricingTable = () => {
   return (
   <div className="">
     
-<div  className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+<div  className="header" >
     <Header/>
     </div>
   

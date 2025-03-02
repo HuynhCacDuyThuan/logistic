@@ -57,48 +57,17 @@ const Home = () => {
 
   return (
     <div>
-      <div className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+      <div className="header" >
         <Header />
       </div>
 
       {/* Hero Section */}
       <section
         className="hero-section text-center text-white"
-        style={{
-          backgroundImage: `url(${heroImage ? heroImage : 'https://res.cloudinary.com/dfy5bqyi7/image/upload/v1740316067/ysmoop1tnbdd7mvdlsfp.jpg'})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-          backgroundRepeat: "no-repeat",
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "white",
-          position: "relative",
-        }}
+       
       >
         <div className="overlay"></div> {/* 🌟 Overlay giúp chữ nổi bật */}
-        <div className="container">
-          <motion.h1
-            className="hero-title display-3 fw-bold"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-         
-          </motion.h1>
-          <motion.p
-            className="lead"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.3 }}
-          >
-            {heroDescription || "Cung cấp giải pháp Logistics - Fulfillment toàn diện."}
-          </motion.p>
-        </div>
+       
       </section>
 
       {/* Product Grid Title */}

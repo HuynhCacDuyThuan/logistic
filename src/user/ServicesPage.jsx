@@ -4,7 +4,7 @@ import RegistrationForm from "../component/RegistrationForm";
 import Header from "../component/Header";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion"; // 🎭 Animation Library
 const ServicesPage = () => {
   const [services, setServices] = useState([]);
 
@@ -29,66 +29,26 @@ const ServicesPage = () => {
       </div>
       <div className="container-fluid p-0">
         {/* Hero Section */}
-        <div
-          className="hero-content text-center text-white"
-          style={{
-            backgroundColor: "#4F9E9E",
-            padding: "80px 0",
-            width: "100%",
-            height: "20vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            margin: "0",
-          }}
-        >
-          <h1 className="hero-title display-3">Dịch vụ</h1>
-          <div className="breadcrumb">
-            <div className="container">
-              <ul
-                className="breadcrumb-list d-flex justify-content-center"
-                style={{ listStyleType: "none", paddingLeft: "0" }}
-              >
-                <li className="breadcrumb-item aos-init aos-animate" data-aos="fade-right">
-                  <a className="breadcrumb-link text-white" href="/" style={{ textDecoration: "none" }}>
-                    Trang chủ
-                  </a>
-                </li>
-                <li className="breadcrumb-item aos-init aos-animate" data-aos="fade-right">
-                  <a className="breadcrumb-link text-white" href="/chuyen-muc/dich-vu" style={{ textDecoration: "none" }}>
-                    Dịch vụ
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+        <section className="product-grid-title py-5 mt-3">
+        <div className="container">
+          <motion.h2
+            className="text-center fw-bold title-text"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <i className="fas fa-truck-fast text-warning me-2"></i> Dịch vụ <i className="fas fa-shipping-fast text-warning ms-2"></i>
+          </motion.h2>
+          <div className="underline"></div>
         </div>
+      </section>
 
         <div className="container row mt-2">
           {/* Left side: Danh Mục */}
-          <div className="col-md-3 mb-4">
-            <div className="side-fixed">
-              <div className="side-fixed-wrap">
-                <div className="news-top">
-                  <span className="txt">DANH MỤC</span>
-                </div>
-                <div className="news-sidebar">
-                  <div className="news-sidebar-block">
-                    <div className="re-menu">
-                     <ul className="list-unstyled">
-                                        <li><Link to="/" className="menu-item"><span className="txt">Trang chủ</span></Link></li>
-                                                             <li><Link to="/order" className="menu-item"><span className="txt">Đơn hàng</span></Link></li>
-                                     </ul>
-                    </div>
-                  </div>
-                  <div className="news-sidebar-block"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
 
           {/* Right side: Dịch vụ */}
-          <div className="col-md-9">
+          <div className="col-md-12">
             <div className="service-section">
               <div className="row">
                 {/* Dynamically render service items */}

@@ -109,7 +109,7 @@ const ModelDetailComponent = () => {
                   <th>Tên</th>
                  
                   <th>Active</th>
-                  <th>Hành động</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
