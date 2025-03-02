@@ -202,7 +202,7 @@ function OrderTable() {
     </div>
       </div>
     </div>
-    <Footer/>
+   
         </div>
   );
 }
