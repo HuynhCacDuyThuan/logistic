@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import "../App.css"
 import Footer from '../component/Footer';
+import { FiEdit } from 'react-icons/fi';
+import { FaPlus } from 'react-icons/fa';
 function OrderTable() {
  
  
@@ -86,7 +88,12 @@ function OrderTable() {
     setCurrentPage(page);
   };
   const handleAddOrder = () => {
-    navigate("/add-order")
+    if (!user || !user.email) {
+      navigate("/dang-nhap")
+    }else{
+      navigate("/add-order-user")
+    }
+  
      };
 
   return (
@@ -112,7 +119,15 @@ function OrderTable() {
     
       <div className="card p-3 w-100 shadow-sm border">
   <h3 className="mb-4 text-white p-3 bg-dark">Đơn Hàng</h3>
-
+  <div className="text-end mb-2">
+              <button 
+                className="btn btn-success" 
+                onClick={handleAddOrder} 
+                title="Add New Order"
+              >
+                <FaPlus /> Thêm Đơn Hàng
+              </button>
+            </div>
   { !user ? (
     <p className="text-danger text-center">Vui lòng đăng nhập để xem đơn hàng!</p>
   ) : orders.length === 0 ? (
@@ -127,53 +142,62 @@ function OrderTable() {
   ) : (
     <>
       {/* Table Section */}
-              <div className="table-responsive">
-                   <table className="table table-bordered table-hover">
-                     <thead className="table-light">
-                       <tr>
-                         <th rowSpan="2">Ngày</th>
-                         <th rowSpan="2">Line</th>
-                         <th colSpan="4" className="text-center">Mã Vận Đơn</th>
-                         <th rowSpan="2">Tên sản phẩm</th>
-                         <th rowSpan="2">Số Kiện</th>
-                         <th rowSpan="2">Đơn vị</th>
-                         <th rowSpan="2">Giá trị</th>
-                         <th rowSpan="2">Giá Bảo Hiểm</th>
-                         <th rowSpan="2">Phương Thức Lấy Hàng</th>
-                         <th rowSpan="2">Mã Khách Hàng</th>
-                         <th rowSpan="2">Trạng Thái</th>
-                         
-                       </tr>
-                       <tr>
-                         <th className="text-center">TQ</th>
-                         <th className="text-center">Mã TQ</th>
-                         <th className="text-center">VN</th>
-                         <th className="text-center">Mã VN</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       {orders.map((order) => (
-                         <tr key={order.id}>
-                           <td>{new Date(order.createdDate).toLocaleString()}</td>
-                           <td>{order.lineId}</td>
-                           <td className="text-danger fw-bold text-center">{order.tqCode}</td>
-                           <td className="text-danger text-center">{order.cnShippingCode}</td>
-                           <td className="text-success text-center">{order.vnCode}</td>
-                           <td className="text-success text-center">{order.vnShippingCode}</td>
-                           <td>{order.name}</td>
-                           <td>{order.packageNumbers}</td>
-                           <td>{order.packageUnitId}</td>
-                           <td>{order.packageUnitValue}</td>
-                           <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
-                           <td>{order.shippingMethod}</td>
-                           <td>{order.customerCode}</td>
-                           <td>{order.statusId}</td>
-                       
-                         </tr>
-                       ))}
-                     </tbody>
-                   </table>
-                 </div>
+      <div className="table-responsive">
+  <table className="table table-bordered table-hover">
+    <thead className="table-light">
+      <tr>
+        <th rowSpan="2">Ngày</th>
+        <th rowSpan="2">Line</th>
+        <th colSpan="4" className="text-center">Mã Vận Đơn</th>
+        <th rowSpan="2">Tên sản phẩm</th>
+        <th rowSpan="2">Số Kiện</th>
+        <th rowSpan="2">Đơn vị</th>
+        <th rowSpan="2">Giá trị</th>
+        <th rowSpan="2">Giá Bảo Hiểm</th>
+        <th rowSpan="2">Phương Thức Lấy Hàng</th>
+        <th rowSpan="2">Mã Khách Hàng</th>
+        <th rowSpan="2">Trạng Thái</th>
+        <th rowSpan="2">Chỉnh Sửa</th> {/* Add this header for edit button */}
+      </tr>
+      <tr>
+        <th className="text-center">TQ</th>
+        <th className="text-center">Mã TQ</th>
+        <th className="text-center">VN</th>
+        <th className="text-center">Mã VN</th>
+      </tr>
+    </thead>
+    <tbody>
+      {orders.map((order) => (
+        <tr key={order.id}>
+          <td>{new Date(order.createdDate).toLocaleString()}</td>
+          <td>{order.lineId}</td>
+          <td className="text-danger fw-bold text-center">{order.tqCode}</td>
+          <td className="text-danger text-center">{order.cnShippingCode}</td>
+          <td className="text-success text-center">{order.vnCode}</td>
+          <td className="text-success text-center">{order.vnShippingCode}</td>
+          <td>{order.name}</td>
+          <td>{order.packageNumbers}</td>
+          <td>{order.packageUnitId}</td>
+          <td>{order.packageUnitValue}</td>
+          <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
+          <td>{order.shippingMethod}</td>
+          <td>{order.customerCode}</td>
+          <td>{order.statusId}</td>
+          {/* Add the button here */}
+          <td>
+            <button 
+              className="btn btn-warning"
+              onClick={() => navigate(`/edit-order-user/${order.id}`)}
+            >
+              <FiEdit size={20} />
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
 
       {/* Pagination */}
       <div className="d-flex justify-content-end mt-4">

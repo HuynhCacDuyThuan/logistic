@@ -3,43 +3,63 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import Header from "../component/Header";
 
-const API_URL = "http://14.225.29.33:81/api/import-orders"; // Adjusted API URL
-
-const AddOrder = () => {
+const API_URL = "http://14.225.29.33:81/api/import-orders"; // API URL chuẩn
+const EditOrderUser = () => {
+  const { id } = useParams(); // Lấy ID từ URL
+  const navigate = useNavigate(); // Điều hướng sau khi cập nhật thành công
+  const [order, setOrder] = useState(null); // State lưu dữ liệu đơn hàng
   const [units, setUnits] = useState([]);
   const [lines, setLines] = useState([]);
   const [statuses, setStatuses] = useState([]);
 
+  // Lấy dữ liệu đơn hàng khi có ID
+  useEffect(() => {
+    if (id) {
+      fetchOrderDetails(id);
+    }
+  }, [id]);
+
+  const fetchOrderDetails = async (orderId) => {
+    try {
+      const response = await axios.get(`${API_URL}/${orderId}`);
+      setOrder(response.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu:", error);
+    }
+  };
+
+  // Lấy danh sách Units, Lines, Statuses
   useEffect(() => {
     const fetchData = async () => {
       try {
         const fetchWithCheck = async (url) => {
           const response = await fetch(url);
           if (!response.ok) {
-            console.error(`Error fetching ${url}:`, response.statusText);
-            return []; // Return empty array to prevent JSON parse error
+            console.error(`Lỗi lấy dữ liệu từ ${url}:`, response.statusText);
+            return [];
           }
           return response.json();
         };
-  
+
         const [unitData, lineData, statusData] = await Promise.all([
           fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/2"),
           fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/1"),
           fetchWithCheck("http://14.225.29.33:81/api/model-details/by-model/3"),
         ]);
-  
+
         setUnits(unitData);
         setLines(lineData);
         setStatuses(statusData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Lỗi khi tải dữ liệu:", error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
 
   // Validation Schema
   const validationSchema = Yup.object({
@@ -50,55 +70,42 @@ const AddOrder = () => {
     customerCode: Yup.string().nullable(),
     shippingMethod: Yup.string().nullable(),
     cnShippingCode: Yup.string().nullable(),
-    vnShippingCode: Yup.string().nullable(),
     lineId: Yup.string().required("Line là bắt buộc"),
     packageUnitId: Yup.string().required("Đơn vị là bắt buộc"),
-    statusId: Yup.string().required("Trạng thái là bắt buộc"),
+  
   });
 
-  const handleSubmit = async (values, { resetForm }) => {
+  const handleSubmit = async (values) => {
     try {
-      const formData = new FormData();
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key] || "");
+      const response = await axios.put(`${API_URL}/${id}`, values, {
+        headers: { "Content-Type": "application/json" },
       });
 
-      const response = await axios.post(API_URL, formData, {
-        headers: { "Content-Type": "application/json" }, // ✅ Send JSON instead
-      });
-
-      console.log("Success:", response.data);
-      alert("Thêm đơn nhập hàng thành công!");
-      resetForm();
+      console.log("Cập nhật thành công:", response.data);
+     
+      navigate("/order"); // Điều hướng về danh sách đơn hàng
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Lỗi khi thêm đơn nhập hàng.");
+      console.error("Lỗi khi cập nhật:", error);
+      alert("Lỗi khi cập nhật đơn nhập hàng.");
     }
   };
 
+  if (!order) {
+    return <p>Đang tải dữ liệu...</p>;
+  }
+
   return (
     <div>
-      <AdminHeader />
+      <Header />
       <div className="container my-5">
-        <h2 className="text-center">Thêm Đơn Nhập Hàng</h2>
+        <h2 className="text-center">Chỉnh Sửa Đơn Nhập Hàng</h2>
         <Formik
-          initialValues={{
-            name: "",
-            packageNumbers: "",
-            packageUnitValue: "",
-            insurancePrice: "",
-            customerCode: "",
-            shippingMethod: "",
-            cnShippingCode: "",
-            vnShippingCode: "",
-            lineId: "",
-            packageUnitId: "",
-            statusId: "",
-          }}
+          initialValues={order}
+          enableReinitialize={true} // Cập nhật dữ liệu form khi có đơn hàng từ API
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ values, setFieldValue }) => (
+          {({ values }) => (
             <Form className="row g-3">
               <div className="col-md-6">
                 <label className="form-label">Tên sản phẩm</label>
@@ -135,10 +142,7 @@ const AddOrder = () => {
                 <Field type="text" className="form-control" name="cnShippingCode" />
               </div>
 
-              <div className="col-md-6">
-                <label className="form-label">Mã vận đơn Việt Nam</label>
-                <Field type="text" className="form-control" name="vnShippingCode" />
-              </div>
+             
 
               <div className="col-md-6">
                 <label className="form-label">Line</label>
@@ -160,18 +164,10 @@ const AddOrder = () => {
                 </Field>
               </div>
 
-              <div className="col-md-6">
-                <label className="form-label">Trạng thái</label>
-                <Field as="select" className="form-control" name="statusId">
-                  <option value="">Chọn Trạng thái</option>
-                  {statuses.map((status) => (
-                    <option key={status.name} value={status.name}>{status.name}</option>
-                  ))}
-                </Field>
-              </div>
+              
 
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary">Thêm Đơn Nhập Hàng</button>
+                <button type="submit" className="btn btn-primary">Cập Nhật</button>
               </div>
             </Form>
           )}
@@ -181,4 +177,4 @@ const AddOrder = () => {
   );
 };
 
-export default AddOrder;
+export default EditOrderUser;

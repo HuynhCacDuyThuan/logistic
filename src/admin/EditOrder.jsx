@@ -108,7 +108,7 @@ const EditOrder = () => {
           {({ values }) => (
             <Form className="row g-3">
               <div className="col-md-6">
-                <label className="form-label">Tên</label>
+                <label className="form-label">Tên sản phẩm</label>
                 <Field type="text" className="form-control" name="name" />
               </div>
 

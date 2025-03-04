@@ -22,6 +22,8 @@ import PrivateRoute from "./PrivateRoute";
 import PostsPage from "./component/PostsPage";
 import BannerManagement from "./admin/InitialBanners";
 import Order from "./admin/Order";
+import AddOrderUser from "./user/AddOrderUser";
+import EditOrderUser from "./user/EditOrderUser";
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
         <Route path="/Bang-gia" element={<PricingTable />} />
         <Route path="/dich-vu" element={<ServicesPage />} />
         <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />
+        <Route path="/add-order-user" element={<AddOrderUser />} />
         <Route
           path="/admin"
           element={
@@ -69,6 +72,7 @@ const App = () => {
         <Route path="/model-details" element={<ModelDetailComponent />} />
         <Route path="/add-order" element={<AddOrder/>} />
         <Route path="/edit-order/:id" element={<EditOrder />} />
+        <Route path="/edit-order-user/:id" element={<EditOrderUser />} />
         <Route path="/quan-li-bai-dang" element={<PostsPage/>} />
         <Route path="/quan-li-banner" element={<BannerManagement />}/>
         <Route path="/quan-li-bai-viet" element={

@@ -3,10 +3,11 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
+import Header from "../component/Header";
 
 const API_URL = "http://14.225.29.33:81/api/import-orders"; // Adjusted API URL
 
-const AddOrder = () => {
+const AddOrderUser = () => {
   const [units, setUnits] = useState([]);
   const [lines, setLines] = useState([]);
   const [statuses, setStatuses] = useState([]);
@@ -50,10 +51,10 @@ const AddOrder = () => {
     customerCode: Yup.string().nullable(),
     shippingMethod: Yup.string().nullable(),
     cnShippingCode: Yup.string().nullable(),
-    vnShippingCode: Yup.string().nullable(),
+  
     lineId: Yup.string().required("Line là bắt buộc"),
     packageUnitId: Yup.string().required("Đơn vị là bắt buộc"),
-    statusId: Yup.string().required("Trạng thái là bắt buộc"),
+   
   });
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -78,7 +79,7 @@ const AddOrder = () => {
 
   return (
     <div>
-      <AdminHeader />
+      <Header/>
       <div className="container my-5">
         <h2 className="text-center">Thêm Đơn Nhập Hàng</h2>
         <Formik
@@ -90,10 +91,10 @@ const AddOrder = () => {
             customerCode: "",
             shippingMethod: "",
             cnShippingCode: "",
-            vnShippingCode: "",
+         
             lineId: "",
             packageUnitId: "",
-            statusId: "",
+           
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -135,10 +136,6 @@ const AddOrder = () => {
                 <Field type="text" className="form-control" name="cnShippingCode" />
               </div>
 
-              <div className="col-md-6">
-                <label className="form-label">Mã vận đơn Việt Nam</label>
-                <Field type="text" className="form-control" name="vnShippingCode" />
-              </div>
 
               <div className="col-md-6">
                 <label className="form-label">Line</label>
@@ -160,15 +157,7 @@ const AddOrder = () => {
                 </Field>
               </div>
 
-              <div className="col-md-6">
-                <label className="form-label">Trạng thái</label>
-                <Field as="select" className="form-control" name="statusId">
-                  <option value="">Chọn Trạng thái</option>
-                  {statuses.map((status) => (
-                    <option key={status.name} value={status.name}>{status.name}</option>
-                  ))}
-                </Field>
-              </div>
+              
 
               <div className="col-12 text-center">
                 <button type="submit" className="btn btn-primary">Thêm Đơn Nhập Hàng</button>
@@ -181,4 +170,4 @@ const AddOrder = () => {
   );
 };
 
-export default AddOrder;
+export default AddOrderUser;

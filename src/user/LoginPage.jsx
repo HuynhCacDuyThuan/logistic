@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Header from "../component/Header";
-import { Link, useNavigate,  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
 
 const LoginPage = () => {
   const [email, setEmail] = useState(""); // State lưu trữ email nhập vào
+  const [password, setPassword] = useState(""); // State lưu trữ mật khẩu, giá trị mặc định là "zto123"
   const navigate = useNavigate();
-  
+  const [error, setError] = useState(""); // State lưu trữ thông báo lỗi
   const dispatch = useDispatch();  // Hook để dispatch action
 
   const responseGoogle = async (response) => {
@@ -48,17 +49,18 @@ const LoginPage = () => {
       alert("Có lỗi xảy ra. Vui lòng thử lại!");
     }
   };
-  
   // Hàm xử lý khi người dùng submit form đăng nhập
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    if (email === "phamvulong2411@gmail.com") {
+    
+    
+    if (email === "ztovietnam.vn@gmail.com" && password === "ztovietnam123@") {
       const userData = { email, role: "admin" };
+      setError(""); // Thay thế alert bằng setError
       dispatch(setUser(userData)); // Lưu thông tin người dùng vào Redux
       navigate("/admin");
     } else {
-      alert("Email không hợp lệ.");
+      setError("Email hoặc mật khẩu không hợp lệ."); // Thay thế alert bằng setError
     }
   };
   
@@ -96,6 +98,12 @@ const LoginPage = () => {
                 {/* Form đăng nhập */}
                 <form onSubmit={handleSubmit}>
                   {/* Tên đăng nhập (email) */}
+
+                  {error && (
+                    <div className="alert alert-danger mt-3" role="alert">
+                      {error}
+                    </div>
+                  )}
                   <div className="mb-3">
                     <label htmlFor="txtUsername" className="form-label">
                       Email <span className="text-danger">*</span>
@@ -107,6 +115,22 @@ const LoginPage = () => {
                       placeholder="Nhập email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  {/* Mật khẩu */}
+                  <div className="mb-3">
+                    <label htmlFor="txtPassword" className="form-label">
+                      Mật khẩu <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      id="txtPassword"
+                      className="form-control"
+                      placeholder="Nhập mật khẩu"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                   </div>
@@ -123,7 +147,6 @@ const LoginPage = () => {
                         Lưu mật khẩu
                       </label>
                     </div>
-                  
                   </div>
 
                   {/* Button Đăng nhập */}
@@ -136,13 +159,12 @@ const LoginPage = () => {
                     </button>
                   </div>
                   <div className="text-center">
-                  <GoogleLogin 
-        onSuccess={responseGoogle}
-        onError={() => console.log('Login Failed')}
-      />
+                    <GoogleLogin 
+                      onSuccess={responseGoogle}
+                      onError={() => console.log('Login Failed')}
+                    />
                   </div>
                   {/* Liên kết Đăng ký */}
-             
                 </form>
               </div>
             </div>
