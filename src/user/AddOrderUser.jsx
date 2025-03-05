@@ -4,14 +4,30 @@ import * as Yup from "yup";
 import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
 import Header from "../component/Header";
-
+import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 const API_URL = "http://14.225.29.33:81/api/import-orders"; // Adjusted API URL
 
 const AddOrderUser = () => {
   const [units, setUnits] = useState([]);
   const [lines, setLines] = useState([]);
   const [statuses, setStatuses] = useState([]);
-
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user); // Lấy thông tin người dùng từ Redux
+ 
+  const [email, setEmail] = useState(""); 
+  useEffect(() => {
+    if (user) {  
+       
+        setEmail(user.email);
+        console.log("User Email:", user.email);
+    } else {
+      setEmail(null); 
+    }
+  }, [ user]); 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,12 +62,10 @@ const AddOrderUser = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Tên là bắt buộc"),
     packageNumbers: Yup.number().required("Số lượng kiện hàng là bắt buộc"),
-    packageUnitValue: Yup.number().required("Giá trị mỗi kiện hàng là bắt buộc"),
-    insurancePrice: Yup.number().required("Giá bảo hiểm là bắt buộc"),
-    customerCode: Yup.string().nullable(),
-    shippingMethod: Yup.string().nullable(),
-    cnShippingCode: Yup.string().nullable(),
-  
+    packageUnitValue: Yup.number().required("Giá trị kiện hàng là bắt buộc"),
+    shippingMethod: Yup.string().required("phương thức này bắt buộc"),
+    cnShippingCode: Yup.string().required("Mã trung quốc bắt buộc"),
+    emailCustomer: Yup.string().required("Email  bắt buộc"),
     lineId: Yup.string().required("Line là bắt buộc"),
     packageUnitId: Yup.string().required("Đơn vị là bắt buộc"),
    
@@ -63,17 +77,18 @@ const AddOrderUser = () => {
       Object.keys(values).forEach((key) => {
         formData.append(key, values[key] || "");
       });
-
+  
       const response = await axios.post(API_URL, formData, {
-        headers: { "Content-Type": "application/json" }, // ✅ Send JSON instead
+        headers: { "Content-Type": "application/json" },
       });
-
+  
       console.log("Success:", response.data);
-      alert("Thêm đơn nhập hàng thành công!");
+      toast.success("Thêm đơn hàng thành công!", { position: "top-right" });
+  
       resetForm();
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Lỗi khi thêm đơn nhập hàng.");
+      toast.error("Lỗi khi thêm đơn hàng!", { position: "top-right" });
     }
   };
 
@@ -81,38 +96,50 @@ const AddOrderUser = () => {
     <div>
       <Header/>
       <div className="container my-5">
-        <h2 className="text-center">Thêm Đơn Nhập Hàng</h2>
+      <div className="d-flex align-items-center mb-3">
+          <button className="btn btn-secondary me-3" onClick={() => navigate("/order")}>
+            <BiArrowBack /> Quay lại
+          </button>
+          <h2 className="text-center flex-grow-1">Thêm đơn hàng</h2>
+        </div>
         <Formik
-          initialValues={{
-            name: "",
-            packageNumbers: "",
-            packageUnitValue: "",
-            insurancePrice: "",
-            customerCode: "",
-            shippingMethod: "",
-            cnShippingCode: "",
-         
-            lineId: "",
-            packageUnitId: "",
-           
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ values, setFieldValue }) => (
+  initialValues={{
+    name: "",
+    packageNumbers: "",
+    packageUnitValue: "",
+    insurancePrice: "",
+    emailCustomer: "",  // Điền giá trị email vào form khi email đã có
+    shippingMethod: "",
+    cnShippingCode: "",
+    lineId: "",
+    packageUnitId: "",
+  }}
+  validationSchema={validationSchema}
+  onSubmit={handleSubmit}
+>
+  {({ values, setFieldValue }) => (
             <Form className="row g-3">
               <div className="col-md-6">
-                <label className="form-label">Tên sản phẩm</label>
-                <Field type="text" className="form-control" name="name" />
+  <label className="form-label">
+    Tên sản phẩm <span className="text-danger">*</span>
+  </label>
+  <Field type="text" className="form-control" name="name" />
+</div>
+
+
+<div className="col-md-6">
+                <label className="form-label">Email khách hàng</label>
+                <Field
+  type="text"
+  className="form-control"
+  name="emailCustomer"
+
+/>
+
               </div>
 
               <div className="col-md-6">
-                <label className="form-label">Số lượng kiện hàng</label>
-                <Field type="number" className="form-control" name="packageNumbers" />
-              </div>
-
-              <div className="col-md-6">
-                <label className="form-label">Giá trị mỗi kiện hàng</label>
+                <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
                 <Field type="number" className="form-control" name="packageUnitValue" />
               </div>
 
@@ -121,9 +148,10 @@ const AddOrderUser = () => {
                 <Field type="number" className="form-control" name="insurancePrice" />
               </div>
 
+         
               <div className="col-md-6">
-                <label className="form-label">Mã khách hàng</label>
-                <Field type="text" className="form-control" name="customerCode" />
+                <label className="form-label">Số lượng kiện hàng</label>
+                <Field type="number" className="form-control" name="packageNumbers" />
               </div>
 
               <div className="col-md-6">
@@ -138,14 +166,19 @@ const AddOrderUser = () => {
 
 
               <div className="col-md-6">
-                <label className="form-label">Line</label>
-                <Field as="select" className="form-control" name="lineId">
-                  <option value="">Chọn Line</option>
-                  {lines.map((line) => (
-                    <option key={line.name} value={line.name}>{line.name}</option>
-                  ))}
-                </Field>
-              </div>
+  <label className="form-label">
+    Line <span style={{ color: "red" }}>*</span>
+  </label>
+  <Field as="select" className="form-control" name="lineId">
+    <option value="">Chọn Line</option>
+    {lines.map((line) => (
+      <option key={line.name} value={line.name}>
+        {line.name}
+      </option>
+    ))}
+  </Field>
+</div>
+
 
               <div className="col-md-6">
                 <label className="form-label">Đơn vị</label>
@@ -160,7 +193,7 @@ const AddOrderUser = () => {
               
 
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary">Thêm Đơn Nhập Hàng</button>
+                <button type="submit" className="btn btn-primary">Thêm đơn hàng</button>
               </div>
             </Form>
           )}

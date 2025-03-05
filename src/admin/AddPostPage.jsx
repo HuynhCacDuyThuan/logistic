@@ -5,7 +5,8 @@ import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the Quill styles
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Function to convert an image file to base64
 const convertToBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -93,8 +94,8 @@ const AddPostPage = () => {
           "Content-Type": "application/json",
         },
       });
-  
-      console.log("Bài viết đã được thêm thành công:", response.data);
+    toast.success("Bài viết đã được thêm thành công!", { position: "top-right" });
+      
     } catch (error) {
       console.error("Có lỗi khi thêm bài viết:", error.response?.data || error.message);
     }

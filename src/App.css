@@ -27,13 +27,41 @@ h5 {
   }
 
   th, td {
-   
-    padding: 10px;
+  
     vertical-align: middle; /* Căn giữa nội dung theo chiều dọc */
+}
+th , td{
+  text-align: center;
 }
 
 
-  
+  /* Cơ bản */
+.status-badge {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: rgb(20, 3, 3);
+  text-align: center;
+  display: inline-block;
+}
+
+/* Các lớp màu cho từng trạng thái */
+.status-confirmed {
+  background-color: #007bff; /* Màu xanh dương */
+}
+
+.status-received {
+  background-color: #28a745; /* Màu xanh lá */
+}
+
+.status-shipped {
+  background-color: #fd7e14; /* Màu cam */
+}
+
+.status-default {
+  background-color: #6c757d; /* Màu xám */
+}
+
 /* Section Background */
 .product-grid-title {
     background: linear-gradient(to right, #4F9E9E, #3a7d7d);

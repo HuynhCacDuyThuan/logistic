@@ -8,6 +8,7 @@ import logo from "../img/logo.JPG";
 import "../css/headerUser.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown } from "react-bootstrap";
+import { div } from "framer-motion/client";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,21 +47,32 @@ const Header = () => {
               <span className="navbar-toggler-icon"></span>
             </button>
 
-            {/* Navbar Menu */}
-            <div
-              className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
-              id="navbarNav"
-            >
-              <ul className="navbar-nav mx-auto text-center">
-                <li className="nav-item">
-                  <Link className="nav-link text-primary" to="/trang-chu">TRANG CHỦ</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link text-primary" to="/order">ĐƠN HÀNG</Link>
-                </li>
-              </ul>
-            </div>
+          
 
+
+
+{isLoggedIn ? (
+               <div
+               className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
+               id="navbarNav"
+               >
+               <ul className="navbar-nav mx-auto text-center">
+                 <li className="nav-item">
+                   <Link className="nav-link text-primary" to="/trang-chu">TRANG CHỦ</Link>
+                 </li>
+                 <li className="nav-item">
+                   <Link className="nav-link text-primary" to="/order">ĐƠN HÀNG</Link>
+                 </li>
+               </ul>
+               </div>
+              ) : (
+                <div></div>
+              )}
+
+            
+
+
+       
             {/* User Profile */}
             <div className="d-flex align-items-center">
               {isLoggedIn ? (

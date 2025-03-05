@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AdminHeader from "./AdminHeader";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const PostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,16 +26,17 @@ const PostsPage = () => {
 
   // Function to handle delete action
   const handleDelete = async (id) => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa bài viết này?")) {
+
       try {
         await axios.delete(`http://14.225.29.33:81/api/posts/${id}`);
         const updatedPosts = posts.filter((post) => post.id !== id);
         setPosts(updatedPosts);
-        alert("Xóa bài viết thành công!");
+        toast.success("Xóa bài viết thành công!", { position: "top-right" });
+      
       } catch (error) {
         console.error("Error deleting post:", error);
         alert("Có lỗi xảy ra khi xóa bài viết.");
-      }
+      
     }
   };
 

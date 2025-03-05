@@ -3,14 +3,17 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 const API_URL = "http://14.225.29.33:81/api/import-orders"; // Adjusted API URL
 
 const AddOrder = () => {
   const [units, setUnits] = useState([]);
   const [lines, setLines] = useState([]);
   const [statuses, setStatuses] = useState([]);
-
+ const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,9 +48,9 @@ const AddOrder = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Tên là bắt buộc"),
     packageNumbers: Yup.number().required("Số lượng kiện hàng là bắt buộc"),
-    packageUnitValue: Yup.number().required("Giá trị mỗi kiện hàng là bắt buộc"),
-    insurancePrice: Yup.number().required("Giá bảo hiểm là bắt buộc"),
-    customerCode: Yup.string().nullable(),
+    packageUnitValue: Yup.number().required("Giá trị kiện hàng là bắt buộc"),
+    insurancePrice: Yup.number().nullable(),
+    emailCustomer: Yup.string().required("Email  bắt buộc"),
     shippingMethod: Yup.string().nullable(),
     cnShippingCode: Yup.string().nullable(),
     vnShippingCode: Yup.string().nullable(),
@@ -68,11 +71,13 @@ const AddOrder = () => {
       });
 
       console.log("Success:", response.data);
-      alert("Thêm đơn nhập hàng thành công!");
+    toast.success("Thêm đơn hàng thành công!", { position: "top-right" });
+      
       resetForm();
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Lỗi khi thêm đơn nhập hàng.");
+    toast.error("Lỗi khi thêm đơn hàng!", { position: "top-right" });
+      
     }
   };
 
@@ -80,14 +85,19 @@ const AddOrder = () => {
     <div>
       <AdminHeader />
       <div className="container my-5">
-        <h2 className="text-center">Thêm Đơn Nhập Hàng</h2>
+      <div className="d-flex align-items-center mb-3">
+                <button className="btn btn-secondary me-3" onClick={() => navigate("/quan-li-don-hang")}>
+                  <BiArrowBack /> Quay lại
+                </button>
+                <h2 className="text-center flex-grow-1">Thêm đơn hàng</h2>
+              </div>
         <Formik
           initialValues={{
             name: "",
             packageNumbers: "",
             packageUnitValue: "",
             insurancePrice: "",
-            customerCode: "",
+            emailCustomer: "",
             shippingMethod: "",
             cnShippingCode: "",
             vnShippingCode: "",
@@ -100,30 +110,31 @@ const AddOrder = () => {
         >
           {({ values, setFieldValue }) => (
             <Form className="row g-3">
-              <div className="col-md-6">
-                <label className="form-label">Tên sản phẩm</label>
+                  <div className="col-md-6">
+                <label className="form-label">
+                  Tên sản phẩm <span className="text-danger"></span>
+                </label>
                 <Field type="text" className="form-control" name="name" />
               </div>
 
               <div className="col-md-6">
-                <label className="form-label">Số lượng kiện hàng</label>
-                <Field type="number" className="form-control" name="packageNumbers" />
+                <label className="form-label">Email khách hàng</label>
+                <Field type="text" className="form-control" name="emailCustomer" />
               </div>
-
-              <div className="col-md-6">
-                <label className="form-label">Giá trị mỗi kiện hàng</label>
-                <Field type="number" className="form-control" name="packageUnitValue" />
-              </div>
+                <div className="col-md-6">
+                              <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
+                              <Field type="number" className="form-control" name="packageUnitValue" />
+                            </div>
 
               <div className="col-md-6">
                 <label className="form-label">Giá bảo hiểm</label>
                 <Field type="number" className="form-control" name="insurancePrice" />
               </div>
-
               <div className="col-md-6">
-                <label className="form-label">Mã khách hàng</label>
-                <Field type="text" className="form-control" name="customerCode" />
+                <label className="form-label">Số lượng kiện hàng</label>
+                <Field type="number" className="form-control" name="packageNumbers" />
               </div>
+              
 
               <div className="col-md-6">
                 <label className="form-label">Phương thức lấy hàng</label>
@@ -171,7 +182,7 @@ const AddOrder = () => {
               </div>
 
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary">Thêm Đơn Nhập Hàng</button>
+                <button type="submit" className="btn btn-primary">Thêm đơn hàng</button>
               </div>
             </Form>
           )}

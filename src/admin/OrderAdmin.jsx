@@ -6,7 +6,8 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import AdminHeader from '../component/AdminHeader';
 import Footer from '../component/Footer';
 import axios from 'axios';
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function OrderAdmin() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchDate, setSearchDate] = useState('');
@@ -58,15 +59,17 @@ function OrderAdmin() {
   
 
   const handleDeleteOrder = async (id) => {
-    if (!window.confirm(`Bạn có chắc muốn xóa đơn hàng ID: ${id}?`)) return;
+    
     
     try {
       await axios.delete(`http://14.225.29.33:81/api/import-orders/${id}`);
       setOrders(orders.filter((order) => order.id !== id));
-      alert("Xóa đơn hàng thành công!");
+    
+      toast.success("Xóa đơn hàng thành công!", { position: "top-right" });
+        
     } catch (error) {
       console.error("Lỗi khi xóa đơn hàng:", error);
-      alert("Không thể xóa đơn hàng. Vui lòng thử lại!");
+    
     }
   };
 
@@ -145,10 +148,10 @@ function OrderAdmin() {
                     <th rowSpan="2">Tên sản phẩm</th>
                     <th rowSpan="2">Số Kiện</th>
                     <th rowSpan="2">Đơn vị</th>
-                    <th rowSpan="2">Giá trị</th>
+                    <th rowSpan="2">Khối lượng</th>
                     <th rowSpan="2">Giá Bảo Hiểm</th>
                     <th rowSpan="2">Phương Thức Lấy Hàng</th>
-                    <th rowSpan="2">Mã Khách Hàng</th>
+                    <th rowSpan="2">Email Khách Hàng</th>
                     <th rowSpan="2">Trạng Thái</th>
                     <th rowSpan="2"></th>
                   </tr>
@@ -162,7 +165,15 @@ function OrderAdmin() {
                 <tbody>
                   {orders.map((order) => (
                     <tr key={order.id}>
-                      <td>{new Date(order.createdDate).toLocaleString()}</td>
+                      <td>
+  {new Date(order.createdDate).toLocaleDateString("vi-VN")}{" "}
+  {new Date(order.createdDate).toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false, // Định dạng giờ 24h
+  })}
+</td>
+
                       <td>{order.lineId}</td>
                       <td className="text-danger fw-bold text-center">{order.tqCode}</td>
                       <td className="text-danger text-center">{order.cnShippingCode}</td>
@@ -172,10 +183,18 @@ function OrderAdmin() {
                       <td>{order.packageNumbers}</td>
                       <td>{order.packageUnitId}</td>
                       <td>{order.packageUnitValue}</td>
-                      <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
+                      <td>{order.insurancePrice ? order.insurancePrice.toLocaleString() : "0"}</td>
+
                       <td>{order.shippingMethod}</td>
-                      <td>{order.customerCode}</td>
-                      <td>{order.statusId}</td>
+                      <td>{order.emailCustomer}</td>
+                      <td>
+  <span
+    className={"status-badge"}
+  >
+    {order.statusId}
+  </span>
+</td>
+
                       <td className="text-center">
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <button 

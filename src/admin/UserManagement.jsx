@@ -31,28 +31,11 @@ const UserManagement = () => {
     }
     
     setSelectedUser(user);
-    setCustomerCode(user.customerCode || ""); // Load mã cũ nếu có
+  
     setShowModal(true);
   };
   // Cập nhật mã khách hàng
-const handleUpdateCustomerCode = async () => {
-  if (!selectedUser) return;
 
-  try {
-    await axios.put(
-      `http://14.225.29.33:81/api/users/${selectedUser.id}/customer-code`,
-      { customerCode: customerCode }, // ✅ Gửi JSON Object thay vì string
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-  
-    setShowModal(false);
-    fetchUsers(); // Cập nhật lại danh sách người dùng
-  } catch (error) {
-    console.error("Lỗi khi cập nhật mã khách hàng:", error);
-    alert("Không thể cập nhật. Vui lòng thử lại.");
-  }
-};
 
 
   return (
@@ -65,8 +48,7 @@ const handleUpdateCustomerCode = async () => {
           <th>Id</th>
             <th>Email</th>
             <th>Tên</th>
-            <th>Mã Khách Hàng</th>
-            <th></th>
+           
           </tr>
         </thead>
         <tbody>
@@ -75,42 +57,13 @@ const handleUpdateCustomerCode = async () => {
                <td>{user.id}</td>
               <td>{user.email}</td>
               <td>{user.name}</td>
-              <td>{user.customerCode || "Chưa có mã"}</td>
-              <td>
-                <Button variant="primary" size="sm" onClick={() => handleShowModal(user)}>
-                  Thêm Mã
-                </Button>
-              </td>
+              
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Modal Thêm Mã Khách Hàng */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Cập Nhật Mã Khách Hàng</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Email: {selectedUser?.email}</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Nhập mã khách hàng"
-              value={customerCode}
-              onChange={(e) => setCustomerCode(e.target.value)}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Đóng
-          </Button>
-          <Button variant="success" onClick={handleUpdateCustomerCode}>
-            Lưu
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    
     </div>
   );
 };

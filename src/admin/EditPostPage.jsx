@@ -6,7 +6,8 @@ import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the Quill styles
 import { useParams, useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const convertToBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -94,8 +95,8 @@ const EditPostPage = () => {
           "Content-Type": "application/json",
         },
       });
-  
-      alert("Bài viết đã được cập nhật thành công!");
+     toast.success("Bài viết đã được cập nhật thành công!", { position: "top-right" });
+   
       navigate("/Admin"); // Navigate back to posts list
     } catch (error) {
       console.error("Có lỗi khi cập nhật bài viết:", error.response?.data || error.message);

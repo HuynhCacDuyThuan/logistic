@@ -5,7 +5,9 @@ import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../component/Header";
-
+import { BiArrowBack } from "react-icons/bi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const API_URL = "http://14.225.29.33:81/api/import-orders"; // API URL chuẩn
 const EditOrderUser = () => {
   const { id } = useParams(); // Lấy ID từ URL
@@ -63,15 +65,15 @@ const EditOrderUser = () => {
 
   // Validation Schema
   const validationSchema = Yup.object({
-    name: Yup.string().required("Tên là bắt buộc"),
-    packageNumbers: Yup.number().required("Số lượng kiện hàng là bắt buộc"),
-    packageUnitValue: Yup.number().required("Giá trị mỗi kiện hàng là bắt buộc"),
-    insurancePrice: Yup.number().required("Giá bảo hiểm là bắt buộc"),
-    customerCode: Yup.string().nullable(),
-    shippingMethod: Yup.string().nullable(),
-    cnShippingCode: Yup.string().nullable(),
-    lineId: Yup.string().required("Line là bắt buộc"),
-    packageUnitId: Yup.string().required("Đơn vị là bắt buộc"),
+     name: Yup.string().required("Tên là bắt buộc"),
+       packageNumbers: Yup.number().required("Số lượng kiện hàng là bắt buộc"),
+       packageUnitValue: Yup.number().required("Giá trị kiện hàng là bắt buộc"),
+       
+       emailCustomer: Yup.string().required("Email là bắt buộc"),
+       shippingMethod: Yup.string().required("bắt buộc"),
+       cnShippingCode: Yup.string().required("Mã trung quốc bắt buộc"),
+       lineId: Yup.string().required("Line là bắt buộc"),
+       packageUnitId: Yup.string().required("Đơn vị là bắt buộc"),
   
   });
 
@@ -80,8 +82,8 @@ const EditOrderUser = () => {
       const response = await axios.put(`${API_URL}/${id}`, values, {
         headers: { "Content-Type": "application/json" },
       });
-
-      console.log("Cập nhật thành công:", response.data);
+  toast.success("Cập nhật thành công đơn hàng!", { position: "top-right" });
+  
      
       navigate("/order"); // Điều hướng về danh sách đơn hàng
     } catch (error) {
@@ -98,7 +100,8 @@ const EditOrderUser = () => {
     <div>
       <Header />
       <div className="container my-5">
-        <h2 className="text-center">Chỉnh Sửa Đơn Nhập Hàng</h2>
+      <h2 className="text-center flex-grow-1 mb-2">Chỉnh sửa đơn hàng</h2>
+     
         <Formik
           initialValues={order}
           enableReinitialize={true} // Cập nhật dữ liệu form khi có đơn hàng từ API
@@ -128,8 +131,9 @@ const EditOrderUser = () => {
               </div>
 
               <div className="col-md-6">
-                <label className="form-label">Mã khách hàng</label>
-                <Field type="text" className="form-control" name="customerCode" />
+                <label className="form-label">Email khách hàng</label>
+                <Field type="text" className="form-control" name="emailCustomer" readOnly />
+
               </div>
 
               <div className="col-md-6">

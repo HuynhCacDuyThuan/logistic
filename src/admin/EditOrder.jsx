@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import AdminHeader from "../component/AdminHeader";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AdminHeader from "../component/AdminHeader";
 
 const API_URL = "http://14.225.29.33:81/api/import-orders"; // API URL chuẩn
+
 const EditOrder = () => {
   const { id } = useParams(); // Lấy ID từ URL
   const navigate = useNavigate(); // Điều hướng sau khi cập nhật thành công
@@ -65,14 +68,14 @@ const EditOrder = () => {
     name: Yup.string().required("Tên là bắt buộc"),
     packageNumbers: Yup.number().required("Số lượng kiện hàng là bắt buộc"),
     packageUnitValue: Yup.number().required("Giá trị mỗi kiện hàng là bắt buộc"),
-    insurancePrice: Yup.number().required("Giá bảo hiểm là bắt buộc"),
-    customerCode: Yup.string().nullable(),
+    emailCustomer: Yup.string().nullable(),
     shippingMethod: Yup.string().nullable(),
     cnShippingCode: Yup.string().nullable(),
     vnShippingCode: Yup.string().nullable(),
     lineId: Yup.string().required("Line là bắt buộc"),
     packageUnitId: Yup.string().required("Đơn vị là bắt buộc"),
     statusId: Yup.string().required("Trạng thái là bắt buộc"),
+    locked: Yup.boolean(), // Thêm validation cho checkbox locked
   });
 
   const handleSubmit = async (values) => {
@@ -82,7 +85,7 @@ const EditOrder = () => {
       });
 
       console.log("Cập nhật thành công:", response.data);
-      alert("Cập nhật đơn nhập hàng thành công!");
+      toast.success("Cập nhật thành công đơn hàng!", { position: "top-right" });
       navigate("/quan-li-don-hang"); // Điều hướng về danh sách đơn hàng
     } catch (error) {
       console.error("Lỗi khi cập nhật:", error);
@@ -98,14 +101,14 @@ const EditOrder = () => {
     <div>
       <AdminHeader />
       <div className="container my-5">
-        <h2 className="text-center">Chỉnh Sửa Đơn Nhập Hàng</h2>
+        <h2 className="text-center">Chỉnh sửa đơn hàng</h2>
         <Formik
           initialValues={order}
           enableReinitialize={true} // Cập nhật dữ liệu form khi có đơn hàng từ API
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ values }) => (
+          {({ values, setFieldValue }) => (
             <Form className="row g-3">
               <div className="col-md-6">
                 <label className="form-label">Tên sản phẩm</label>
@@ -113,25 +116,25 @@ const EditOrder = () => {
               </div>
 
               <div className="col-md-6">
-                <label className="form-label">Số lượng kiện hàng</label>
-                <Field type="number" className="form-control" name="packageNumbers" />
+                <label className="form-label">Email khách hàng</label>
+                <Field type="text" className="form-control" name="emailCustomer" readOnly />
               </div>
 
-              <div className="col-md-6">
-                <label className="form-label">Giá trị mỗi kiện hàng</label>
-                <Field type="number" className="form-control" name="packageUnitValue" />
-              </div>
+               <div className="col-md-6">
+                             <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
+                             <Field type="number" className="form-control" name="packageUnitValue" />
+                           </div>
 
               <div className="col-md-6">
                 <label className="form-label">Giá bảo hiểm</label>
                 <Field type="number" className="form-control" name="insurancePrice" />
               </div>
 
+          
               <div className="col-md-6">
-                <label className="form-label">Mã khách hàng</label>
-                <Field type="text" className="form-control" name="customerCode" />
+                <label className="form-label">Số lượng kiện hàng</label>
+                <Field type="number" className="form-control" name="packageNumbers" />
               </div>
-
               <div className="col-md-6">
                 <label className="form-label">Phương thức lấy hàng</label>
                 <Field type="text" className="form-control" name="shippingMethod" />
@@ -152,7 +155,9 @@ const EditOrder = () => {
                 <Field as="select" className="form-control" name="lineId">
                   <option value="">Chọn Line</option>
                   {lines.map((line) => (
-                    <option key={line.name} value={line.name}>{line.name}</option>
+                    <option key={line.name} value={line.name}>
+                      {line.name}
+                    </option>
                   ))}
                 </Field>
               </div>
@@ -162,7 +167,9 @@ const EditOrder = () => {
                 <Field as="select" className="form-control" name="packageUnitId">
                   <option value="">Chọn Đơn vị</option>
                   {units.map((unit) => (
-                    <option key={unit.name} value={unit.name}>{unit.name}</option>
+                    <option key={unit.name} value={unit.name}>
+                      {unit.name}
+                    </option>
                   ))}
                 </Field>
               </div>
@@ -172,13 +179,32 @@ const EditOrder = () => {
                 <Field as="select" className="form-control" name="statusId">
                   <option value="">Chọn Trạng thái</option>
                   {statuses.map((status) => (
-                    <option key={status.name} value={status.name}>{status.name}</option>
+                    <option key={status.name} value={status.name}>
+                      {status.name}
+                    </option>
                   ))}
                 </Field>
               </div>
 
+              {/* Checkbox "Khóa đơn hàng" hiển thị ngang hàng với "Trạng thái" */}
+              <div className="col-md-6">
+                <label className="form-check-label">Khóa đơn hàng</label>
+                <br />
+                <br />
+               
+                <Field
+                  type="checkbox"
+                  className="form-check-input"
+                  name="locked"
+                  checked={values.locked}
+                  onChange={() => setFieldValue("locked", !values.locked)} // Đảo giá trị khi checkbox được chọn
+                />
+              </div>
+
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary">Cập Nhật</button>
+                <button type="submit" className="btn btn-primary px-5 py-2">
+                  Cập Nhật
+                </button>
               </div>
             </Form>
           )}

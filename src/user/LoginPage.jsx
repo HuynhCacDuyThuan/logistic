@@ -39,11 +39,18 @@ const LoginPage = () => {
       console.log("Server Response:", data); 
   
       if (data.success) {
-        dispatch(setUser(data.data)); 
-        navigate("/trang-chu"); 
+        // Đảm bảo dữ liệu trả về chứa thông tin người dùng và role
+        const userData = { 
+          ...data.data, // Lấy toàn bộ thông tin người dùng từ data.data
+          role: "user" // Gán quyền "user" cho tài khoản này
+        };
+      
+        dispatch(setUser(userData)); // Lưu thông tin người dùng vào Redux
+        navigate("/trang-chu"); // Chuyển đến trang chính cho người dùng
       } else {
         alert("Đăng nhập thất bại: " + (data.data || "Lỗi không xác định từ server"));
       }
+      
     } catch (error) {
       console.error("Error sending request to backend:", error);
       alert("Có lỗi xảy ra. Vui lòng thử lại!");
@@ -53,16 +60,20 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    
-    if (email === "ztovietnam.vn@gmail.com" && password === "ztovietnam123@") {
-      const userData = { email, role: "admin" };
+    // Kiểm tra email và mật khẩu cho hai tài khoản
+    if (
+      (email === "ztovietnam.vn@gmail.com" && password === "ztovietnam123@") ||
+      (email === "phamvulong2411@gmail.com" && password === "phamvulong2411")
+    ) {
+      const userData = { email, role: "admin" }; // Cả hai tài khoản đều có role "admin"
       setError(""); // Thay thế alert bằng setError
       dispatch(setUser(userData)); // Lưu thông tin người dùng vào Redux
-      navigate("/admin");
+      navigate("/admin"); // Chuyển đến trang admin
     } else {
-      setError("Email hoặc mật khẩu không hợp lệ."); // Thay thế alert bằng setError
+      setError("Email hoặc mật khẩu không hợp lệ."); // Thông báo lỗi nếu thông tin không đúng
     }
   };
+  
   
   return (
     <div>

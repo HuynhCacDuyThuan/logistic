@@ -9,9 +9,6 @@ import Footer from '../component/Footer';
 import { FiEdit } from 'react-icons/fi';
 import { FaPlus } from 'react-icons/fa';
 function OrderTable() {
- 
- 
-
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [orders, setOrders] = useState([]);
@@ -40,22 +37,8 @@ function OrderTable() {
   
     try {
       console.log(`🔍 Fetching customerCode for email: ${user.email}`);
-  
-     
-      const customerRes = await axios.get(`http://14.225.29.33:81/api/users/customer-code/${user.email}`);
-      const customerCode = customerRes.data.customerCode;
-  
-      if (!customerCode) {
-        console.warn("Không tìm thấy mã khách hàng!");
-        setOrders([]);
-        setLoading(false);
-        return;
-      }
-  
-      console.log(`Mã khách hàng: ${customerCode}`);
-  
     
-      const orderRes = await axios.get(`http://14.225.29.33:81/api/import-orders/customer/${customerCode}`, {
+      const orderRes = await axios.get(`http://14.225.29.33:81/api/import-orders/customer/${user.email}`, {
         params: { 
           page: currentPage - 1, 
           size: itemsPerPage, 
@@ -152,10 +135,10 @@ function OrderTable() {
         <th rowSpan="2">Tên sản phẩm</th>
         <th rowSpan="2">Số Kiện</th>
         <th rowSpan="2">Đơn vị</th>
-        <th rowSpan="2">Giá trị</th>
+        <th rowSpan="2">Khối lượng</th>
         <th rowSpan="2">Giá Bảo Hiểm</th>
         <th rowSpan="2">Phương Thức Lấy Hàng</th>
-        <th rowSpan="2">Mã Khách Hàng</th>
+        <th rowSpan="2">Email Khách Hàng</th>
         <th rowSpan="2">Trạng Thái</th>
         <th rowSpan="2">Chỉnh Sửa</th> {/* Add this header for edit button */}
       </tr>
@@ -169,7 +152,16 @@ function OrderTable() {
     <tbody>
       {orders.map((order) => (
         <tr key={order.id}>
-          <td>{new Date(order.createdDate).toLocaleString()}</td>
+  <td>
+  {new Date(order.createdDate).toLocaleDateString("vi-VN")}{" "}
+  {new Date(order.createdDate).toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false, // Định dạng giờ 24h
+  })}
+</td>
+
+
           <td>{order.lineId}</td>
           <td className="text-danger fw-bold text-center">{order.tqCode}</td>
           <td className="text-danger text-center">{order.cnShippingCode}</td>
@@ -178,20 +170,23 @@ function OrderTable() {
           <td>{order.name}</td>
           <td>{order.packageNumbers}</td>
           <td>{order.packageUnitId}</td>
-          <td>{order.packageUnitValue}</td>
-          <td>{order.insurancePrice.toLocaleString()} VNĐ</td>
+          <td>{order.packageUnitValue?.toLocaleString("vi-VN")}</td>
+
+          <td>{(order.insurancePrice ? order.insurancePrice : 0).toLocaleString()}</td>
+
           <td>{order.shippingMethod}</td>
-          <td>{order.customerCode}</td>
+<td>{order.emailCustomer}</td>
           <td>{order.statusId}</td>
           {/* Add the button here */}
           <td>
-            <button 
-              className="btn btn-warning"
-              onClick={() => navigate(`/edit-order-user/${order.id}`)}
-            >
-              <FiEdit size={20} />
-            </button>
-          </td>
+  <button 
+    className="btn btn-warning"
+    onClick={() => navigate(`/edit-order-user/${order.id}`)}
+    disabled={order.locked} // Vô hiệu hóa nút khi order.locked là true
+  >
+    <FiEdit size={20} />
+  </button>
+</td>
         </tr>
       ))}
     </tbody>
@@ -216,7 +211,7 @@ function OrderTable() {
             </li>
           </ul>
         </nav>
-      </div>
+      </div>          
     </>
   )}
 </div>

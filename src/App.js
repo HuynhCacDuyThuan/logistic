@@ -24,20 +24,52 @@ import BannerManagement from "./admin/InitialBanners";
 import Order from "./admin/Order";
 import AddOrderUser from "./user/AddOrderUser";
 import EditOrderUser from "./user/EditOrderUser";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <Router>
       <Routes>
       <Route path="/" element={<LoginPage />} />
-      <Route path="/posts/:id" element={<PostDetail />} />
-        <Route path="/trang-chu" element={<Home />} />
+
+      <Route
+          path="/posts/:id"
+          element={
+            <PrivateRoute roles={['user']}>
+              <PostDetail  />
+            </PrivateRoute>
+          }
+        />
+      <Route
+          path="/trang-chu"
+          element={
+            <PrivateRoute roles={['user']}>
+              <Home  />
+            </PrivateRoute>
+          }
+        />
+
         <Route path="/dang-ki" element={<RegistrationPage />} />
         <Route path="/dang-nhap" element={<LoginPage />} />
-        <Route path="/Bang-gia" element={<PricingTable />} />
-        <Route path="/dich-vu" element={<ServicesPage />} />
-        <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />
-        <Route path="/add-order-user" element={<AddOrderUser />} />
+    
+    
+        <Route
+          path="/dich-vu"
+          element={
+            <PrivateRoute roles={['user']}>
+              <ServicesPage  />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/add-order-user"
+          element={
+            <PrivateRoute roles={['user']}>
+              <AddOrderUser  />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/admin"
           element={
@@ -55,8 +87,28 @@ const App = () => {
              
    
         <Route path="/admin/posts/edit/:id" element={<EditPostPage />} />
-        <Route path="/order" element={<OrderTable />} />
-        <Route path="/order/:id" element={<OrderDetail />} />
+
+
+        <Route
+          path="/order"
+          element={
+            <PrivateRoute roles={['user']}>
+              <OrderTable  />
+            </PrivateRoute>
+          }
+        />
+
+
+<Route
+          path="/order/:id"
+          element={
+            <PrivateRoute roles={['user']}>
+              <OrderDetail  />
+            </PrivateRoute>
+          }
+        />
+        
+    
         <Route path="/quan-li-model" element={
               <PrivateRoute roles={['admin']}>
                  <Order />
@@ -70,11 +122,26 @@ const App = () => {
          } />
 
         <Route path="/model-details" element={<ModelDetailComponent />} />
-        <Route path="/add-order" element={<AddOrder/>} />
-        <Route path="/edit-order/:id" element={<EditOrder />} />
+
+        <Route path="/add-order" element={
+              <PrivateRoute roles={['admin']}>
+                 <AddOrder />
+              </PrivateRoute>
+         } />
+        <Route path="/edit-order/:id" element={
+              <PrivateRoute roles={['admin']}>
+                 <EditOrder />
+              </PrivateRoute>
+         } />
+         <Route path="/quan-li-bai-dang" element={
+              <PrivateRoute roles={['admin']}>
+                 <PostsPage />
+              </PrivateRoute>
+         } />
         <Route path="/edit-order-user/:id" element={<EditOrderUser />} />
-        <Route path="/quan-li-bai-dang" element={<PostsPage/>} />
+    
         <Route path="/quan-li-banner" element={<BannerManagement />}/>
+        
         <Route path="/quan-li-bai-viet" element={
               <PrivateRoute roles={['admin']}>
 
@@ -82,6 +149,7 @@ const App = () => {
               </PrivateRoute>
          } />
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );
 };

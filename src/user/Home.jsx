@@ -63,7 +63,7 @@ const Home = () => {
 
       {/* Hero Section */}
       <section
-        className="hero-section text-center text-white"
+      
        
       >
         <div className="overlay"></div> {/* 🌟 Overlay giúp chữ nổi bật */}
