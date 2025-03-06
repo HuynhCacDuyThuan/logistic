@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-const API_URL = "http://14.225.29.33:81/api/import-orders"; // Adjusted API URL
+const API_URL = "http://localhost:81/api/import-orders"; // Adjusted API URL
 
 const AddOrder = () => {
   const [units, setUnits] = useState([]);
@@ -57,40 +57,33 @@ const AddOrder = () => {
     lineId: Yup.string().required("Line là bắt buộc"),
     packageUnitId: Yup.string().required("Đơn vị là bắt buộc"),
     statusId: Yup.string().required("Trạng thái là bắt buộc"),
+      locked: Yup.boolean(), // Thêm validation cho checkbox locked
   });
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const formData = new FormData();
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key] || "");
+      const response = await axios.post(API_URL, values, {
+        headers: { "Content-Type": "application/json" }, // Gửi JSON thay vì FormData
       });
-
-      const response = await axios.post(API_URL, formData, {
-        headers: { "Content-Type": "application/json" }, // ✅ Send JSON instead
-      });
-
+  
       console.log("Success:", response.data);
-    toast.success("Thêm đơn hàng thành công!", { position: "top-right" });
-      
+      toast.success("Thêm đơn hàng thành công!", { position: "top-right" });
       resetForm();
     } catch (error) {
       console.error("Error submitting form:", error);
-    toast.error("Lỗi khi thêm đơn hàng!", { position: "top-right" });
-      
+      toast.error("Lỗi khi thêm đơn hàng!", { position: "top-right" });
     }
   };
+  
 
   return (
     <div>
       <AdminHeader />
       <div className="container my-5">
-      <div className="d-flex align-items-center mb-3">
-                <button className="btn btn-secondary me-3" onClick={() => navigate("/quan-li-don-hang")}>
-                  <BiArrowBack /> Quay lại
-                </button>
-                <h2 className="text-center flex-grow-1">Thêm đơn hàng</h2>
-              </div>
+      
+                
+                <h2 className="text-center ">Thêm đơn hàng</h2>
+              
         <Formik
           initialValues={{
             name: "",
@@ -104,6 +97,7 @@ const AddOrder = () => {
             lineId: "",
             packageUnitId: "",
             statusId: "",
+            locked: false,// Thêm validation cho checkbox locked
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -121,20 +115,21 @@ const AddOrder = () => {
                 <label className="form-label">Email khách hàng</label>
                 <Field type="text" className="form-control" name="emailCustomer" />
               </div>
-                <div className="col-md-6">
-                              <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
-                              <Field type="number" className="form-control" name="packageUnitValue" />
-                            </div>
-
-              <div className="col-md-6">
-                <label className="form-label">Giá bảo hiểm</label>
-                <Field type="number" className="form-control" name="insurancePrice" />
-              </div>
               <div className="col-md-6">
                 <label className="form-label">Số lượng kiện hàng</label>
                 <Field type="number" className="form-control" name="packageNumbers" />
               </div>
+
               
+              <div className="col-md-6">
+                              <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
+                              <Field type="number" className="form-control" name="packageUnitValue" />
+                            </div>
+             
+                            <div className="col-md-6">
+                <label className="form-label">Giá bảo hiểm</label>
+                <Field type="number" className="form-control" name="insurancePrice" />
+              </div>
 
               <div className="col-md-6">
                 <label className="form-label">Phương thức lấy hàng</label>
@@ -180,9 +175,27 @@ const AddOrder = () => {
                   ))}
                 </Field>
               </div>
+ <div className="col-md-6">
+                <label className="form-check-label">Khóa đơn hàng</label>
+                <br />
+                <br />
+               
+                <Field
+  type="checkbox"
+  className="form-check-input"
+  name="locked" // Field name
+  checked={values.locked} // Bind checkbox to Formik value
+  onChange={() => setFieldValue("locked", !values.locked)} // Toggle value on change
+/>
 
+
+              </div>
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary">Thêm đơn hàng</button>
+                <button type="submit" className="btn btn-primary me-3">Thêm đơn hàng</button>
+              
+                <button className="btn btn-secondary me-3" onClick={() => navigate("/quan-li-don-hang")}>
+                   Quay lại
+                </button>
               </div>
             </Form>
           )}

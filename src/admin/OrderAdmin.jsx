@@ -165,14 +165,15 @@ function OrderAdmin() {
                 <tbody>
                   {orders.map((order) => (
                     <tr key={order.id}>
-                      <td>
-  {new Date(order.createdDate).toLocaleDateString("vi-VN")}{" "}
+       <td>
+  {new Date(order.createdDate).toLocaleDateString("vi-VN", { month: "2-digit", day: "2-digit" })}{" "}
   {new Date(order.createdDate).toLocaleTimeString("vi-VN", {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false, // Định dạng giờ 24h
   })}
 </td>
+
 
                       <td>{order.lineId}</td>
                       <td className="text-danger fw-bold text-center">{order.tqCode}</td>

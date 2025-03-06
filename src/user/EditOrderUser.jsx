@@ -171,7 +171,8 @@ const EditOrderUser = () => {
               
 
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary">Cập Nhật</button>
+                <button type="submit" className="btn btn-primary me-3">Cập Nhật</button>
+                <button className="btn btn-secondary " onClick={() => navigate("/order")}>Quay lại</button>
               </div>
             </Form>
           )}

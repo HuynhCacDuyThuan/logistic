@@ -119,7 +119,10 @@ const EditOrder = () => {
                 <label className="form-label">Email khách hàng</label>
                 <Field type="text" className="form-control" name="emailCustomer" readOnly />
               </div>
-
+              <div className="col-md-6">
+                <label className="form-label">Số lượng kiện hàng</label>
+                <Field type="number" className="form-control" name="packageNumbers" />
+              </div>
                <div className="col-md-6">
                              <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
                              <Field type="number" className="form-control" name="packageUnitValue" />
@@ -131,10 +134,7 @@ const EditOrder = () => {
               </div>
 
           
-              <div className="col-md-6">
-                <label className="form-label">Số lượng kiện hàng</label>
-                <Field type="number" className="form-control" name="packageNumbers" />
-              </div>
+             
               <div className="col-md-6">
                 <label className="form-label">Phương thức lấy hàng</label>
                 <Field type="text" className="form-control" name="shippingMethod" />
@@ -202,8 +202,11 @@ const EditOrder = () => {
               </div>
 
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary px-5 py-2">
+                <button type="submit" className="btn btn-primary px-5 py-2 me-3">
                   Cập Nhật
+                </button>
+                <button className="btn btn-secondary me-3" onClick={() => navigate("/quan-li-don-hang")}>
+                   Quay lại
                 </button>
               </div>
             </Form>

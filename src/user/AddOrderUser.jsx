@@ -96,12 +96,9 @@ const AddOrderUser = () => {
     <div>
       <Header/>
       <div className="container my-5">
-      <div className="d-flex align-items-center mb-3">
-          <button className="btn btn-secondary me-3" onClick={() => navigate("/order")}>
-            <BiArrowBack /> Quay lại
-          </button>
-          <h2 className="text-center flex-grow-1">Thêm đơn hàng</h2>
-        </div>
+     
+          <h2 className="text-center ">Thêm đơn hàng</h2>
+        
         <Formik
   initialValues={{
     name: "",
@@ -138,21 +135,21 @@ const AddOrderUser = () => {
 
               </div>
 
-              <div className="col-md-6">
-                <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
-                <Field type="number" className="form-control" name="packageUnitValue" />
-              </div>
+             
 
-              <div className="col-md-6">
-                <label className="form-label">Giá bảo hiểm</label>
-                <Field type="number" className="form-control" name="insurancePrice" />
-              </div>
-
-         
               <div className="col-md-6">
                 <label className="form-label">Số lượng kiện hàng</label>
                 <Field type="number" className="form-control" name="packageNumbers" />
               </div>
+              <div className="col-md-6">
+                <label className="form-label">Giá trị kiện hàng (Kg-M3)</label>
+                <Field type="number" className="form-control" name="packageUnitValue" />
+              </div>
+              <div className="col-md-6">
+                <label className="form-label">Giá bảo hiểm</label>
+                <Field type="number" className="form-control" name="insurancePrice" />
+              </div>
+             
 
               <div className="col-md-6">
                 <label className="form-label">Phương thức lấy hàng</label>
@@ -193,7 +190,10 @@ const AddOrderUser = () => {
               
 
               <div className="col-12 text-center">
-                <button type="submit" className="btn btn-primary">Thêm đơn hàng</button>
+                <button type="submit" className="btn btn-primary me-3">Thêm đơn hàng</button>
+                <button className="btn btn-secondary me-3" onClick={() => navigate("/order")}>
+           Quay lại
+          </button>
               </div>
             </Form>
           )}

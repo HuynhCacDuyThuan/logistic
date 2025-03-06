@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../redux/userSlice";
+import { logoutUser, setUser } from "../redux/userSlice";
 import { FiLogOut } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
 import logo from "../img/logo.JPG";
@@ -25,6 +25,17 @@ const Header = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem('persist:root');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      const user = parsedUser.user === "null" ? null : JSON.parse(parsedUser.user);
+      if (user) {
+        dispatch(setUser(user));
+      }
+    }
+  }, [dispatch]);
+  
   return (
     <header className="header navbar navbar-expand-lg shadow-sm">
       <div className="container-fluid">
