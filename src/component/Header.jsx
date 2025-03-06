@@ -26,15 +26,17 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('persist:root');
+    const storedUser = localStorage.getItem('persist:root'); // Lấy persisted state từ localStorage
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      const user = parsedUser.user === "null" ? null : JSON.parse(parsedUser.user);
+      console.log(parsedUser)
+      const user = parsedUser.user && parsedUser.user !== "null" ? JSON.parse(parsedUser.user) : null;
       if (user) {
-        dispatch(setUser(user));
+        dispatch(setUser(user)); // Nếu có user, dispatch action setUser vào Redux store
       }
     }
   }, [dispatch]);
+  
   
   return (
     <header className="header navbar navbar-expand-lg shadow-sm">
