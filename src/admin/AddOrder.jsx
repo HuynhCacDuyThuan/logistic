@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-const API_URL = "http://localhost:81/api/import-orders"; // Adjusted API URL
+const API_URL = "http://14.225.29.33:81/api/import-orders"; // Adjusted API URL
 
 const AddOrder = () => {
   const [units, setUnits] = useState([]);
