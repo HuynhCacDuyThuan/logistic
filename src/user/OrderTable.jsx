@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import "../App.css"
 import Footer from '../component/Footer';
 import { FiEdit } from 'react-icons/fi';
-import { FaPlus } from 'react-icons/fa';
+import { FaCheckCircle, FaPlus, FaTimesCircle } from 'react-icons/fa';
 function OrderTable() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -138,8 +138,9 @@ function OrderTable() {
         <th rowSpan="2">Khối lượng</th>
         <th rowSpan="2">Giá Bảo Hiểm</th>
         <th rowSpan="2">Phương Thức Lấy Hàng</th>
-        <th rowSpan="2">Email Khách Hàng</th>
+        
         <th rowSpan="2">Trạng Thái</th>
+        <th rowSpan="2">Lock</th>
         <th rowSpan="2">Chỉnh Sửa</th> {/* Add this header for edit button */}
       </tr>
       <tr>
@@ -168,24 +169,34 @@ function OrderTable() {
           <td className="text-success text-center">{order.vnCode}</td>
           <td className="text-success text-center">{order.vnShippingCode}</td>
           <td>{order.name}</td>
-          <td>{order.packageNumbers}</td>
+          <td>{order.packageNumbers?.toLocaleString("vi-VN")}</td>
           <td>{order.packageUnitId}</td>
           <td>{order.packageUnitValue?.toLocaleString("vi-VN")}</td>
 
-          <td>{(order.insurancePrice ? order.insurancePrice : 0).toLocaleString()}</td>
+          <td>{(order.insurancePrice ? order.insurancePrice : 0).toLocaleString("vi-VN")}</td>
 
           <td>{order.shippingMethod}</td>
-<td>{order.emailCustomer}</td>
+
           <td>{order.statusId}</td>
+          <th >
+  {!order.locked ? (
+    <FaCheckCircle className="text-success" />
+  ) : (
+    <FaTimesCircle className="text-danger" />
+  )}
+</th>
+
           {/* Add the button here */}
           <td>
+          {!order.locked && (
   <button 
     className="btn btn-warning"
     onClick={() => navigate(`/edit-order-user/${order.id}`)}
-    disabled={order.locked} // Vô hiệu hóa nút khi order.locked là true
   >
     <FiEdit size={20} />
   </button>
+)}
+
 </td>
         </tr>
       ))}

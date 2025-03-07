@@ -146,15 +146,16 @@ const AddOrderUser = () => {
                 <Field type="number" className="form-control" name="packageUnitValue" />
               </div>
               <div className="col-md-6">
-                <label className="form-label">Giá bảo hiểm</label>
+                <label className="form-label mb-3">Giá bảo hiểm</label>
                 <Field type="number" className="form-control" name="insurancePrice" />
               </div>
              
 
               <div className="col-md-6">
-                <label className="form-label">Phương thức lấy hàng</label>
-                <Field type="text" className="form-control" name="shippingMethod" />
-              </div>
+  <label className="form-label">Phương thức lấy hàng</label>
+  <Field as="textarea" className="form-control" name="shippingMethod" />
+</div>
+
 
               <div className="col-md-6">
                 <label className="form-label">Mã vận đơn Trung Quốc</label>

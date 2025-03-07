@@ -78,6 +78,10 @@ const EditOrderUser = () => {
   });
 
   const handleSubmit = async (values) => {
+    if (order.locked) {
+      toast.error("Hiện tại chúng tôi đã nhận được đơn nên sẽ không thể thay đổi thông tin. Mọi thắc mắc vui lòng liên hệ bộ phận CSKH", { position: "top-right" });
+      return;
+    }
     try {
       const response = await axios.put(`${API_URL}/${id}`, values, {
         headers: { "Content-Type": "application/json" },
@@ -88,7 +92,8 @@ const EditOrderUser = () => {
       navigate("/order"); // Điều hướng về danh sách đơn hàng
     } catch (error) {
       console.error("Lỗi khi cập nhật:", error);
-      alert("Lỗi khi cập nhật đơn nhập hàng.");
+       
+       toast.error("Hiện tại chúng tôi đã nhận được đơn nên sẽ không thể thay đổi thông tin. Mọi thắc mắc vui lòng liên hệ bộ phận CSKH", { position: "top-right" });
     }
   };
 
@@ -111,7 +116,7 @@ const EditOrderUser = () => {
           {({ values }) => (
             <Form className="row g-3">
               <div className="col-md-6">
-                <label className="form-label">Tên sản phẩm</label>
+                <label className="form-label">Tên sản phẩm <span className="text-danger">*</span></label>
                 <Field type="text" className="form-control" name="name" />
               </div>
               <div className="col-md-6">
@@ -128,16 +133,17 @@ const EditOrderUser = () => {
                                           <Field type="number" className="form-control" name="packageUnitValue" />
                                         </div>
               <div className="col-md-6">
-                <label className="form-label">Giá bảo hiểm</label>
+                <label className="form-label mb-3">Giá bảo hiểm</label>
                 <Field type="number" className="form-control" name="insurancePrice" />
               </div>
 
              
 
               <div className="col-md-6">
-                <label className="form-label">Phương thức lấy hàng</label>
-                <Field type="text" className="form-control" name="shippingMethod" />
-              </div>
+  <label className="form-label">Phương thức lấy hàng</label>
+  <Field as="textarea" className="form-control" name="shippingMethod" />
+</div>
+
 
               <div className="col-md-6">
                 <label className="form-label">Mã vận đơn Trung Quốc</label>
@@ -147,7 +153,7 @@ const EditOrderUser = () => {
              
 
               <div className="col-md-6">
-                <label className="form-label">Line</label>
+                <label className="form-label">Line <span className="text-danger">*</span></label>
                 <Field as="select" className="form-control" name="lineId">
                   <option value="">Chọn Line</option>
                   {lines.map((line) => (

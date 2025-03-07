@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus } from 'react-icons/fa';
+import { FaCheckCircle, FaPlus, FaTimesCircle } from 'react-icons/fa';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import AdminHeader from '../component/AdminHeader';
 import Footer from '../component/Footer';
@@ -153,6 +153,7 @@ function OrderAdmin() {
                     <th rowSpan="2">Phương Thức Lấy Hàng</th>
                     <th rowSpan="2">Email Khách Hàng</th>
                     <th rowSpan="2">Trạng Thái</th>
+                    <th rowSpan="2">Lock</th>
                     <th rowSpan="2"></th>
                   </tr>
                   <tr>
@@ -181,10 +182,10 @@ function OrderAdmin() {
                       <td className="text-success text-center">{order.vnCode}</td>
                       <td className="text-success text-center">{order.vnShippingCode}</td>
                       <td>{order.name}</td>
-                      <td>{order.packageNumbers}</td>
+                      <td>{order.packageNumbers?.toLocaleString("vi-VN")}</td>
                       <td>{order.packageUnitId}</td>
-                      <td>{order.packageUnitValue}</td>
-                      <td>{order.insurancePrice ? order.insurancePrice.toLocaleString() : "0"}</td>
+                      <td>{order.packageUnitValue?.toLocaleString("vi-VN")}</td>
+                      <td>{order.insurancePrice ? order.insurancePrice.toLocaleString("vi-VN") : "0"}</td>
 
                       <td>{order.shippingMethod}</td>
                       <td>{order.emailCustomer}</td>
@@ -195,7 +196,13 @@ function OrderAdmin() {
     {order.statusId}
   </span>
 </td>
-
+ <th >
+  {!order.locked ? (
+    <FaCheckCircle className="text-success" />
+  ) : (
+    <FaTimesCircle className="text-danger" />
+  )}
+</th>
                       <td className="text-center">
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <button 

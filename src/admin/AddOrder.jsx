@@ -104,12 +104,13 @@ const AddOrder = () => {
         >
           {({ values, setFieldValue }) => (
             <Form className="row g-3">
-                  <div className="col-md-6">
-                <label className="form-label">
-                  Tên sản phẩm <span className="text-danger"></span>
-                </label>
-                <Field type="text" className="form-control" name="name" />
-              </div>
+                <div className="col-md-6">
+  <label className="form-label">
+    Tên sản phẩm <span className="text-danger">*</span>
+  </label>
+  <Field type="text" className="form-control" name="name" />
+</div>
+
 
               <div className="col-md-6">
                 <label className="form-label">Email khách hàng</label>
@@ -127,14 +128,16 @@ const AddOrder = () => {
                             </div>
              
                             <div className="col-md-6">
-                <label className="form-label">Giá bảo hiểm</label>
+                <label className="form-label mb-3">Giá bảo hiểm</label>
+                
                 <Field type="number" className="form-control" name="insurancePrice" />
               </div>
 
               <div className="col-md-6">
-                <label className="form-label">Phương thức lấy hàng</label>
-                <Field type="text" className="form-control" name="shippingMethod" />
-              </div>
+  <label className="form-label">Phương thức lấy hàng</label>
+  <Field as="textarea" className="form-control" name="shippingMethod" />
+</div>
+
 
               <div className="col-md-6">
                 <label className="form-label">Mã vận đơn Trung Quốc</label>
@@ -147,7 +150,7 @@ const AddOrder = () => {
               </div>
 
               <div className="col-md-6">
-                <label className="form-label">Line</label>
+                <label className="form-label">Line <span className="text-danger">*</span></label>
                 <Field as="select" className="form-control" name="lineId">
                   <option value="">Chọn Line</option>
                   {lines.map((line) => (

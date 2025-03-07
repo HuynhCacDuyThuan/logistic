@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Modal } from "bootstrap";
-
+import Swal from 'sweetalert2';
 const API_URL = "http://14.225.29.33:81/api/model-details";
 
 const ModelDetailComponent = () => {
@@ -16,7 +16,7 @@ const ModelDetailComponent = () => {
     id: "",
     name: "",
     activeFlag: true,
-    deleteFlag: false,
+    block: false,
   });
 
   const dispatch = useDispatch();
@@ -40,19 +40,24 @@ const ModelDetailComponent = () => {
   };
 
   const handleEdit = (detail) => {
+    if (!detail.id) {
+      console.error("No ID found in the model detail to edit");
+      return;
+    }
     setEditingDetail(detail);
     setEditForm({
-      id: detail.id,
+      id: detail.id,            // Ensure that the ID is set properly
       name: detail.name,
       activeFlag: detail.activeFlag,
       deleteFlag: detail.deleteFlag,
     });
-
-    // ✅ Initialize and Show Bootstrap Modal Properly
+  
     const modalElement = document.getElementById("editModal");
-    const modalInstance = new Modal(modalElement); // Using Bootstrap Modal Class
+    const modalInstance = new Modal(modalElement);
     modalInstance.show();
   };
+  
+  
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -63,30 +68,67 @@ const ModelDetailComponent = () => {
   };
 
   const handleUpdate = async () => {
+    // Ensure the ID is valid before sending the request
+    if (!editForm.id) {
+      console.error("Model detail ID is missing");
+      return; // Don't send the request if ID is missing
+    }
+  
+    // Create the body to send to the backend, ensuring it includes modelId
+    const requestBody = {
+      modelId: selectedOrderId,  // Assuming selectedOrderId represents the modelId
+      name: editForm.name,
+      activeFlag: editForm.activeFlag,
+      block: editForm.deleteFlag,
+    };
+  
     try {
-      await axios.put(`${API_URL}/${editForm.id}`, editForm);
-      setModelDetails(modelDetails.map(detail => detail.id === editForm.id ? editForm : detail));
+      // Make the PUT request with the ID and the updated data
+      const response = await axios.put(`${API_URL}/${editForm.id}`, requestBody);
+  
+      // Update the state with the modified data
+      setModelDetails(
+        modelDetails.map((detail) => (detail.id === editForm.id ? { ...detail, ...editForm } : detail))
+      );
+  
       setEditingDetail(null);
-
-      // ✅ Properly Hide Modal After Update
+  
+      // Hide the modal after updating
       const modalElement = document.getElementById("editModal");
-      const modalInstance = Modal.getInstance(modalElement); // Get modal instance
+      const modalInstance = Modal.getInstance(modalElement);
       modalInstance.hide();
-
-      console.log("Updated model detail:", editForm);
+  
+      console.log("Updated model detail:", response.data);
     } catch (error) {
       console.error("Error updating model detail:", error);
     }
   };
+  
+  
+  
+  
 
   const handleDelete = async (id) => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa mục này?")) {
+    // Sử dụng SweetAlert2 để hiển thị modal xác nhận
+    const result = await Swal.fire({
+      title: 'Bạn có chắc chắn muốn xóa mục này?',
+      text: "Việc xóa không thể hoàn tác!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Xóa',
+      cancelButtonText: 'Hủy'
+    });
+  
+    // Kiểm tra nếu người dùng nhấn "Xóa"
+    if (result.isConfirmed) {
       try {
         await axios.delete(`${API_URL}/${id}`);
         setModelDetails(modelDetails.filter(detail => detail.id !== id));
         console.log("Deleted model detail with ID:", id);
+        Swal.fire('Đã xóa!', 'Mục đã được xóa.', 'success');
       } catch (error) {
         console.error("Error deleting model detail:", error);
+        Swal.fire('Lỗi!', 'Có lỗi khi xóa mục.', 'error');
       }
     }
   };

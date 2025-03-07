@@ -39,7 +39,7 @@ const AdminHeader = () => {
 
         {/* Navbar Collapse */}
         <div className={`collapse navbar-collapse admin ${menuOpen ? "show" : ""}`}>
-          <ul className="navbar-nav me-auto">
+          <ul className="navbar-nav mx-auto">
             <li className="nav-item">
               <Link className="nav-link admin" to="/admin">Quản lý người dùng</Link>
             </li>

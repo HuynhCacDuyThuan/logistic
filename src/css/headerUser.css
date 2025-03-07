@@ -80,10 +80,11 @@ img.Logo {
 
   .navbar-nav {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 15px 0;
+    width: 100%;
   }
+  
 
   .nav-item {
     margin-bottom: 10px;
