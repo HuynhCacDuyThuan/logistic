@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../component/Header";
 import "../App.css"
+import { API_URL_All } from "../api";
 
 const PostDetail = () => {
   const { id } = useParams(); // Get the post ID from the URL
@@ -11,7 +12,7 @@ const PostDetail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://14.225.29.33:81/api/posts/${id}`);
+        const response = await axios.get(`${API_URL_All}/api/posts/${id}`);
         setPost(response.data); // Store the fetched post data
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -42,18 +43,24 @@ const PostDetail = () => {
     <div className="col-md-12 col-12 mb-4"> {/* Added col-12 for responsiveness */}
       <div className="service-section">
         <div className="card mb-4 shadow-sm rounded">
-          <img
-            className="card-img-top"
-            src={post.mainImageUrl}
-            alt={post.title}
-            style={{
-              maxHeight: "400px",
-              objectFit: "cover",
-              borderTopLeftRadius: "10px",
-              borderTopRightRadius: "10px",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          />
+        <img
+  className="card-img-top"
+  src={post.mainImageUrl}
+  alt={post.title}
+  style={{
+    width: "100%", // Chiều rộng luôn bằng card
+    height: "auto", // Tự động điều chỉnh theo tỉ lệ ảnh
+    maxHeight: "500px", // Giới hạn chiều cao để không quá dài
+    aspectRatio: "16/9", // Giữ tỷ lệ ảnh, có thể chỉnh theo 4/3 hoặc khác nếu cần
+    objectFit: "cover", // Ảnh điền khung mà không bị méo
+    borderTopLeftRadius: "10px",
+    borderTopRightRadius: "10px",
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+  }}
+/>
+
+
+
           <div className="card-body">
             <h3
               className="card-title"
@@ -82,16 +89,18 @@ const PostDetail = () => {
                     color: "#555",
                   }}
                 ></h5>
-                <img
-                  src={subtitle.imageUrl}
-                  alt="Subtitle"
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                    borderRadius: "8px",
-                    boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
+               {subtitle.imageUrl && subtitle.imageUrl.trim() !== "" && (
+  <img
+    src={subtitle.imageUrl}
+    alt="Subtitle"
+    style={{
+      maxWidth: "100%",
+      height: "auto",
+      borderRadius: "8px",
+      boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.1)",
+    }}
+  />
+)}
               </div>
             ))}
           </div>

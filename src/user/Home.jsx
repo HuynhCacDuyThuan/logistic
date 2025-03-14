@@ -8,7 +8,9 @@ import Footer from "../component/Footer";
 import Header from "../component/Header";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../App.css";
+import "../css/zto.css"
 import { motion } from "framer-motion"; // 🎭 Animation Library
+import { API_URL_All } from "../api";
 
 const Home = () => {
   const [isScrolled, setIsScrolled] = useState(false); 
@@ -26,7 +28,7 @@ const Home = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetch("http://14.225.29.33:81/api/banner/all");
+      const response = await fetch(`${API_URL_All}/api/banner/all`);
       if (response.ok) {
         const data = await response.json();
         if (data.length > 0) {
@@ -56,44 +58,42 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <div className="header" >
-        <Header />
+    <div className="page-container">
+  <Header />
+
+  <div className="content"> {/* Bọc nội dung vào đây */}
+    {/* Hero Section */}
+    <section>
+      <div className="overlay"></div>
+    </section>
+
+    {/* Product Grid Title */}
+    <section className="py-5 mt-3 bg-zto text-white">
+      <div className="container">
+        <motion.h2
+          className="text-center fw-bold title-text"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <i className="fas fa-truck-fast text-warning me-2"></i> Dịch vụ 
+          <i className="fas fa-shipping-fast text-warning ms-2"></i>
+        </motion.h2>
+        <div className="underline"></div>
       </div>
+    </section>
 
-      {/* Hero Section */}
-      <section
-      
-       
-      >
-        <div className="overlay"></div> {/* 🌟 Overlay giúp chữ nổi bật */}
-       
-      </section>
+    {/* Product Grid */}
+    <section id="products" className="product-grid py-4">
+      <div className="container">
+        <Services />
+      </div>
+    </section>
+  </div> {/* Đóng content */}
 
-      {/* Product Grid Title */}
-      <section className="product-grid-title py-5 mt-3">
-        <div className="container">
-          <motion.h2
-            className="text-center fw-bold title-text"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <i className="fas fa-truck-fast text-warning me-2"></i> Dịch vụ <i className="fas fa-shipping-fast text-warning ms-2"></i>
-          </motion.h2>
-          <div className="underline"></div>
-        </div>
-      </section>
+  <Footer /> {/* Footer luôn nằm ở dưới */}
+</div>
 
-      {/* Product Grid */}
-      <section id="products" className="product-grid py-4">
-        <div className="container">
-          <Services />
-        </div>
-      </section>
-
-      <Footer />
-    </div>
   );
 };
 

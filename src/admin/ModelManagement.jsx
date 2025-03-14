@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setSelectedOrderId } from '../redux/userSlice';
 import Header from '../component/Header';
 import AdminHeader from '../component/AdminHeader';
+import { API_URL_All } from '../api';
 
 const ModelManagement = () => {
   const [models, setModels] = useState([]);
@@ -49,7 +50,7 @@ const ModelManagement = () => {
     }
   
     try {
-      const response = await axios.post("http://14.225.29.33:81/api/model-details", {
+      const response = await axios.post(`${API_URL_All}/api/model-details`, {
         name: formData.name,
         modelId: selectedModel.id, // Gửi ID của Model
         activeFlag: true,
@@ -75,7 +76,7 @@ const ModelManagement = () => {
   useEffect(() => {
     const fetchModels = async () => {
       try {
-        const response = await axios.get('http://14.225.29.33:81/api/models/active');
+        const response = await axios.get(`${API_URL_All}/api/models/active`);
         setModels(response.data);
       } catch (error) {
         console.error('There was an error fetching the models:', error);
@@ -96,23 +97,20 @@ const ModelManagement = () => {
       createdDate: createdDate || new Date(),
       modifiedDate,
     };
-
+  
     try {
-      if (isEditing && selectedModel) {
-        const response = await axios.put(`http://14.225.29.33:81/api/models/${selectedModel.id}`, modelData);
-        setModels(models.map((model) =>
-          model.id === selectedModel.id ? response.data : model
-        ));
-        setIsEditing(false);
-      } else {
-        const response = await axios.post('http://14.225.29.33:81/api/models', modelData);
-        setModels([...models, response.data]);
-      }
+      const response = await axios.post(`${API_URL_All}/api/models`, modelData);
+      
+      // Cập nhật danh sách models sau khi thêm thành công
+      setModels([...models, response.data]);
+      
+      // Xóa dữ liệu nhập
       clearForm();
     } catch (error) {
       console.error("There was an error submitting the model:", error);
     }
   };
+  
 
   const clearForm = () => {
     setName('');
@@ -128,7 +126,7 @@ const ModelManagement = () => {
     // Xác nhận xóa
     try {
       // Gọi API DELETE để xóa model
-      await axios.delete(`http://14.225.29.33:81/api/models/${id}`);
+      await axios.delete(`${API_URL_All}/api/models/${id}`);
   
       // Cập nhật lại state models sau khi xóa thành công
       setModels(models.filter(model => model.id !== id));
@@ -166,7 +164,32 @@ const ModelManagement = () => {
    
     <div className="container mt-5">
       
-     
+    <div className="mb-3">
+  <h2>Thêm Model Mới</h2>
+  <form onSubmit={handleSubmit}>
+    <div className="row align-items-center">
+      {/* Input tên Model */}
+      <div className="col-md-12 col-lg-10">
+        <label className="form-label">Tên Model</label>
+        <input
+          type="text"
+          className="form-control w-100" // Đảm bảo input kéo dài hết cột
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
+
+      {/* Nút Thêm Model */}
+      <div className="col-md-4 col-lg-2 mt-4">
+        <button type="submit" className="btn btn-primary w-100">
+          Thêm Model
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
 
       <div className="card shadow-lg mb-5">
         <div className="card-body">

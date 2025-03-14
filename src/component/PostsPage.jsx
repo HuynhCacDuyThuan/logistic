@@ -4,6 +4,7 @@ import axios from "axios";
 import AdminHeader from "./AdminHeader";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL_All } from "../api";
 const PostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const PostsPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://14.225.29.33:81/api/posts/");
+        const response = await axios.get(`${API_URL_All}/api/posts/`);
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
@@ -28,7 +29,7 @@ const PostsPage = () => {
   const handleDelete = async (id) => {
 
       try {
-        await axios.delete(`http://14.225.29.33:81/api/posts/${id}`);
+        await axios.delete(`${API_URL_All}/api/posts/${id}`);
         const updatedPosts = posts.filter((post) => post.id !== id);
         setPosts(updatedPosts);
         toast.success("Xóa bài viết thành công!", { position: "top-right" });

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://HuynhCacDuyThuan.github.io/logistic",
+  "proxy": "https://zto.com.vn",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@react-oauth/google": "^0.12.1",
@@ -22,6 +23,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.29.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.10.1",
     "react-toastify": "^11.0.5",
     "redux-persist": "^6.0.0",
     "sweetalert2": "^11.17.2",

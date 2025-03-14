@@ -7,7 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Modal } from "bootstrap";
 import Swal from 'sweetalert2';
-const API_URL = "http://14.225.29.33:81/api/model-details";
+import { API_URL_All } from "../api";
+const API_URL = `${API_URL_All}/api/model-details`;
 
 const ModelDetailComponent = () => {
   const [modelDetails, setModelDetails] = useState([]);
@@ -179,12 +180,12 @@ const ModelDetailComponent = () => {
                         >
                           <FaEdit />
                         </button>
-                        <button
+                        {/* <button
                           onClick={() => handleDelete(detail.id)}
                           className="btn btn-danger btn-sm"
                         >
                           <FaTrash />
-                        </button>
+                        </button> */}
                       </td>
                     </tr>
                   ))

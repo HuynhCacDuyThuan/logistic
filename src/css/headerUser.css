@@ -29,9 +29,9 @@ img.Logo {
   padding: 10px 15px;
 }
 
-.navbar-nav .nav-link:hover {
+/* .navbar-nav .nav-link:hover {
   color:  #007bff !important;
-}
+} */
 
 .btn-outline-light {
   border-color: white;
@@ -74,10 +74,12 @@ img.Logo {
     top: 80px;
     left: 0;
     width: 100%;
-    background: #ffff;
+    background-color: #004d9f !important;
     z-index: 10;
   }
-
+  .col-11.text-white.d-flex.align-items-center.justify-content-end.px-3 {
+   width: 280px
+  }
   .navbar-nav {
     display: flex;
     justify-content: center;

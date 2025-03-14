@@ -5,6 +5,7 @@ import Header from "../component/Header";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"; // 🎭 Animation Library
+import { API_URL_All } from "../api";
 const ServicesPage = () => {
   const [services, setServices] = useState([]);
 
@@ -12,7 +13,7 @@ const ServicesPage = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("http://14.225.29.33:81/api/posts/");
+        const response = await axios.get(`${API_URL_All}/api/posts/`);
         setServices(response.data); // Set the fetched data to state
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -29,7 +30,7 @@ const ServicesPage = () => {
       </div>
       <div className="container-fluid p-0">
         {/* Hero Section */}
-        <section className="product-grid-title py-5 mt-3">
+        <section className="py-5 mt-3 bg-zto text-white">
         <div className="container">
           <motion.h2
             className="text-center fw-bold title-text"

@@ -8,6 +8,7 @@ import "react-quill/dist/quill.snow.css"; // Import the Quill styles
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL_All } from "../api";
 const convertToBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -25,7 +26,7 @@ const EditPostPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://14.225.29.33:81/api/posts/${id}`);
+        const response = await axios.get(`${API_URL_All}/api/posts/${id}`);
         setPost(response.data);
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -90,14 +91,14 @@ const EditPostPage = () => {
   
     try {
       // Send PUT request to update the post
-      await axios.put(`http://14.225.29.33:81/api/posts/${id}`, formData, {
+      await axios.put(`${API_URL_All}/api/posts/${id}`, formData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
      toast.success("Bài viết đã được cập nhật thành công!", { position: "top-right" });
    
-      navigate("/Admin"); // Navigate back to posts list
+    
     } catch (error) {
       console.error("Có lỗi khi cập nhật bài viết:", error.response?.data || error.message);
     }

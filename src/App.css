@@ -44,6 +44,34 @@ th , td{
   text-align: center;
   display: inline-block;
 }
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Chiều cao tối thiểu bằng màn hình */
+}
+
+html, body {
+  height: 100vh; /* Đảm bảo toàn bộ trang chiếm đủ chiều cao màn hình */
+  margin: 0;
+  padding: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Giữ chiều cao tối thiểu */
+}
+
+.content {
+  flex-grow: 1; /* Đẩy footer xuống nếu nội dung ngắn */
+}
+
+.footer {
+  padding: 10px 0;
+  text-align: center;
+ 
+}
+
 
 /* Các lớp màu cho từng trạng thái */
 .status-confirmed {

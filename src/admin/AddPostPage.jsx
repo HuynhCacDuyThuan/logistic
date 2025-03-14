@@ -7,6 +7,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the Quill styles
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL_All } from "../api";
 // Function to convert an image file to base64
 const convertToBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -89,7 +90,7 @@ const AddPostPage = () => {
   
     try {
       // Send the data to the backend
-      const response = await axios.post("http://14.225.29.33:81/api/posts/add", formData, {
+      const response = await axios.post(`${API_URL_All}/api/posts/add`, formData, {
         headers: {
           "Content-Type": "application/json",
         },

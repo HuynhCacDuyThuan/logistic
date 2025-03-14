@@ -25,7 +25,7 @@ const AdminHeader = () => {
       <div className="container-fluid">
         {/* Logo Admin */}
         <Link to="/admin" className="navbar-brand fw-bold">
-          Quản Lý Admin
+          Admin
         </Link>
 
         {/* Toggle Button cho Mobile */}

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
+import { API_URL, API_URL_All } from "../api";
 
 const LoginPage = () => {
   const [email, setEmail] = useState(""); // State lưu trữ email nhập vào
@@ -29,7 +30,7 @@ const LoginPage = () => {
   
     try {
       console.log("Sending token to backend:", credential); 
-      const res = await fetch("http://14.225.29.33:81/login", {
+      const res = await fetch(`${API_URL_All}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: credential }),
@@ -169,12 +170,13 @@ const LoginPage = () => {
                       Đăng nhập
                     </button>
                   </div>
-                  <div className="text-center">
-                    <GoogleLogin 
-                      onSuccess={responseGoogle}
-                      onError={() => console.log('Login Failed')}
-                    />
-                  </div>
+                  <div className="d-flex justify-content-center ">
+  <GoogleLogin 
+    onSuccess={responseGoogle}
+    onError={() => console.log('Login Failed')}
+  />
+</div>
+
                   {/* Liên kết Đăng ký */}
                 </form>
               </div>

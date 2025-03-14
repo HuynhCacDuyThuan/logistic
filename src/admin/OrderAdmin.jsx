@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { FaCheckCircle, FaPlus, FaTimesCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaLock, FaPlus, FaTimesCircle, FaUnlock } from 'react-icons/fa';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import AdminHeader from '../component/AdminHeader';
 import Footer from '../component/Footer';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Swal from 'sweetalert2';
+import { API_URL_All } from '../api';
 function OrderAdmin() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchDate, setSearchDate] = useState('');
@@ -17,7 +19,6 @@ function OrderAdmin() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,26 +28,23 @@ function OrderAdmin() {
   const fetchOrders = async () => {
     try {
       const formattedDate = searchDate ? new Date(searchDate).toISOString().split("T")[0] : null;
-
-
-  
-      const response = await axios.get(`http://14.225.29.33:81/api/import-orders`, {
-        params: { 
-          page: currentPage - 1, 
-          size: itemsPerPage, 
-          search: searchQuery.trim(), 
+      const response = await axios.get(`${API_URL_All}/api/import-orders`, {
+        params: {
+          page: currentPage - 1,
+          size: itemsPerPage,
+          search: searchQuery.trim(),
           createdDate: formattedDate // ✅ Gửi ngày đúng định dạng
         }
       });
-  
-      console.log(`Fetching: http://14.225.29.33:81/api/import-orders?page=${currentPage - 1}&size=${itemsPerPage}&search=${searchQuery}&createdDate=${formattedDate}`);
-  
+
+      
+
       const processedOrders = response.data.content.map((order) => ({
         ...order,
         tqCode: order.cnShippingCode ? order.cnShippingCode.substring(0, 3) : "",
         vnCode: order.vnShippingCode ? order.vnShippingCode.substring(0, 3) : "",
       }));
-  
+
       setOrders(processedOrders);
       setTotalPages(response.data.totalPages);
       setLoading(false);
@@ -56,23 +54,40 @@ function OrderAdmin() {
       setLoading(false);
     }
   };
-  
 
   const handleDeleteOrder = async (id) => {
-    
-    
-    try {
-      await axios.delete(`http://14.225.29.33:81/api/import-orders/${id}`);
-      setOrders(orders.filter((order) => order.id !== id));
-    
-      toast.success("Xóa đơn hàng thành công!", { position: "top-right" });
-        
-    } catch (error) {
-      console.error("Lỗi khi xóa đơn hàng:", error);
-    
-    }
+    // Hiển thị hộp thoại xác nhận
+    Swal.fire({
+      title: "Bạn có chắc chắn?",
+      text: "Sau khi xóa, bạn sẽ không thể khôi phục đơn hàng này!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Xóa ngay!",
+      cancelButtonText: "Hủy"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${API_URL_All}/api/import-orders/${id}`);
+          
+          // Cập nhật lại danh sách đơn hàng
+          setOrders(orders.filter((order) => order.id !== id));
+  
+          // Hiển thị thông báo thành công
+          toast.success("Xóa đơn hàng thành công!", { position: "top-right" });
+  
+          // Hiển thị thông báo SweetAlert2 sau khi xóa thành công
+          Swal.fire("Đã xóa!", "Đơn hàng đã được xóa.", "success");
+        } catch (error) {
+          console.error("Lỗi khi xóa đơn hàng:", error);
+          
+          // Hiển thị cảnh báo nếu có lỗi
+          Swal.fire("Lỗi!", "Không thể xóa đơn hàng.", "error");
+        }
+      }
+    });
   };
-
   const handleChangeItemsPerPage = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10));
     setCurrentPage(1);
@@ -81,62 +96,51 @@ function OrderAdmin() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   const handleAddOrder = () => {
     navigate("/add-order")
-     };
+  };
+
   return (
     <div>
-     
       <div className="container-fluid p-0">
-        <AdminHeader/>
+        <AdminHeader />
         <div className="container-fluid row mt-2">
           <div className="card p-3 w-100 shadow-sm border">
-            <h3 className="mb-4 text-white p-3 bg-dark">Quản lý Đơn Hàng</h3>
+            <h3 className="mb-2 text-white p-3 bg-dark">Đơn Hàng</h3>
+            <div className="mb-2 d-flex flex-column flex-md-row gap-3 align-items-center">
+              <div className="input-group" style={{ maxWidth: '300px' }}>
+              <input
+  type="text"
+  className="form-control"
+  placeholder="Tìm kiếm..."
+  value={searchQuery}
+  onChange={(e) => {
+    setSearchQuery(e.target.value);
+    setSearchDate(""); // Reset ngày khi nhập vào ô tìm kiếm
+  }}
+/>
 
-            <div className="mb-4 d-flex flex-column flex-md-row gap-3 align-items-center">
-              <div className="input-group mt-3" style={{ maxWidth: '300px' }}>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  placeholder="tìm kiếm..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
                 <button className="btn btn-primary" type="button">Search</button>
               </div>
+              <div className="input-group" style={{ maxWidth: '300px' }}>
+              <input
+  type="date"
+  className="form-control"
+  value={searchDate}
+  onChange={(e) => {
+    setSearchDate(e.target.value);
+    setSearchQuery(""); // Reset search query khi chọn ngày mới
+  }}
+/>
 
-              <div className="input-group mt-3" style={{ maxWidth: '300px' }}>
-                <input 
-                  type="date" 
-                  className="form-control" 
-                  value={searchDate}
-                  onChange={(e) => setSearchDate(e.target.value)}
-                />
               </div>
-
-              {/* <div className="input-group mt-3" style={{ maxWidth: '200px' }}>
-                <label className="me-2 align-self-center">Show</label>
-                <select 
-                  className="form-select" 
-                  value={itemsPerPage}
-                  onChange={handleChangeItemsPerPage}
-                >
-                  <option value={10}>10</option>
-                  <option value={20}>20</option>
-                  <option value={30}>30</option>
-                  <option value={50}>50</option>
-                </select>
-              </div> */}
-            </div>
-
-            <div className="text-end mb-2">
-              <button 
-                className="btn btn-success" 
-                onClick={handleAddOrder} 
-                title="Add New Order"
-              >
-                <FaPlus /> Thêm Đơn Hàng
-              </button>
+             
+              <div className="col text-end">
+                <button className="btn btn-success" onClick={handleAddOrder} title="Add New Order">
+                  <FaPlus /> Thêm Đơn Hàng
+                </button>
+              </div>
             </div>
             <div className="table-responsive">
               <table className="table table-bordered table-hover">
@@ -149,71 +153,59 @@ function OrderAdmin() {
                     <th rowSpan="2">Số Kiện</th>
                     <th rowSpan="2">Đơn vị</th>
                     <th rowSpan="2">Khối lượng</th>
-                    <th rowSpan="2">Giá Bảo Hiểm</th>
+                    <th rowSpan="2">Bảo Hiểm</th>
                     <th rowSpan="2">Phương Thức Lấy Hàng</th>
-                    <th rowSpan="2">Email Khách Hàng</th>
+                    <th rowSpan="2">Mã Khách Hàng</th>
                     <th rowSpan="2">Trạng Thái</th>
-                    <th rowSpan="2">Lock</th>
                     <th rowSpan="2"></th>
                   </tr>
                   <tr>
-                    <th className="text-center">TQ</th>
-                    <th className="text-center">Mã TQ</th>
-                    <th className="text-center">VN</th>
-                    <th className="text-center">Mã VN</th>
+                    <th colSpan="2" className="text-center">Mã TQ</th>
+                    <th colSpan="2" className="text-center">Mã VN</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map((order) => (
                     <tr key={order.id}>
-       <td>
-  {new Date(order.createdDate).toLocaleDateString("vi-VN", { month: "2-digit", day: "2-digit" })}{" "}
-  {new Date(order.createdDate).toLocaleTimeString("vi-VN", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false, // Định dạng giờ 24h
-  })}
-</td>
-
-
-                      <td>{order.lineId}</td>
-                      <td className="text-danger fw-bold text-center">{order.tqCode}</td>
-                      <td className="text-danger text-center">{order.cnShippingCode}</td>
-                      <td className="text-success text-center">{order.vnCode}</td>
-                      <td className="text-success text-center">{order.vnShippingCode}</td>
-                      <td>{order.name}</td>
-                      <td>{order.packageNumbers?.toLocaleString("vi-VN")}</td>
-                      <td>{order.packageUnitId}</td>
-                      <td>{order.packageUnitValue?.toLocaleString("vi-VN")}</td>
-                      <td>{order.insurancePrice ? order.insurancePrice.toLocaleString("vi-VN") : "0"}</td>
-
-                      <td>{order.shippingMethod}</td>
-                      <td>{order.emailCustomer}</td>
                       <td>
-  <span
-    className={"status-badge"}
-  >
-    {order.statusId}
-  </span>
+                        {new Date(order.createdDate).toLocaleDateString("vi-VN", { month: "2-digit", day: "2-digit" })}{" "}
+                        {new Date(order.createdDate).toLocaleTimeString("vi-VN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false, // Định dạng giờ 24h
+                        })}
+                      </td>
+                      <td>{order.lineId?.name}</td>
+
+                      <td className="text-danger fw-bold">{order.tqCode}</td>
+                      <td className="text-danger">{order.cnShippingCode}</td>
+                      <td className="text-success">{order.vnCode}</td>
+                      <td className="text-success">{order.vnShippingCode}</td>
+                      <td>{order.name}</td>
+                      <td className="text-end">{order.packageNumbers?.toLocaleString("vi-VN")}</td>
+                      <td>{order.packageUnitId?.name}</td>
+
+                      <td className="text-end">{order.packageUnitValue?.toLocaleString("vi-VN")}</td>
+                      <td className="text-end">{order.insurancePrice ? order.insurancePrice.toLocaleString("vi-VN") : "0"}</td>
+                      <td className="text-start">{order.shippingMethod}</td>
+                      <td>{order.user?.customerCode}</td>
+                      <td>
+  <span className="status-badge">{order.statusId?.name}</span>
 </td>
- <th >
-  {!order.locked ? (
-    <FaCheckCircle className="text-success" />
-  ) : (
-    <FaTimesCircle className="text-danger" />
-  )}
-</th>
+
                       <td className="text-center">
                         <div className="d-flex align-items-center justify-content-center gap-2">
-                          <button 
-                            className="btn btn-warning"
-                            onClick={() => navigate(`/edit-order/${order.id}`)}
-                          >
-                            <FiEdit size={20} />
-                          </button>
-                          <button className="btn btn-danger" onClick={() => handleDeleteOrder(order.id)}>
-                            <FiTrash2 size={20} />
-                          </button>
+                          {!order.locked ? (
+                            <FaUnlock className="text-success mt-1" />
+                          ) : (
+                            <FaLock className="text-danger mt-1" />
+                          )}
+                          <a onClick={() => navigate(`/edit-order/${order.id}`)}>
+                            <FiEdit className="text-warning" size={20} />
+                          </a>
+                          <a onClick={() => handleDeleteOrder(order.id)}>
+                            <FiTrash2 className="text-danger" size={20} />
+                          </a>
                         </div>
                       </td>
                     </tr>
@@ -221,8 +213,7 @@ function OrderAdmin() {
                 </tbody>
               </table>
             </div>
-
-            <div className="d-flex justify-content-end mt-4">
+            <div className="d-flex justify-content-end">
               <nav aria-label="Page navigation">
                 <ul className="pagination">
                   <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -243,7 +234,6 @@ function OrderAdmin() {
         </div>
       </div>
 
-     <Footer/>
     </div>
   );
 }
