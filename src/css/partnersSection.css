@@ -1,0 +1,106 @@
+/* Partners Section */
+.partners-section {
+    background-color: #fff; /* White background */
+  }
+  
+  /* Partners Header */
+  .partners-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #003087; /* Blue color to match ZTO branding */
+    margin-bottom: 2rem;
+  }
+  
+  /* Partner Logos */
+  .partners-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .partner-logo {
+    height: 50px; /* Adjust based on your logo sizes */
+    width: auto;
+  }
+  
+  /* Card Container */
+  .card-container {
+    border: 1px solid #ccc; /* Border bao quanh cả form và ảnh */
+    border-radius: 15px; /* Bo góc cho card */
+    overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+    background-color: #fff; /* Nền trắng cho card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng nhẹ để tạo chiều sâu */
+  }
+  
+  /* Form Container */
+  .form-container {
+    padding-right: 20px; /* Add spacing between form and illustration */
+    /* Xóa border riêng lẻ */
+  }
+  
+  /* Form Box */
+  .form-box {
+    background-color: #003087; /* Blue background */
+    padding: 2rem;
+    border-radius: 15px;
+    color: white;
+    height: 100%; /* Đảm bảo form-box chiếm toàn bộ chiều cao container */
+  }
+  
+  /* Form Title */
+  .form-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Form Label */
+  .form-label {
+    font-weight: 500;
+  }
+  
+  /* Form Control */
+  .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 0.5rem;
+  }
+  
+  /* Form Button */
+  .form-button {
+    background-color: #28a745; /* Green button to match ZTO branding */
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .form-button:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  /* Illustration Container */
+  .illustration-container {
+    text-align: center;
+    display: flex; /* Sử dụng flex để căn chỉnh ảnh */
+    align-items: stretch; /* Đảm bảo ảnh kéo dài theo chiều cao */
+    padding: 0; /* Xóa padding mặc định nếu không cần */
+    /* Xóa border riêng lẻ */
+  }
+  
+  /* Illustration Image */
+  .illustration-image {
+    max-width: 100%;
+    width: 100%; /* Đảm bảo ảnh lấp đầy chiều ngang */
+    height: 100%; /* Ảnh khớp với chiều cao của container */
+    object-fit: cover; /* Giữ tỷ lệ ảnh và lấp đầy container */
+  }
+  
+  /* Đảm bảo row không có margin thừa */
+  .row {
+    margin: 0; /* Xóa margin mặc định của row */
+  }

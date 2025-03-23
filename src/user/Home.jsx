@@ -11,6 +11,7 @@ import "../App.css";
 import "../css/zto.css"
 import { motion } from "framer-motion"; // 🎭 Animation Library
 import { API_URL_All } from "../api";
+import Banner from "../component/SectionBanner";
 
 const Home = () => {
   const [isScrolled, setIsScrolled] = useState(false); 
@@ -60,35 +61,15 @@ const Home = () => {
   return (
     <div className="page-container">
   <Header />
-
+<Banner></Banner>
   <div className="content"> {/* Bọc nội dung vào đây */}
     {/* Hero Section */}
     <section>
       <div className="overlay"></div>
     </section>
 
-    {/* Product Grid Title */}
-    <section className="py-5 mt-3 bg-zto text-white">
-      <div className="container">
-        <motion.h2
-          className="text-center fw-bold title-text"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <i className="fas fa-truck-fast text-warning me-2"></i> Dịch vụ 
-          <i className="fas fa-shipping-fast text-warning ms-2"></i>
-        </motion.h2>
-        <div className="underline"></div>
-      </div>
-    </section>
-
-    {/* Product Grid */}
-    <section id="products" className="product-grid py-4">
-      <div className="container">
-        <Services />
-      </div>
-    </section>
+    
+    
   </div> {/* Đóng content */}
 
   <Footer /> {/* Footer luôn nằm ở dưới */}

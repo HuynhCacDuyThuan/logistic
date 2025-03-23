@@ -71,7 +71,7 @@ const EditOrder = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch(`${API_URL_All}/api/users`);
+        const response = await fetch(`${API_URL_All}/api/users/all`);
         if (!response.ok) {
           throw new Error("Lỗi khi lấy danh sách khách hàng");
         }

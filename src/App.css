@@ -1,8 +1,9 @@
 h5 {
-    font-size: 1.0rem !important;
-    font-weight: 300 !important;
-    margin-bottom: 10px;
-    color: rgb(85, 85, 85);
+  font-size: 1.0rem !important;
+  font-weight: 500 !important;
+  margin-bottom: 10px;
+  /* color: rgb(85, 85, 85); */
+  color: black;
 }
 .empty-orders-container {
     display: flex;
@@ -102,9 +103,19 @@ html, body {
   
   /* Tiêu đề */
   .title-text {
-    font-size: 2.5rem;
-    font-weight: bold;
-    letter-spacing: 2px;
+    
+    color: #000;
+    
+    position: relative;
+    opacity: 0;
+    animation: textFadeIn 1.2s ease-in-out forwards;
+  }
+
+  
+  .title-text1 {
+    
+    color: #fff;
+    
     position: relative;
     opacity: 0;
     animation: textFadeIn 1.2s ease-in-out forwards;
@@ -120,6 +131,8 @@ html, body {
     opacity: 0;
     animation: slideIn 1.2s ease-in-out forwards 0.3s;
   }
+
+  
   
   /* Hiệu ứng chữ xuất hiện */
   @keyframes textFadeIn {

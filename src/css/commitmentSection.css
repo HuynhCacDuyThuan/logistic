@@ -1,0 +1,133 @@
+/* Commitment Section */
+.commitment-section {
+    background-color: #28a745; /* Nền trắng */
+    padding: 3rem 0; /* Padding trên và dưới */
+  }
+  
+  /* Title */
+  .commitment-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffff; /* Màu xanh lá cây giống trong ảnh */
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  
+  /* Subtitle */
+  .commitment-subtitle {
+    font-size: 1.2rem;
+    color: #FFF; /* Màu xám cho phụ đề */
+    max-width: 600px; /* Giới hạn chiều rộng để dễ đọc */
+    margin: 0 auto; /* Căn giữa */
+    margin-bottom: 2rem;
+    white-space: normal; /* Cho phép xuống dòng */
+    overflow-wrap: break-word; /* Đảm bảo từ dài xuống dòng */
+    line-height: 1.5; /* Khoảng cách dòng */
+  }
+  
+  /* Commitment Items */
+  .commitment-items {
+    margin-bottom: 1rem; /* Khoảng cách giữa các hàng */
+  }
+  
+  .commitment-item {
+    margin-bottom: 1rem; /* Khoảng cách giữa các item trong cùng 1 hàng */
+  }
+  
+  .item-box1 {
+    background-color: #28a745; /* Màu xanh lá cây giống trong ảnh */
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: left;
+    height: 100%;
+    color: white; /* Chữ trắng để nổi trên nền xanh */
+  }
+  
+  /* Item Title and Description */
+  .item-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .item-description {
+    font-size: 1rem;
+    white-space: normal; /* Cho phép văn bản xuống dòng tự nhiên */
+    overflow-wrap: break-word; /* Đảm bảo từ dài sẽ xuống dòng */
+    line-height: 1.5; /* Tăng khoảng cách giữa các dòng để dễ đọc */
+  }
+  
+  /* Responsive Design */
+  
+  /* Tablet (màn hình từ 768px đến 991px) */
+  @media (max-width: 991px) {
+    .commitment-title {
+      font-size: 2rem;
+    }
+  
+    .commitment-subtitle {
+      font-size: 1rem;
+    }
+  
+    .item-box {
+      padding: 1rem;
+    }
+  
+    .item-title {
+      font-size: 1.3rem;
+    }
+  
+    .item-description {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Mobile (màn hình dưới 768px) */
+  @media (max-width: 767px) {
+    .commitment-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .commitment-subtitle {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .commitment-item {
+      margin-bottom: 1.5rem;
+    }
+  
+    .item-box {
+      padding: 0.8rem;
+      text-align: center; /* Căn giữa trên mobile */
+    }
+  
+    .item-title {
+      font-size: 1.2rem;
+    }
+  
+    .item-description {
+      font-size: 0.85rem;
+    }
+  }
+  
+  /* Mobile nhỏ (dưới 576px) */
+  @media (max-width: 576px) {
+    .commitment-title {
+      font-size: 1.5rem;
+    }
+  
+    .commitment-subtitle {
+      font-size: 0.8rem;
+    }
+  
+    .item-title {
+      font-size: 1rem;
+    }
+  
+    .item-description {
+      font-size: 0.8rem;
+    }
+  }

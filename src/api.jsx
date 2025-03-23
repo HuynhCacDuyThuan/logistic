@@ -1,2 +1,2 @@
-export const API_URL_All = "https://api.zto.com.vn";
+export const API_URL_All = "http://localhost:81";
 

@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import CustomerSelect from "./CustomerSelect";
-const API_URL = "https://api.zto.com.vn/api/import-orders"; // Adjusted API URL
+import { API_URL_All } from "../api";
+const API_URL =`${API_URL_All}/api/import-orders`; // Adjusted API URL
 
 const AddOrder = () => {
   const [units, setUnits] = useState([]);
@@ -22,7 +23,7 @@ const AddOrder = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("https://api.zto.com.vn/api/users", {
+        const response = await fetch(`${API_URL_All}/api/users/all`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -57,9 +58,9 @@ const AddOrder = () => {
         };
 
         const [unitData, lineData, statusData] = await Promise.all([
-          fetchWithCheck("https://api.zto.com.vn/api/model-details/by-model/2"),
-          fetchWithCheck("https://api.zto.com.vn/api/model-details/by-model/1"),
-          fetchWithCheck("https://api.zto.com.vn/api/model-details/by-model/3"),
+          fetchWithCheck(`${API_URL_All}/api/model-details/by-model/2`),
+          fetchWithCheck(`${API_URL_All}/api/model-details/by-model/1`),
+          fetchWithCheck(`${API_URL_All}/api/model-details/by-model/3`),
         ]);
 
         setUnits(unitData);

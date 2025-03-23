@@ -1,8 +1,15 @@
 import Select from "react-select";
 
 const CustomerSelectEdit = ({ customers, selectedUserId, setFieldValue, error }) => {
+  // Kiểm tra xem customers có phải là mảng không
+  if (!Array.isArray(customers)) {
+    console.error("customers is not an array:", customers);
+    return <div>Đã xảy ra lỗi khi tải dữ liệu khách hàng.</div>;
+  }
+
+  // Tạo danh sách options từ customers
   const options = customers
-    .filter((customer) => customer.customerCode)
+    .filter((customer) => customer.customerCode) // Lọc những khách hàng có customerCode
     .map((customer) => ({
       value: customer.id,
       label: `${customer.customerCode}`,

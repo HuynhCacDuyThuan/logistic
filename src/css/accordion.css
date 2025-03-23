@@ -1,0 +1,51 @@
+.accordion-section {
+    background-color: #003087; /* Màu nền xanh đậm */
+    padding: 40px 0;
+    color: #fff;
+  }
+  
+  .accordion-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .accordion-item {
+    border: 1px solid #fff; /* Viền trắng */
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between; /* Căn tiêu đề và icon ra hai bên */
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  .accordion-header.active {
+    background-color: rgba(255, 255, 255, 0.1); /* Nền sáng hơn khi tab mở */
+  }
+  
+  .accordion-icon {
+    font-size: 1rem;
+    color: #fff;
+  }
+  
+  .accordion-content {
+    display: none; /* Ẩn nội dung mặc định */
+    padding: 15px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    background-color: rgba(255, 255, 255, 0.05); /* Nền nhạt hơn cho nội dung */
+  }
+  
+  .accordion-content.open {
+    display: block; /* Hiển thị nội dung khi tab mở */
+  }

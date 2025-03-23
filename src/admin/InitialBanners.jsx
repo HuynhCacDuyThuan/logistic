@@ -127,7 +127,7 @@ const AddBannerForm = ({ fetchBanners }) => {
     formData.append("file", values.image);
 
     try {
-      const response = await fetch("https://api.zto.com.vn/api/banner/add", {
+      const response = await fetch("http://localhost:81/api/banner/add", {
         method: "POST",
         body: formData,
       });
@@ -201,7 +201,7 @@ const EditBannerForm = ({ fetchBanners, banner, setEditingBanner }) => {
 
     try {
       const response = await fetch(
-        `https://api.zto.com.vn/api/banner/update/${banner.id}`,
+        `http://localhost:81/api/banner/update/${banner.id}`,
         {
           method: "PUT",
           body: formData,

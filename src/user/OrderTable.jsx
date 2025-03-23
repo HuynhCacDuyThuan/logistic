@@ -8,7 +8,8 @@ import "../App.css"
 import "../css/zto.css"
 import Footer from '../component/Footer';
 import { FiEdit } from 'react-icons/fi';
-import { FaCheckCircle, FaLock, FaPlus, FaTimesCircle, FaUnlock } from 'react-icons/fa';
+import { FaCheckCircle, FaLock, FaPlus, FaSortDown, FaSortUp, FaTimesCircle, FaUnlock } from 'react-icons/fa';
+import { API_URL_All } from '../api';
 
 
 function OrderTable() {
@@ -24,8 +25,10 @@ function OrderTable() {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
     const [searchDate, setSearchDate] = useState('');
-  const [userId , setUserId ] = useState(0); // ✅ State để lưu email của user
-  const [email, setEmail] = useState(""); // ✅ State để lưu email của user
+  const [userId , setUserId ] = useState(0); 
+  const [email, setEmail] = useState(""); 
+  const [sortColumn, setSortColumn] = useState(null);
+    const [sortDirection, setSortDirection] = useState('asc');
   useEffect(() => {
     if (user && user.email) {
       setEmail(user.email);
@@ -40,26 +43,26 @@ function OrderTable() {
     if (userId > 0) {  // Chỉ gọi API khi `userId` hợp lệ
       fetchOrders();
     }
-  }, [userId, currentPage, itemsPerPage, searchQuery, searchDate]);
+  }, [userId, currentPage, itemsPerPage, searchQuery, searchDate, sortColumn, sortDirection]);
   const fetchUserByEmail = async () => {
     try {
    
-      const res = await axios.get(`https://api.zto.com.vn/api/users/email/${user.email}`);
+      const res = await axios.get(`${API_URL_All}/api/users/email/${user.email}`);
       
       if (res.data) {
-        console.log("✅ User Data:", res.data);
-     setUserId(res.data.id); // ✅ Lưu ID vào Redux
+        console.log(" User Data:", res.data);
+     setUserId(res.data.id); 
      setCode(res.data.customerCode);
         fetchOrders(res.data.id); // Gọi API lấy đơn hàng với userId
       }
     } catch (error) {
-      console.error("❌ Lỗi khi lấy user:", error);
+      console.error(" Lỗi khi lấy user:", error);
       setError("Không thể lấy thông tin người dùng.");
     }
   };
-
   const fetchOrders = async () => {
     try {
+      // Kiểm tra userId
       if (!userId) {
         console.warn("⚠ Không có userId, không gọi API.");
         return;
@@ -67,9 +70,10 @@ function OrderTable() {
   
       console.log(`📡 Fetching orders for userId: ${userId}`);
   
+      // Định dạng ngày nếu có searchDate
       const formattedDate = searchDate ? new Date(searchDate).toISOString().split("T")[0] : null;
   
-      // Chuẩn bị params, nếu có searchDate thì bỏ qua searchQuery
+      // Chuẩn bị params
       let params = {
         page: currentPage - 1,
         size: itemsPerPage,
@@ -79,31 +83,48 @@ function OrderTable() {
         params.createdDate = formattedDate;
       } else if (searchQuery.trim() !== "") {
         params.search = searchQuery.trim();
-        params.createdDate = ""; // ✅ Khi có searchQuery, đặt ngày thành rỗng
+        params.createdDate = ""; // Khi có searchQuery, đặt ngày thành rỗng
       }
   
-      const response = await axios.get(`https://api.zto.com.vn/api/import-orders/user/${userId}`, { params });
+      // Gọi API với userId trong URL
+      const response = await axios.get(`${API_URL_All}/api/import-orders/user/${userId}`, { params });
   
-      console.log("✅ API Response:", response.data);
+      console.log(" API Response:", response.data);
   
-      const processedOrders = response.data.content.map((order) => ({
+      // Xử lý dữ liệu trả về
+      let processedOrders = response.data.content.map((order) => ({
         ...order,
         tqCode: order.cnShippingCode ? order.cnShippingCode.substring(0, 3) : "",
         vnCode: order.vnShippingCode ? order.vnShippingCode.substring(0, 3) : "",
       }));
   
+      // Sắp xếp client-side nếu cần
+      if (sortColumn) {
+        processedOrders.sort((a, b) => {
+          const aValue = getNestedValue(a, sortColumn);
+          const bValue = getNestedValue(b, sortColumn);
+          if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+          if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+          return 0;
+        });
+      }
+  
+      // Cập nhật state
       setOrders(processedOrders);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error("❌ Lỗi khi lấy dữ liệu:", error);
-      setOrders([]); // ✅ Trả về mảng rỗng nếu lỗi
+      console.error("Lỗi khi lấy dữ liệu:", error);
+      setOrders([]); // Trả về mảng rỗng nếu có lỗi
       setError("Không thể tải dữ liệu.");
     } finally {
-      setLoading(false);
+      setLoading(false); // Đảm bảo loading luôn được tắt
     }
   };
   
-  
+  const getNestedValue = (obj, path) => {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  };
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -116,6 +137,24 @@ function OrderTable() {
     }
   };
 
+  const handleChangeItemsPerPage = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10));
+    setCurrentPage(1);
+  };
+  const handleSort = (column) => {
+    if (sortColumn === column) {
+      if (sortDirection === "asc") {
+        setSortDirection("desc");
+      } else {
+        setSortColumn(null);
+        setSortDirection("asc");
+      }
+    } else {
+      setSortColumn(column);
+      setSortDirection("asc");
+    }
+    setCurrentPage(1);
+  };
   return (
     <div>
       <div className="header" >
@@ -127,39 +166,49 @@ function OrderTable() {
 
           {/* Right side: Dịch vụ */}
           <div className="col-md-12 col-12 mb-5"> {/* Added col-12 for responsiveness */}
-            <div className="card p-3 shadow-sm border">
+            <div className="p-3 ">
               {/* Table Section with Scroll for Small Devices */}
               <div className="table-responsive">
                 <div className="card p-3 w-100 shadow-sm border">
                   <h3 className="mb-2 text-white p-3 bg-zto" >Đơn Hàng</h3>
                   <div className="mb-2 d-flex flex-column flex-md-row gap-3 align-items-center">
-                               <div className="input-group" style={{ maxWidth: '300px' }}>
-                               <div className="input-group" style={{ maxWidth: '300px' }}>
-  <input
-    type="text"
-    className="form-control"
-    placeholder="tìm kiếm..."
-    value={searchQuery}
-    onChange={(e) => {
-      setSearchQuery(e.target.value);
-      setSearchDate("");
-    }}
-  />
-  <button className="btn btn-primary" type="button">Search</button>
-</div>
-                           
-                               </div>
-                               <div className="input-group" style={{ maxWidth: '300px' }}>
-                              <input
-  type="date"
-  className="form-control"
-  value={searchDate}
-  onChange={(e) => {
-    setSearchDate(e.target.value);
-   setSearchQuery("");
-  }}
-/>
-                               </div>
+              <div className="input-group" style={{ maxWidth: '300px' }}>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Tìm kiếm..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setSearchDate("");
+                  }}
+                />
+                <button className="btn btn-primary" type="button">Search</button>
+              </div>
+              <div className="input-group" style={{ maxWidth: '300px' }}>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={searchDate}
+                  onChange={(e) => {
+                    setSearchDate(e.target.value);
+                    setSearchQuery("");
+                  }}
+                />
+              </div>
+              <div className="input-group" style={{ maxWidth: '150px' }}>
+                <select
+                  className="form-select"
+                  value={itemsPerPage}
+                  onChange={handleChangeItemsPerPage}
+                >
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+     
                               
                                <div className="col text-end">
                               {code !== null && code !== "" && (
@@ -185,20 +234,53 @@ function OrderTable() {
                       {/* Table Section */}
                       <div className="table-responsive">
                       <table className="table table-bordered table-hover">
-                <thead className="table-light">
-                  <tr>
-                    <th rowSpan="2">Ngày</th>
-                    <th rowSpan="2">Line</th>
-                    <th colSpan="4" className="text-center">Mã Vận Đơn</th>
-                    <th rowSpan="2">Tên sản phẩm</th>
-                    <th rowSpan="2">Số Kiện</th>
-                    <th rowSpan="2">Đơn vị</th>
-                    <th rowSpan="2">Khối lượng</th>
-                    <th rowSpan="2">Bảo Hiểm</th>
-                    <th rowSpan="2">Phương Thức Lấy Hàng</th>
-                    {/* <th rowSpan="2">Mã Khách Hàng</th> */}
-                    <th rowSpan="2">Trạng Thái</th>
-                    <th rowSpan="2"></th>
+               <thead className="table-light">
+                                 <tr>
+                                
+                                   <th rowSpan="2" onClick={() => handleSort('createdDate')} style={{ cursor: 'pointer' }}>
+                                     Ngày
+                                     {sortColumn === 'createdDate' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'createdDate' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                                   <th rowSpan="2" onClick={() => handleSort('lineId.name')} style={{ cursor: 'pointer' }}>
+                                     Line
+                                     {sortColumn === 'lineId.name' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'lineId.name' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                                   <th colSpan="4" className="text-center">Mã Vận Đơn</th>
+                                   <th rowSpan="2" onClick={() => handleSort('name')} style={{ cursor: 'pointer' }}>
+                                     Tên sản phẩm
+                                     {sortColumn === 'name' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'name' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                                   <th rowSpan="2" onClick={() => handleSort('packageNumbers')} style={{ cursor: 'pointer' }}>
+                                     Số Kiện
+                                     {sortColumn === 'packageNumbers' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'packageNumbers' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                                   <th rowSpan="2">Đơn vị</th>
+                                   <th rowSpan="2" onClick={() => handleSort('packageUnitValue')} style={{ cursor: 'pointer' }}>
+                                     Khối lượng
+                                     {sortColumn === 'packageUnitValue' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'packageUnitValue' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                                   <th rowSpan="2" onClick={() => handleSort('insurancePrice')} style={{ cursor: 'pointer' }}>
+                                     Bảo Hiểm
+                                     {sortColumn === 'insurancePrice' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'insurancePrice' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                                   <th rowSpan="2">Phương Thức Lấy Hàng</th>
+                                   <th rowSpan="2" onClick={() => handleSort('user.customerCode')} style={{ cursor: 'pointer' }}>
+                                     Mã Khách Hàng
+                                     {sortColumn === 'user.customerCode' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'user.customerCode' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                                   <th rowSpan="2" onClick={() => handleSort('statusId.name')} style={{ cursor: 'pointer' }}>
+                                     Trạng Thái
+                                     {sortColumn === 'statusId.name' && sortDirection === 'asc' && <FaSortUp className="ms-1" />}
+                                     {sortColumn === 'statusId.name' && sortDirection === 'desc' && <FaSortDown className="ms-1" />}
+                                   </th>
+                  
                   </tr>
                   <tr>
                     <th colSpan="2" className="text-center">Mã TQ</th>

@@ -33,7 +33,7 @@ const ServicesPage = () => {
         <section className="py-5 mt-3 bg-zto text-white">
         <div className="container">
           <motion.h2
-            className="text-center fw-bold title-text"
+            className="text-center fw-bold title-text1"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}

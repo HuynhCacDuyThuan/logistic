@@ -24,7 +24,7 @@ const AdminHeader = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container-fluid">
         {/* Logo Admin */}
-        <Link to="/admin" className="navbar-brand fw-bold">
+        <Link to="/admin" className="navbar-brand fw-bold ms-2">
           Admin
         </Link>
 
@@ -54,6 +54,9 @@ const AdminHeader = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link admin" to="/quan-li-model">Quản lý model</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link admin" to="/quan-li-doi-soat">Quản lý đối soát</Link>
             </li>
           </ul>
 

@@ -1,7 +1,178 @@
-.bg-zto {
-    background-color: #004d9f !important;
-}
 
 .text-white-important {
     color: #ffffff !important;
 }
+.accordion-item {
+  border-top: 1px solid #ccc !important;
+}
+.footer-logo {
+  margin-bottom: 0;
+}
+.office-info {
+  margin-top: 0;
+}
+.footer-copyright {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  margin-top: 20px;
+  background: #003087;
+}
+
+.footer-copyright p {
+  font-size: 0.9rem;
+  color: #ddd; /* Màu chữ tối để tương phản với nền sáng */
+}
+/* Footer Section */
+.footer-section {
+    background-color: #F5F5F5;; /* Màu xanh đậm giống trong ảnh */
+    color: white;
+    margin-top: -50px;
+  }
+  
+  /* Footer Content */
+  .footer-content {
+    margin-bottom: 2rem; /* Khoảng cách giữa nội dung và copyright */
+  }
+  
+  /* Logo */
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .footer-logo img {
+    max-width: 300px; /* Kích thước logo */
+  }
+  
+  /* Footer Columns */
+  .footer-column {
+    margin-bottom: 2rem;
+  }
+  
+  .footer-column h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  
+  .footer-column p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+  .social-links {
+    display: flex;
+    gap: 20px; /* Khoảng cách giữa Zalo và WeChat */
+    
+  }
+  
+  .social-item {
+    display: flex;
+    flex-direction: column; /* Sắp xếp QR code và icon theo cột */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    gap: 10px; /* Khoảng cách giữa QR code và icon */
+  }
+  
+  .social-qr {
+    width: 50px; /* Kích thước QR code */
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .social-icon {
+    width: 40px; /* Kích thước icon */
+    height: 40px;
+    object-fit: contain;
+  }
+  /* Copyright */
+  .footer-copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+  }
+  
+  .footer-copyright p {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  /* Responsive Design */
+  
+  /* Tablet (màn hình từ 768px đến 991px) */
+  @media (max-width: 991px) {
+    .footer-logo {
+      justify-content: center; /* Căn giữa logo trên tablet */
+    }
+   
+    .footer-column h5 {
+      font-size: 1.1rem;
+    }
+  
+    .footer-column p {
+      font-size: 0.85rem;
+    }
+  
+   
+  
+    .social-icon {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  
+  /* Mobile (màn hình dưới 768px) */
+  @media (max-width: 767px) {
+    .footer-logo {
+      margin-bottom: 1.5rem;
+    }
+    .vt1{
+      margin-left:0px !important;
+    }
+    .footer-column {
+      text-align: center; /* Căn giữa nội dung trên mobile */
+    }
+  
+    .footer-column h5 {
+      font-size: 1rem;
+    }
+  
+    .footer-column p {
+      font-size: 0.8rem;
+    }
+ 
+  
+    .social-icon {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .footer-copyright p {
+      font-size: 0.8rem;
+    }
+  }
+  
+  /* Mobile nhỏ (dưới 576px) */
+  @media (max-width: 576px) {
+    .footer-logo img {
+      max-width: 120px; /* Giảm kích thước logo trên mobile nhỏ */
+    }
+  
+    .footer-column h5 {
+      font-size: 0.9rem;
+    }
+  
+    .footer-column p {
+      font-size: 0.75rem;
+    }
+  
+    .social-icon {
+      width: 35px;
+      height: 35px;
+    }
+  
+    .footer-copyright p {
+      font-size: 0.7rem;
+    }
+  }

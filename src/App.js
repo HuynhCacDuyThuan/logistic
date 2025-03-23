@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./user/Home";
 import RegistrationPage from "./user/RegistrationPage";
@@ -26,11 +26,56 @@ import AddOrderUser from "./user/AddOrderUser";
 import EditOrderUser from "./user/EditOrderUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./redux/userSlice";
+import ReconciliationManagement from "./admin/ReconciliationManagement";
 const App = () => {
+
+  const user = useSelector((state) => state.user.user)  || {} ;
+
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('persist:root'); // Lấy persisted state từ localStorage
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      console.log(parsedUser)
+      const user = parsedUser.user && parsedUser.user !== "null" ? JSON.parse(parsedUser.user) : null;
+      if (user) {
+        dispatch(setUser(user)); // Nếu có user, dispatch action setUser vào Redux store
+      }
+    }
+  }, [dispatch]);
+
+ 
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<LoginPage />} />
+      {user.role === "user" ? (
+  <Route
+  path="/"
+  element={
+    <PrivateRoute roles={['user']}>
+      <Home  />
+    </PrivateRoute>
+  }
+/>
+) : user.role === "admin" ? (
+  <Route
+          path="/"
+          element={
+            <PrivateRoute roles={['admin']}>
+              <AdminPage />
+            </PrivateRoute>
+          }
+        />
+         
+) : (
+  <Route path="/" element={<LoginPage />} />
+  
+)}
+
 
       <Route
           path="/posts/:id"
@@ -75,6 +120,14 @@ const App = () => {
           element={
             <PrivateRoute roles={['admin']}>
               <AdminPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/quan-li-doi-soat"
+          element={
+            <PrivateRoute roles={['admin']}>
+              <ReconciliationManagement />
             </PrivateRoute>
           }
         />

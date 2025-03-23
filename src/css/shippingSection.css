@@ -1,0 +1,224 @@
+/* Shipping Section */
+.shipping-section {
+    position: relative;
+    width: 100%;
+    color: white;
+  }
+  
+  /* Background Image and Overlay */
+  .shipping-background {
+    background-image: url("https://static-images.vnncdn.net/vps_images_publish/000001/000003/2025/3/5/na-uy-viet-nam-cung-hop-tac-thuc-hien-hai-trinh-xanh-106351.jpg?width=0&s=RsOShCuKFoJVd_0QDZGgaQ");
+    background-size: cover;
+    background-position: center;
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .shipping-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Main Content */
+  .shipping-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 15px;
+  }
+  
+  /* Title */
+  .shipping-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+  
+  /* Shipping Items */
+  .shipping-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .shipping-item {
+    margin-bottom: 2rem;
+  }
+  
+  .item-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: left;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap; /* Cho phép nội dung trong item-box xuống dòng nếu cần */
+  }
+  
+  /* Icons */
+  .item-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+  
+  .triangle {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 40px solid white;
+  }
+  
+  .star {
+    background-image: url("https://img.icons8.com/ios-filled/50/ffffff/star.png");
+    background-size: cover;
+  }
+  
+  .circle {
+    background-color: white;
+    border-radius: 50%;
+  }
+  
+  .square {
+    background-color: white;
+  }
+  
+  /* Item Title and Description */
+  .item-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .item-description {
+    font-size: 1rem;
+    color: #ccc;
+    white-space: normal; /* Cho phép văn bản xuống dòng tự nhiên */
+    overflow-wrap: break-word; /* Đảm bảo từ dài sẽ xuống dòng */
+    word-break: break-all; /* Ép xuống dòng nếu từ quá dài không có khoảng trắng */
+    line-height: 1.5; /* Tăng khoảng cách giữa các dòng để dễ đọc */
+    width: 100%; /* Đảm bảo thẻ p chiếm toàn bộ chiều rộng còn lại trong flexbox */
+  }
+  
+  /* Responsive Design */
+  
+  /* Tablet (màn hình từ 768px đến 991px) */
+  @media (max-width: 991px) {
+    .shipping-background {
+      min-height: 500px;
+    }
+  
+    .shipping-title {
+      font-size: 2rem;
+    }
+  
+    .item-box {
+      padding: 1rem;
+    }
+  
+    .item-title {
+      font-size: 1.3rem;
+    }
+  
+    .item-description {
+      font-size: 0.9rem;
+    }
+  
+    .item-icon {
+      width: 30px;
+      height: 30px;
+    }
+  
+    .triangle {
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid white;
+    }
+  }
+  
+  /* Mobile (màn hình dưới 768px) */
+  @media (max-width: 767px) {
+    .shipping-background {
+      min-height: 400px;
+    }
+  
+    .shipping-title {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+    }
+  
+    .shipping-item {
+      margin-bottom: 1.5rem;
+    }
+  
+    .item-box {
+      padding: 0.8rem;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .item-title {
+      font-size: 1.2rem;
+    }
+  
+    .item-description {
+      font-size: 0.85rem;
+    }
+  
+    .item-icon {
+      width: 25px;
+      height: 25px;
+      margin-bottom: 0.5rem;
+    }
+  
+    .triangle {
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 25px solid white;
+    }
+  }
+  
+  /* Mobile nhỏ (dưới 576px) */
+  @media (max-width: 576px) {
+    .shipping-background {
+      min-height: 350px;
+    }
+  
+    .shipping-title {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .item-title {
+      font-size: 1rem;
+    }
+  
+    .item-description {
+      font-size: 0.8rem;
+    }
+  
+    .item-icon {
+      width: 20px;
+      height: 20px;
+    }
+  
+    .triangle {
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 20px solid white;
+    }
+  }
+
+  

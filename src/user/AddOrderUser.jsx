@@ -23,7 +23,7 @@ const AddOrderUser = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
     const [searchDate, setSearchDate] = useState('');
-  const [userId , setUserId ] = useState(0); // ✅ State để lưu email của user
+  const [userId , setUserId ] = useState(0); 
   
   useEffect(() => {
     if (user && user.email) {
@@ -42,13 +42,13 @@ const AddOrderUser = () => {
       const res = await axios.get(`${API_URL_All}/api/users/email/${user.email}`);
       
       if (res.data) {
-        console.log("✅ User Data:", res.data);
-     setUserId(res.data.id); // ✅ Lưu ID vào Redux
+        console.log(" User Data:", res.data);
+     setUserId(res.data.id); 
      setCode(res.data.customerCode);
      
       }
     } catch (error) {
-      console.error("❌ Lỗi khi lấy user:", error);
+      console.error(" Lỗi khi lấy user:", error);
       setError("Không thể lấy thông tin người dùng.");
     }
   };
@@ -123,13 +123,13 @@ const AddOrderUser = () => {
       <div className="container my-5">
         <h2 className="text-center ">Thêm đơn hàng</h2>
         <Formik
-  enableReinitialize={true} // ✅ Cập nhật lại form khi state thay đổi
+  enableReinitialize={true} 
   initialValues={{
     name: "",
     packageNumbers: "",
     packageUnitValue: "",
     insurancePrice: "",
-    userId: userId || "", // ✅ Gán userId đúng cách
+    userId: userId || "", 
     shippingMethod: "",
     cnShippingCode: "",
     lineId: "",
